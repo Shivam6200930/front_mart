@@ -1,0 +1,255 @@
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+.image-all{
+  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+  margin:2.5%;
+  width:95%;
+}
+.left-arrow{
+  color:black;
+  margin-left:3%;
+  margin-top: 9%;
+}
+.right-arrow{
+  color:black;
+  margin-right:3%;
+  margin-top: 9%;
+}
+.left-arrow:hover{
+  padding:10px;
+  background:none;
+}
+.right-arrow:hover{
+  padding:10px;
+  background:none;
+}
+.all-catogaries{
+  background-color: white;
+  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+  margin:2.5%;
+  width:95%;
+}
+.catogaries{
+  display:flex;
+  margin-left:50px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.mobile{
+  margin-left:60px;
+  cursor: pointer;
+}
+.cat-col{
+  margin-left:60px;
+  cursor: pointer;
+}
+.smart{
+  margin-left:60px;
+  cursor: pointer;
+}
+.furniture{
+  margin-left:70px;
+  cursor: pointer;
+
+}
+.all-deals-sale{
+  display:flex;
+}
+.up-head{
+  display:flex;
+  justify-content: space-between;
+}
+.up-head>h2{
+  margin-left:25px;
+}
+.b-ar{
+  margin: 20px;
+  background-color:blue;
+  border-radius:50%;
+  padding:1% 1.5% ;
+  cursor: pointer;
+}
+.b-ar:hover{
+  padding: 15px 20px;
+}
+.best-deals{
+  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+  background-color: white;
+  margin:2.5%;
+  width:95%;
+}
+.best-electronics{
+  display:flex;
+  margin-left:50px;
+  margin-bottom: 10px;
+}
+.best-camera{
+  border: solid 1px rgb(58, 57, 57);
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  transition: transform .2s;
+}
+.best-camera>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+}
+.best-deals>h2{
+  margin-left:15px;
+  padding:1%;
+}
+.deals-pic>img{
+ margin-right:5px;
+ box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+ transition: transform .2s;
+}
+.deals-pic>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+}
+.speaker-pic{
+  border: solid 1px rgb(58, 57, 57);
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  margin-left:60px;
+  transition: transform .2s;
+}
+.speaker-pic>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+}
+.card-pic{
+  border: solid 1px rgb(58, 57, 57);
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  margin-left:50px;
+}
+.card-pic>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+
+}
+.monitor{
+  border: solid 1px;
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  margin-left:50px;
+  transition: transform .2s;
+}
+.monitor>img :hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+
+}
+.printer{
+  border: solid 1px rgb(58, 57, 57);
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  margin-left:40px;
+  transition: transform .1s;
+}
+.printer>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+
+}
+.toy-f-m{
+  display:flex;
+}
+.indiual{
+  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+  background-color: white;
+  margin:2.5%;
+  width:95%;
+}
+.indiual>h2{
+  margin:2.5%;      
+}
+.sho{
+  display:flex;
+  margin-left:50px;
+  margin-bottom: 10px;
+}
+.st{
+  border: solid 1px rgb(58, 57, 57);
+  padding:1% 1% 0% 1%;
+  margin-bottom:10px;
+  text-align: center;
+  background-color: rgb(242, 240, 240);
+  cursor: pointer;
+  margin-left:60px;
+  transition: transform .1s;
+}
+.st>img:hover{
+  padding:2% 1% 0% 1%;
+  transform: scale(1.05);
+
+}
+@media (max-width: 768px) {
+  .arrow {
+    font-size: 18px;
+  }
+  .left-arrow{
+    color:black;
+    top:20%;
+  }
+  .left-arrow:hover{
+    color:white;
+  }
+  .right-arrow{
+    color:black;
+    top:20%;
+  }
+  .right-arrow:hover{
+    color:white;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .arrow {
+    font-size: 20px; 
+  }
+  .left-arrow{
+    color:black;
+    top:30%;
+  }
+  .left-arrow:hover{
+    color:white;
+  }
+  .right-arrow{
+    color:black;
+    top:30%;
+  }
+  .right-arrow:hover{
+    color:white;
+  }
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
