@@ -35,7 +35,7 @@ const ProductForm = ({ onAddProduct }) => {
   };
  
   const add_product= async()=>{
-    await axios.post("https://backend-shivammart.vercel.app/api/users/product", product,{withCredentials: true})
+    await axios.post("https://new-backend-s80n.onrender.com/api/users/product", product,{withCredentials: true})
     .then(function () {
       toast.success("Product added successfully")
       Navigate('/admin')

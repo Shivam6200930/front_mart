@@ -26,7 +26,7 @@ function ChangeUserPassword() {
   const change_Password = async () => {
     try {
       const response = await axios.post(
-        "https://backend-shivammart.vercel.app/api/users/changepassword",
+        "https://new-backend-s80n.onrender.com/api/users/changepassword",
         {
           password: user.password,
           password_confirm: user.confirm_password

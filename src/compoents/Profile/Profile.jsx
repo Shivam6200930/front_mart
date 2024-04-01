@@ -41,7 +41,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get("https://backend-shivammart.vercel.app/api/users/logout", { withCredentials: true });
+      await axios.get("https://new-backend-s80n.onrender.com/api/users/logout", { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');

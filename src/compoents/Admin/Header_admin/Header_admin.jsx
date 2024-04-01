@@ -13,7 +13,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
-        const response = await axios.get("https://backend-shivammart.vercel.app/api/users/loggedUser", { withCredentials: true });
+        const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
       console.log(`image:${response.data.user.profileImageUrl}`)
       const temp = {
         name: response.data.user.name,
@@ -32,7 +32,7 @@ const Header = () => {
   const handleSearch = async () => {
     navigate(`/search_admin/?q=${searchQuery}`);
     try {
-      const response = await fetch(`https://backend-shivammart.vercel.app/api/users/search?q=${searchQuery}`, { withCredentials: true });
+      const response = await fetch(`https://new-backend-s80n.onrender.com/api/users/search?q=${searchQuery}`, { withCredentials: true });
       if (response.ok) {
         const data = await response.json();
         console.log('Search results:', data);
