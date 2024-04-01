@@ -20,7 +20,7 @@ const Profile = () => {
   async function fetchData() {
     try {
       setLoading(true);
-      const response = await axios.get("hthttps://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
+      const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
       console.log(`image:${response.data.user.profileImageUrl}`)
       const temp = {
         name: response.data.user.name,
@@ -41,7 +41,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get("hthttps://new-backend-s80n.onrender.com/api/users/logout", { withCredentials: true });
+      await axios.get("https://new-backend-s80n.onrender.com/api/users/logout", { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');
