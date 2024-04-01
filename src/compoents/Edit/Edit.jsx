@@ -26,7 +26,7 @@ function Edit() {
         toast.info('Name is required'); 
         return;
       }
-      await axios.put(`https://backend-shivammart.vercel.app/api/users/edit/${id}`, { user_name: user.name }, { withCredentials: true });
+      await axios.put(`https://new-backend-s80n.onrender.com/api/users/edit/${id}`, { user_name: user.name }, { withCredentials: true });
       toast.success("Updated successfully!!");
       navigate("/profile");
     } catch (err) {

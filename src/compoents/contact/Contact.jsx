@@ -17,7 +17,7 @@ function Contact() {
 
     const handlechange = async () => {
         try {
-            const response = await axios.post("https://backend-shivammart.vercel.app/api/users/contact", { email, feedback }, { withCredentials: true });
+            const response = await axios.post("https://new-backend-s80n.onrender.com/api/users/contact", { email, feedback }, { withCredentials: true });
             if (response.status === 200) {
                 toast.success("Form submitted successfully!");
                 Navigate('/')

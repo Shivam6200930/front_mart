@@ -33,7 +33,7 @@ const Register = () => {
     const { name, email, password, password_confirm } = user
     if (name && email && password && (password === password_confirm)) { 
       try{
-          const response=await axios.post("http://localhost:5858/api/users/register", {
+          const response=await axios.post("https://new-backend-s80n.onrender.com/api/users/register", {
             name:user.name,
             email:user.email,
             password:user.password,

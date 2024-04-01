@@ -20,7 +20,7 @@ const ResetPasswordPage = () => {
   }, [userId, token]);
 
   const handleResetPassword = () => {
-    axios.post(`https://backend-shivammart.vercel.app/api/users/resetPassword/${userId}/${token}`, { password: newPassword })
+    axios.post(`https://new-backend-s80n.onrender.com/api/users/resetPassword/${userId}/${token}`, { password: newPassword })
       .then(response => {
         if (response.status === 200) {
           setResetStatus('success');

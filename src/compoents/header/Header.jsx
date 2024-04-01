@@ -32,7 +32,7 @@ const Header = () => {
   const handleSearch = async () => {
     navigate(`/search_products/?q=${searchQuery}`);
     try {
-      const response = await fetch(`https://backend-shivammart.vercel.app/api/users/search?q=${searchQuery}`, { withCredentials: true });
+      const response = await fetch(`https://new-backend-s80n.onrender.com/api/users/search?q=${searchQuery}`, { withCredentials: true });
       if (response.ok) {
         const data = await response.json();
         console.log('Search results:', data);

@@ -26,7 +26,7 @@ function Forget_Password() {
         alert('Please enter your mail')
       }else{
        await axios.post(
-        'https://backend-shivammart.vercel.app/api/users/sendresetPassword',
+        'https://new-backend-s80n.onrender.com/api/users/sendresetPassword',
         {
           email: user.email
         },
