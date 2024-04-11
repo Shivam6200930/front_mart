@@ -242,9 +242,7 @@
 
 }
 @media (max-width: 768px) {
-  /* .cat-gor>img,.mobile>img ,.cat-col>img,.smart>img,.furniture>img{
-    
-  } */
+  
   .st>img{
     height:70px;
   width:70px;
@@ -327,14 +325,14 @@
   }
   .left-arrow{
     color:black;
-    top:45%;
+    top:42%;
   }
   .left-arrow:hover{
     color:white;
   }
   .right-arrow{
     color:black;
-    top:45%;
+    top:42%;
   }
   .right-arrow:hover{
     color:white;
