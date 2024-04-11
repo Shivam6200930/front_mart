@@ -67,10 +67,7 @@ function Homepage() {
               <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="80px" width="80px" />
               <p>Camers</p>
             </div>
-            <div className="furniture">
-              <img src="https://m.media-amazon.com/images/I/41Qa-9eWfLL._AC_UL320_.jpg" alt="Two wheler" height="80px" width="80px" />
-              <p>Two wheleers</p>
-            </div>
+      
           </div>
         </div>
 

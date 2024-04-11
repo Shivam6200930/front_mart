@@ -5,10 +5,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
   }
   
   .logo {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
   }
   .search-bar {
@@ -23,37 +24,19 @@
     margin-left:10px;
     border: none;
   }
-  .search-button {
-    background-color: #2ecc71;
-    color: #fff;
-    padding: 12px 16px;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+  
   
   .user-actions {
     display: flex;
     align-items: center;
   }
   
-  .login-button {
-    background-color: #e89818;
-    color: #fff;
-    padding: 12px 16px;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-  }
-  
-  
   .profile-button-admin-15 {
     background:transparent;
   }
 
   .profile-button-admin-15 img {
+
     width: 60px;
     height:60px;
     border-radius: 50%;
@@ -71,9 +54,10 @@
     background-color: #f39c12;
     color: #fff;
     padding: 15px 20px;
-    margin-left: 10px;
+    margin-left: 40px;
     border-radius: 50%;
     font-size: 25px;
+    margin-right: 30px;
     cursor: pointer;
     box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
   }
@@ -82,6 +66,7 @@
     color: #fff;
     padding: 15px;
     margin-left: 10px;
+    margin-right: 40px;
     border-radius: 50%;
     font-size: 25px;
     cursor: pointer;
@@ -98,3 +83,47 @@
     background: none;
   }
   
+  @media (max-width: 768px){
+    .logo>a{
+      color:white;
+      font-size: 20px;
+    }
+    .header{
+      background-color: rgb(32, 31, 31);
+      width:100%;
+    }
+    .search-bar input {
+      flex: 1; 
+      padding: 12px;
+      border: none;
+    }
+    .additems-admin{
+      background-color: #f39c12;
+      color: #fff;
+      padding: 15px 20px;
+      margin-left: 5px;
+      border-radius: 50%;
+      font-size: 10px;
+      margin-right: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+    }
+    .cart {
+      background-color: #f39c12;
+      color: #fff;
+      padding: 15px;
+      margin-left: 0px;
+      margin-right: 10px;
+      border-radius: 50%;
+      font-size: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+    }
+    .profile-button-admin-15 img {
+
+      width: 40px;
+      height:40px;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+    }
+  }

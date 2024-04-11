@@ -77,11 +77,15 @@
   #icon:hover {
     color: #007bff;
   }
-  
-  /* Responsive styling (adjust as needed) */
   @media (max-width: 768px) {
     .login {
-      width: 80%;
+      width: 55%;
+    }
+    #icon {
+      cursor: pointer;
+      position:absolute;
+      right:23.5%;
+      top:60.5%;
     }
   }
   

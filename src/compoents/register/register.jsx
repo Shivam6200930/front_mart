@@ -12,7 +12,8 @@ const Register = () => {
     name:"",
     email:"",
     password:"",
-    password_confirm:""
+    password_confirm:"",
+    phone:""
   })
 
   const [changePassword, setChangePassword] = useState(true);
@@ -37,7 +38,8 @@ const Register = () => {
             name:user.name,
             email:user.email,
             password:user.password,
-            password_confirm:user.password_confirm
+            password_confirm:user.password_confirm,
+            phone:user.ph
           },{withCredentials:true})
           console.log(response)
           toast.success('register successfully')
@@ -55,7 +57,8 @@ const Register = () => {
       name:"",
       email:"",
       password:"",
-      password_confirm:""
+      password_confirm:"",
+      phone:""
     })
 
   }
@@ -69,6 +72,7 @@ const Register = () => {
         {console.log("User", user)}
         <input type="text" className="input" name="name" value={user.name} placeholder="Enter your name" onChange={HandaleChange}></input>
         <input type="text" className="input" name="email" value={user.email} placeholder="Enter your Email" onChange={HandaleChange}></input>
+        <input type="number" className="input" name="phone" value={user.ph} placeholder="Enter your phone number" onChange={HandaleChange}></input>
         <input type={changePassword ? "password" : "text"} className="input" name="password" value={user.password} placeholder="Enter Your Password" onChange={HandaleChange}></input>
         <span className="icon1"
                  onClick={() => {

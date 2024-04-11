@@ -21,7 +21,6 @@ const Profile = () => {
     try {
       setLoading(true);
       const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
-      console.log(`image:${response.data.user.profileImageUrl}`)
       const temp = {
         name: response.data.user.name,
         email: response.data.user.email,

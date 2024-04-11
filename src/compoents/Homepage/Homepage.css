@@ -7,6 +7,23 @@
   font-size: 24px;
   cursor: pointer;
 }
+.all-catogaries, .best-deals {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: darkgrey lightgrey;
+}
+
+.all-catogaries::-webkit-scrollbar, .best-deals::-webkit-scrollbar {
+  width: 10px;
+}
+
+.all-catogaries::-webkit-scrollbar-thumb, .best-deals::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+.all-catogaries::-webkit-scrollbar-thumb:hover, .best-deals::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
 .image-all{
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   margin:2.5%;
@@ -87,7 +104,7 @@
 }
 .best-electronics{
   display:flex;
-  margin-left:50px;
+  margin-left:20px;
   margin-bottom: 10px;
 }
 .best-camera{
@@ -123,7 +140,7 @@
   text-align: center;
   background-color: rgb(242, 240, 240);
   cursor: pointer;
-  margin-left:60px;
+  margin-left:20px;
   transition: transform .2s;
 }
 .speaker-pic>img:hover{
@@ -151,7 +168,7 @@
   text-align: center;
   background-color: rgb(242, 240, 240);
   cursor: pointer;
-  margin-left:50px;
+  margin-left:30px;
   transition: transform .2s;
 }
 .monitor>img :hover{
@@ -166,7 +183,7 @@
   text-align: center;
   background-color: rgb(242, 240, 240);
   cursor: pointer;
-  margin-left:40px;
+  margin-left:30px;
   transition: transform .1s;
 }
 .printer>img:hover{
@@ -198,7 +215,7 @@
   text-align: center;
   background-color: rgb(242, 240, 240);
   cursor: pointer;
-  margin-left:60px;
+  margin-left:30px;
   transition: transform .1s;
 }
 .st>img:hover{
@@ -207,6 +224,7 @@
 
 }
 @media (max-width: 768px) {
+  
   .arrow {
     font-size: 18px;
   }
@@ -251,5 +269,43 @@
 }
 
 .right-arrow {
+  right: 0;
+}
+
+
+
+
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+}
+
+.arrow1 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
   right: 0;
 }
