@@ -1,129 +1,127 @@
-.header {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Header.css */
 
+.header {
+  background-color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #0f0f0f;
+  width:100%;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.search-bar {
+  display: flex;
+  flex: 1;
+  width : 60rem;
+}
+.s-bar{
+  display: flex;
+  justify-content:space-between;
+}
+.search-bar input {
+  flex: 1; 
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  margin-right:2%;
+  width : 60%;
+  outline : none;
+  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+}
+
+.profile-button-admin-15 {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.login-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart {
+  margin-left: 10px;
+}
+
+.sidebar-trigger {
+  display: none; 
+  cursor: pointer;
+  font-size: 25px;
+  padding: 0 10px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding-top: 50px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left:45%;
+}
+
+.sidebar ul li {
+  padding: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* Show sidebar trigger button on smaller screens (tablet and phone) */
+  .sidebar-trigger {
+    display: block;
   }
-  
-  .logo {
-    font-size: 20px;
-    font-weight: bold;
+
+  /* Hide sidebar by default on smaller screens */
+  .sidebar {
+    transform: translateX(-200px); 
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
   }
   .search-bar {
     display: flex;
     flex: 1;
+    width : 15rem;
   }
-  
+  .s-bar{
+    display: flex;
+    justify-content:space-between;
+  }
   .search-bar input {
     flex: 1; 
-    padding: 18px;
-    margin-right: 10px;
-    margin-left:10px;
+    padding: 12px;
     border: none;
+    border-radius: 20px;
+    margin-right:2%;
+    width : 60%;
+    outline : none;
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   }
   
-  
-  .user-actions {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-button-admin-15 {
-    background:transparent;
-  }
-
-  .profile-button-admin-15 img {
-
-    width: 60px;
-    height:60px;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-  }
-  .profile-button-admin-15 img:hover{
-    padding:3%;
-  }
-  .profile-button-admin-15:hover{
-    background:transparent;
-
-  }
-
-  .additems-admin{
-    background-color: #f39c12;
-    color: #fff;
-    padding: 15px 20px;
-    margin-left: 40px;
-    border-radius: 50%;
-    font-size: 25px;
-    margin-right: 30px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-  }
-  .cart {
-    background-color: #f39c12;
-    color: #fff;
-    padding: 15px;
-    margin-left: 10px;
-    margin-right: 40px;
-    border-radius: 50%;
-    font-size: 25px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-  }
-  .additems-admin:hover{
-    background-color: #da8701;
-  }
-  .cart:hover{
-    background-color: #da8701;
-  
-  }
-  .cart-button{
-    background: none;
-  }
-  
-  @media (max-width: 768px){
-    .logo>a{
-      color:white;
-      font-size: 20px;
-    }
-    .header{
-      background-color: rgb(32, 31, 31);
-      width:100%;
-    }
-    .search-bar input {
-      flex: 1; 
-      padding: 12px;
-      border: none;
-    }
-    .additems-admin{
-      background-color: #f39c12;
-      color: #fff;
-      padding: 15px 20px;
-      margin-left: 5px;
-      border-radius: 50%;
-      font-size: 10px;
-      margin-right: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-    }
-    .cart {
-      background-color: #f39c12;
-      color: #fff;
-      padding: 15px;
-      margin-left: 0px;
-      margin-right: 10px;
-      border-radius: 50%;
-      font-size: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-    }
-    .profile-button-admin-15 img {
-
-      width: 40px;
-      height:40px;
-      border-radius: 50%;
-      box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
-    }
-  }
+}

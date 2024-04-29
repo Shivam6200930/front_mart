@@ -1,31 +1,35 @@
+
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import { UserRound } from 'lucide-react';
 import axios from 'axios';
+
 const Header = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [userPhoto, setUserPhoto] = useState(null);
-  const [data,setData] = useState({
-    image:""
-  })
+  const [data, setData] = useState({
+    image: ''
+  });
+  const [showSidebar, setShowSidebar] = useState(false); 
+
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
         const response = await axios.get("https://backend-shivammart.vercel.app/api/users/loggedUser", { withCredentials: true });
-      console.log(`image:${response.data.user.profileImageUrl}`)
-      const temp = {
-        name: response.data.user.name,
-        email: response.data.user.email,
-        image:response.data.user.profileImageUrl
-      };
-      setData(temp);
+        const temp = {
+          name: response.data.user.name,
+          email: response.data.user.email,
+          image: response.data.user.profileImageUrl
+        };
+        setData(temp);
       } catch (error) {
         console.error('Error fetching user photo:', error);
       }
     };
-  
+
     fetchUserPhoto();
   }, []);
 
@@ -88,9 +92,30 @@ const Header = () => {
             </a>
           </div>
         )}
+
+        {localStorage.getItem('loggedIn')&& (
+           <div className="sidebar-trigger" onClick={() => setShowSidebar(!showSidebar)}>
+           ☰
+         </div>
+        )}
+        
       </div>
+
+      {showSidebar && (
+        <div className="sidebar"> 
+        <div className="cut" onClick={() => setShowSidebar(!showSidebar)}>
+         X
+        </div>
+          <ul>
+            <li><a href="/profile">profile</a></li>
+            <li><a href="/cart">cart</a></li>
+            <li><a href="#">oder History</a></li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Header;
+

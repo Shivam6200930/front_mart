@@ -127,7 +127,7 @@ const Profile = () => {
             <p></p>
           </div>
           <div className="bottom-section">
-            <button className="change-password-btn" onClick={() => navigate('/changepassword')} onMouseDown={preventDefault}>Change Password</button>
+            <button className="change-password-btn" onClick={() => navigate('/changePassword_admin')} onMouseDown={preventDefault}>Change Password</button>
             <button onClick={clearData} className="logout-btn">Logout</button>
             <button className="change-password-btn" onClick={() => navigate('/editprofile')} onMouseDown={preventDefault}>Edit Profile</button>
             <button className="change-password-btn" onClick={() => navigate('/admin')} onMouseDown={preventDefault}>Homepage</button>

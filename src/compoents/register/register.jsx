@@ -31,24 +31,27 @@ const Register = () => {
   }
 
   const registers = async () => {
-    const { name, email, password, password_confirm } = user
-    if (name && email && password && (password === password_confirm)) { 
+    const { name, email, password, password_confirm,phone } = user
+    if (name && email && password && (password === password_confirm) && phone) { 
       try{
           const response=await axios.post("https://new-backend-s80n.onrender.com/api/users/register", {
-            name:user.name,
-            email:user.email,
-            password:user.password,
-            password_confirm:user.password_confirm,
-            phone:user.ph
+            name,
+            email,
+            password,
+            password_confirm,
+            phone
           },{withCredentials:true})
-          console.log(response)
-          toast.success('register successfully')
+          
           navigate('/login')
+          console.log(response)
+          
       }
         catch (error) {
           alert('something went wrong')
           console.log(error);
         };
+       if(response.ok)
+        toast.success('register successfully')
     } else {
       alert("invalid")
     }
@@ -69,10 +72,9 @@ const Register = () => {
       <div className="register">
         <h1>Rgesister</h1>
         <hr></hr>
-        {console.log("User", user)}
         <input type="text" className="input" name="name" value={user.name} placeholder="Enter your name" onChange={HandaleChange}></input>
         <input type="text" className="input" name="email" value={user.email} placeholder="Enter your Email" onChange={HandaleChange}></input>
-        <input type="number" className="input" name="phone" value={user.ph} placeholder="Enter your phone number" onChange={HandaleChange}></input>
+        <input type="number" className="input" name="phone" value={(user.phone)} placeholder="Enter your phone number" onChange={HandaleChange}></input>
         <input type={changePassword ? "password" : "text"} className="input" name="password" value={user.password} placeholder="Enter Your Password" onChange={HandaleChange}></input>
         <span className="icon1"
                  onClick={() => {

@@ -36,7 +36,30 @@
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
 }
 
+.cut{
+  margin-left:90%;
+  font-weight: 900;
+  font-size: x-large;
+  cursor: pointer;
+}
+.profile-button-admin-15 {
+  background:transparent;
+}
 
+.profile-button-admin-15 img {
+
+  width: 60px;
+  height:60px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+}
+.profile-button-admin-15 img:hover{
+  padding:3%;
+}
+.profile-button-admin-15:hover{
+  background:transparent;
+
+}
 #user-actions {
   display: flex;
   align-items: center;
@@ -66,33 +89,83 @@
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   width:7rem;
 }
-#cart {
-  background-color: #fed38d;
-  color: #fff;
-  padding: 8px;
-  margin-right: 20px;
-  border-radius: 50%;
-  font-size: 25px;
-  cursor: pointer;
-  box-shadow: 0 4px 6px 5px rgba(0,0,0,0.2);
-}
+
 .login-button:hover{
   background-color: #d28508;
   padding: 12px;
 }
-#cart:hover{
-  background-color: #d28508;
-  padding: 17px;
+
+.sidebar.hidden {
+  display:none;
+}
+.additems-admin{
+  background-color: #f39c12;
+  color: #fff;
+  padding: 15px 20px;
+  margin-left: 40px;
+  border-radius: 50%;
+  font-size: 25px;
+  margin-right: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+}
+.cart {
+  background-color: #f39c12;
+  color: #fff;
+  padding: 15px;
+  margin-left: 10px;
+  margin-right: 40px;
+  border-radius: 50%;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+}
+.additems-admin:hover{
+  background-color: #da8701;
+}
+.cart:hover{
+  background-color: #da8701;
+
+}
+.cart-button{
+  background: none;
 }
 @media (max-width: 768px) {
-  #search-button {
-    display: none;
+  .sidebar-trigger{
+    display:block;
+    cursor :pointer;
   }
-
-  #user-actions {
-    justify-content: flex-end;
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    width: 300px;
+    height: 200vh;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
   }
-
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
   .login-button{
     background-color: #e89818;
     color: #fff;
@@ -108,4 +181,41 @@
     flex: 1;
     width : 13.8rem;
   }
+  .logo>a{
+    color:white;
+    font-size: 20px;
+  }
+  .header{
+    background-color: rgb(32, 31, 31);
+    width:100%;
+  }
+  .search-bar input {
+    flex: 1; 
+    padding: 12px;
+    border: none;
+  }
+  .additems-admin{
+    display:none
+  }
+  .cart {
+    display:none;
+  }
+  .profile-button-admin-15 img {
+
+    width: 40px;
+    height:40px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+  }
+  .sidebar {
+    transform: translateX(0);
+  }
 }
+
+
+
+
+
+
+
+

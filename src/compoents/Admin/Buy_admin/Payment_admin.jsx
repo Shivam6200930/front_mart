@@ -14,6 +14,7 @@ function Payment() {
     name: "",
     email: ""
   });
+  
 const navigate=useNavigate()
   useEffect(() => {
     const fetchUserData = async () => {
@@ -99,7 +100,7 @@ const navigate=useNavigate()
         prefill: {
           name: userData.name,
           email: userData.email,
-          contact: '+916200874410',
+          contact: userData.phone || 96231,
         },
         notes: {
           address: 'Your Address',

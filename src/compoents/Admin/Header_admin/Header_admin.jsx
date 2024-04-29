@@ -10,6 +10,7 @@ const Header = () => {
   const [data,setData] = useState({
     image:""
   })
+  const [showSidebar, setShowSidebar] = useState(false); 
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
@@ -51,6 +52,7 @@ const Header = () => {
   };
 
   return (
+    <>
     <div className="header">
       <div className="logo">
         <a href="/admin">Shivam Mart</a>
@@ -94,8 +96,24 @@ const Header = () => {
             </a>
           </div>
         )}
+        <div className="sidebar-trigger" onClick={() => setShowSidebar(!showSidebar)}>
+          ☰
+        </div>
+        
       </div>
+      {showSidebar && (
+        <div className="sidebar">
+          <div className="cut"onClick={() => setShowSidebar(!showSidebar)}>X</div>
+          <ul>
+            <li><a href="/profile_admin">Profile</a></li>
+            <li><a href="/additems">Add Items</a></li>
+            <li><a href="/cart_admin">Cart</a></li>
+          </ul>
+        </div>
+      )}
+      
     </div>
+    </>
   );
 };
 

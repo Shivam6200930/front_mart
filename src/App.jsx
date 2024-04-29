@@ -21,6 +21,7 @@ import Payment_admin from './compoents/Admin/Buy_admin/Payment_admin'
 import Cart_admin from "./compoents/Admin/cart/Cart_admin"
 import Search_admin from "./compoents/Admin/search_admin/Search_admin";
 import Products_details_admin from "./compoents/Admin/Products_details_admin/Products_d_admin";
+import ChangePassword_admin from "./compoents/Admin/changepassword/changePassword_admin";
 function App() {
   return (
     <>
@@ -51,6 +52,9 @@ function App() {
           <Route path="/profile_admin" element={<Layout_admin />}>
             <Route index element={<Profile_admin />} />
           </Route>
+          <Route path="/changePassword_admin" element={<Layout_admin />}>
+            <Route index element={<ChangePassword_admin/>} />
+          </Route>
           <Route path="/cart_admin" element={<Layout_admin />}>
             <Route index element={<Cart_admin />} />
           </Route>
@@ -69,7 +73,7 @@ function App() {
           <Route path="/editprofile" element={<Layout />}>
             <Route index element={<Edit />} />
           </Route>
-          <Route path="/additems" element={<Layout />}>
+          <Route path="/additems" element={<Layout_admin />}>
             <Route index element={<AddItems />} />
           </Route>
           <Route path="/cart" element={<Layout />}>
