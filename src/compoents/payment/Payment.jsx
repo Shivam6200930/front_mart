@@ -87,6 +87,7 @@ const navigate=useNavigate()
               toast.success('Payment Successfully!!');
 
               await axios.post(`https://new-backend-s80n.onrender.com/api/users/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
+              
 
             } else {
               console.log("Signature verification failed");
@@ -117,14 +118,13 @@ const navigate=useNavigate()
           axios.post('https://new-backend-s80n.onrender.com/api/users/razorpay/verify-signature', response)
           alert(response.error.description);
           rzp1.close()
-          navigate('/admin')
+          navigate('/')
 
         })
         rzp1.open();
       } else {
         console.error("Razorpay script is not loaded.");
       }
-      const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
       const userId = localStorage.getItem("user_id");
       const response = await axios.post(`https://new-backend-s80n.onrender.com/api/users/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
       console.log("Order history saved:", response.data);
@@ -134,6 +134,8 @@ const navigate=useNavigate()
           console.log(`load:${loadscript}`);
         })
       }
+      
+      const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
     } catch (error) {
       console.error("Error initiating payment:", error);
     }

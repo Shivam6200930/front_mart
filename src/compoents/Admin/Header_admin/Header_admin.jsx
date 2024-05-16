@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header_admin.css';
 import { UserRound } from 'lucide-react';
@@ -11,6 +11,7 @@ const Header = () => {
     image:""
   })
   const [showSidebar, setShowSidebar] = useState(false); 
+  const sidebarRef = useRef(null);
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
@@ -30,6 +31,7 @@ const Header = () => {
     fetchUserPhoto();
   }, []);
 
+  
   const handleSearch = async () => {
     navigate(`/search_admin/?q=${searchQuery}`);
     try {
@@ -77,6 +79,7 @@ const Header = () => {
               <UserRound />
             )}
           </button>
+          
         ) : (
           <button className="login-button" onClick={() => navigate("/login")}>
             Login
@@ -102,8 +105,8 @@ const Header = () => {
         
       </div>
       {showSidebar && (
-        <div className="sidebar">
-          <div className="cut"onClick={() => setShowSidebar(!showSidebar)}>X</div>
+        <div className="sidebar" ref={sidebarRef}>
+          <div className="cut" onClick={() => setShowSidebar(!showSidebar)}>X</div>
           <ul>
             <li><a href="/profile_admin">Profile</a></li>
             <li><a href="/additems">Add Items</a></li>

@@ -12,7 +12,8 @@ function Payment() {
   const [Amounts, setAmounts] = useState(0)
   const [userData, setUserData] = useState({
     name: "",
-    email: ""
+    email: "",
+    phone:""
   });
   
 const navigate=useNavigate()
@@ -22,9 +23,11 @@ const navigate=useNavigate()
         const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
         const userData = {
           name: response.data.user.name,
-          email: response.data.user.email
+          email: response.data.user.email,
+          phone:response.data.user.phone
         };
         setUserData(userData);
+        console.log(userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -159,6 +162,8 @@ const navigate=useNavigate()
       <div className="login-success">
         <h1>Login Successfully ✓</h1>
         <h2>{userData.name}</h2>
+        <h2>{userData.email}</h2>
+        <h2>{userData.phone}</h2>
       </div>
       <div className="payment-form">
         <form>

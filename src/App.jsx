@@ -22,6 +22,7 @@ import Cart_admin from "./compoents/Admin/cart/Cart_admin"
 import Search_admin from "./compoents/Admin/search_admin/Search_admin";
 import Products_details_admin from "./compoents/Admin/Products_details_admin/Products_d_admin";
 import ChangePassword_admin from "./compoents/Admin/changepassword/changePassword_admin";
+import Edit_admin from "./compoents/Admin/edit/Edit_admin";
 function App() {
   return (
     <>
@@ -67,15 +68,19 @@ function App() {
           <Route path="/view_admin" element={<Layout_admin />}>
             <Route index element={<Products_details_admin />} />
           </Route>
+          
           <Route path="/changepassword" element={<Layout />}>
             <Route index element={<ChangeUserPassword />} />
           </Route>
           <Route path="/editprofile" element={<Layout />}>
             <Route index element={<Edit />} />
           </Route>
+          <Route path="/editprofile_admin" element={<Layout_admin />}>
+            <Route index element={<Edit_admin />} />
+          </Route>
           <Route path="/additems" element={<Layout_admin />}>
             <Route index element={<AddItems />} />
-          </Route>
+          </Route>  
           <Route path="/cart" element={<Layout />}>
             <Route index element={<Cart />} />
           </Route>

@@ -51,8 +51,13 @@ const Profile = () => {
 
   const deleteId = async () => {
     try {
-      await axios.post(`https://new-backend-s80n.onrender.com/api/users/delete/${id}`, {}, { withCredentials: true });
+      await axios.delete(`https://new-backend-s80n.onrender.com/api/users/delete/${data.id}`, { withCredentials: true });
+      
+      
       toast.success(`${name} Delete your id successfully!`);
+      navigate('/login')
+      localStorage.clear()
+      
     } catch (error) {
       console.error('Failed to delete user ID:', error);
     }

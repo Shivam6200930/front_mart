@@ -54,7 +54,7 @@ const ProductForm = ({ onAddProduct }) => {
         <input type="text" name="name" value={product.name} onChange={handleInputChange}  />
       </label>
       <br />
-      <label>
+      <label >
         Image URL:
         <input type="text" name="imageUrl" value={product.imageUrl} onChange={handleInputChange} />
       </label>

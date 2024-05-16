@@ -26,7 +26,7 @@ function Edit() {
         toast.info('Name is required'); 
         return;
       }
-      await axios.put(`https://new-backend-s80n.onrender.com/api/users/edit/${id}`, { user_name: user.name }, { withCredentials: true });
+      await axios.put(`https://new-backend-s80n.onrender.com/api/users/edit/${id}`, { user_name: user.name ,user_phone:user.phone}, { withCredentials: true });
       toast.success("Updated successfully!!");
       navigate("/profile");
     } catch (err) {
@@ -46,6 +46,7 @@ function Edit() {
           value={user.name}
           onChange={handleChange}
         />
+        <input type='number' placeholder="Enter your new phone" name='phone' value={user.phone} onChange={handleChange}></input>
         <div id="edhm-page">
         <button onClick={handleEdit} id='btn-edit'>Edit</button>
         <button id='btn-hom' onClick={() => navigate('/admin')}>Homepage</button>

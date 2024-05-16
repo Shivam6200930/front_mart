@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
@@ -18,7 +15,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
-        const response = await axios.get("https://backend-shivammart.vercel.app/api/users/loggedUser", { withCredentials: true });
+        const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
         const temp = {
           name: response.data.user.name,
           email: response.data.user.email,

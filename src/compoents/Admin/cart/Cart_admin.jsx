@@ -65,52 +65,55 @@ const Cart = () => {
   };
 
   return (
-    <div id="container">
-      <div id="cart-header">
+    <div className="container">
+      {/* <div className="cart-header">
         <span>Shopping Cart</span>
         <span>Total Price: ₹{totalPrice}</span>
-      </div>
-      <div id="cart-items">
+      </div> */}
+      <div className="cart-items">
         {cartItems.map((item, index) => (
           <div key={index} className="cart-item">
             <img src={item.imageUrl} alt={item.name} />
             <p id="cart-item-title">{item.name}</p>
             <p id="cart-item-price">₹{item.price}</p>
             
-            <div id="quantity-container">
-              <button id="quantity-btn" onClick={() => decreaseQuantity(index)}>-</button>
+            <div className="quantity-container">
+              <button className="quantity-btn" onClick={() => decreaseQuantity(index)}>-</button>
               <span>{item.quantity}</span>
-              <button id="quantity-btn" onClick={() => increaseQuantity(index)}>+</button>
+              <button className="quantity-btn" onClick={() => increaseQuantity(index)}>+</button>
             </div>
 
-            <button id="remove-btn" onClick={() => removeFromCart(index)}>
+            <button className="remove-btn" onClick={() => removeFromCart(index)}>
               Remove
             </button>
           </div>
         ))}
       </div>
 
-      <div id="price-details">
+      <div className="price-details">
         <h2>Price Details</h2>
-        <div id="price-details-row">
+        <div className="price-details-row">
           <span>Total Items:</span>
           <span>{cartItems.length}</span>
         </div>
-        <div id="price-details-row">
+        <div className="price-details-row">
           <span>Total Price:</span>
           <span>₹{totalPrice}</span>
-        </div>
-      </div>
-
-      <div id="bottom-bar">
-        <button id="continue-shopping-btn" onClick={() => Navigate("/admin")}>
+          <div className="bottom-bar">
+            <div className="continue">
+        <button className="continue-shopping-btn" onClick={() => Navigate("/admin")}>
           Continue Shopping
         </button>
+        </div>
+        <div className="buy-now">
         {flag && (
-          <button id="buy-now-btn" onClick={buyNow}>
+          <button className="buy-now-btn" onClick={buyNow}>
             Buy Now
           </button>
         )}
+        </div>
+      </div>
+        </div>
       </div>
     </div>
   );

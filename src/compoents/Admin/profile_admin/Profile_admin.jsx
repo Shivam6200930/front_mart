@@ -4,8 +4,8 @@ import axios from "axios";
 import './Profile_admin.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 const Profile = () => {
+
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,16 +13,20 @@ const Profile = () => {
   const name = localStorage.getItem('name');
   const navigate = useNavigate();
   const [data, setData] = useState({
+    id:"",
     name: "",
     email: ""
   });
+  
+ var response
 
   async function fetchData() {
     try {
       setLoading(true);
-      const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
-      console.log(`image:${response.data.user.profileImageUrl}`)
+        response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
+       
       const temp = {
+        id:response.data.user._id,
         name: response.data.user.name,
         email: response.data.user.email,
         image:response.data.user.profileImageUrl
@@ -52,8 +56,14 @@ const Profile = () => {
 
   const deleteId = async () => {
     try {
-      await axios.post(`https://new-backend-s80n.onrender.com/api/users/delete/${id}`, {}, { withCredentials: true });
+      
+      await axios.delete(`https://new-backend-s80n.onrender.com/api/users/delete/${data.id}`, { withCredentials: true });
+      localStorage.clear()
+      
       toast.success(`${name} Delete your id successfully!`);
+      navigate('/login')
+      
+      
     } catch (error) {
       console.error('Failed to delete user ID:', error);
     }
@@ -70,6 +80,7 @@ const Profile = () => {
       const formData = new FormData();
       formData.append('image', selectedImage);
       const response = await axios.post(`https://new-backend-s80n.onrender.com/api/users/imageupload/${id}`, formData, { withCredentials: true });
+
       if (response.data && response.data.image) {
         setImageUrl(response.data.image);
         
@@ -107,8 +118,8 @@ const Profile = () => {
         <div className="left-section" >
           <div className="profile-image-box">
           {loading && (
-                        <div id="loading-container">
-                            <div id="loading-spinner"></div>
+                        <div className="loading-container">
+                            <div className="loading-spinner"></div>
                             <p>updated</p>
                         </div>
                     )}
@@ -129,7 +140,7 @@ const Profile = () => {
           <div className="bottom-section">
             <button className="change-password-btn" onClick={() => navigate('/changePassword_admin')} onMouseDown={preventDefault}>Change Password</button>
             <button onClick={clearData} className="logout-btn">Logout</button>
-            <button className="change-password-btn" onClick={() => navigate('/editprofile')} onMouseDown={preventDefault}>Edit Profile</button>
+            <button className="change-password-btn" onClick={() => navigate('/editprofile_admin')} onMouseDown={preventDefault}>Edit Profile</button>
             <button className="change-password-btn" onClick={() => navigate('/admin')} onMouseDown={preventDefault}>Homepage</button>
             <button className="change-password-btn" onClick={deleteId} onMouseDown={preventDefault}>Delete ID</button>
           </div>

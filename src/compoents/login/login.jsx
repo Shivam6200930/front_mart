@@ -26,6 +26,7 @@ const Login = () => {
   const logins = () => {
         axios.post("https://new-backend-s80n.onrender.com/api/users/login", user,{withCredentials: true})
       .then(function (response) {
+        console.log(response)
         if('mandalshivam962@gmail.com' === response.data.user.email) {
           toast.success('Login sucessfull');
           Navigate('/admin') 

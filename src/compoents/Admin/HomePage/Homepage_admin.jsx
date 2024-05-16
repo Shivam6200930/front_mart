@@ -118,9 +118,7 @@ function Homepage() {
               </div>
             </div>
           </div>
-          <div className="deals-pic">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/530/810/image/4e53722c1839b515.jpg?q=20" alt="sale" height="427px" width="400px" />
-          </div>
+
         </div>
         <div className="toy-f-m">
           <div className="indiual">
