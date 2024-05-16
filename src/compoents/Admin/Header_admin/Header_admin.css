@@ -110,6 +110,7 @@
     width:100%;
   }
   .sidebar-trigger {
+    margin-right:5%;
     display: block;
   }
 
@@ -136,12 +137,12 @@
     padding: 12px;
     border: none;
     border-radius: 20px;
-    margin-right:2%;
-    width : 60%;
+    margin-left:7%;
+    
     outline : none;
-    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 6px 5px rgb(117, 114, 114);
   }
   .profile-button-admin-15{
-    display:block;
+    display:none;
   }
 }
