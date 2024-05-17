@@ -1,7 +1,7 @@
 import React, { useState, useEffect , useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header_admin.css';
-import { UserRound } from 'lucide-react';
+import { CircleUserRound , StretchHorizontal ,ShoppingCart } from 'lucide-react';
 import axios from 'axios';
 const Header = () => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const Header = () => {
             {data.image ? (
               <img src={data.image} alt="User" />
             ) : (
-              <UserRound />
+              <CircleUserRound />
             )}
           </button>
           
@@ -108,9 +108,9 @@ const Header = () => {
         <div className="sidebar" ref={sidebarRef}>
           <div className="cut" onClick={() => setShowSidebar(!showSidebar)}>X</div>
           <ul>
-            <li><a href="/profile_admin">Profile</a></li>
-            <li><a href="/additems">Add Items</a></li>
-            <li><a href="/cart_admin">Cart</a></li>
+            <li><a href="/profile_admin" ><CircleUserRound/> Profile</a></li>
+            <li><a href="/additems"><StretchHorizontal />  Add Items</a></li>
+            <li><a href="/cart_admin"><ShoppingCart />Cart</a></li>
           </ul>
         </div>
       )}

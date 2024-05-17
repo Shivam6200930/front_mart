@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import { UserRound } from 'lucide-react';
 import axios from 'axios';
+import { CircleUserRound , History  ,ShoppingCart } from 'lucide-react';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -104,9 +105,9 @@ const Header = () => {
          X
         </div>
           <ul>
-            <li><a href="/profile">profile</a></li>
-            <li><a href="/cart">cart</a></li>
-            <li><a href="#">oder History</a></li>
+            <li><a href="/profile"><CircleUserRound/>profile</a></li>
+            <li><a href="/cart"><ShoppingCart/>cart</a></li>
+            <li><a href="#"><History />oder History</a></li>
           </ul>
         </div>
       )}
