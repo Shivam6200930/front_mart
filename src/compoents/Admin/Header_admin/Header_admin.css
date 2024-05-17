@@ -32,7 +32,7 @@
   border: none;
   border-radius: 20px;
   margin-right: 2%;
-  width: 100%; /* Ensure it takes full width of the container */
+  width: 100%;  
   outline: none;
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
 }
@@ -79,13 +79,12 @@
   background-color: #333;
   color: #fff;
   padding-top: 50px;
-  z-index: 1000; 
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
 
 .sidebar.active {
-  transform: translateX(1);
+  transform: translateX(0);
 }
 
 .sidebar ul {
@@ -95,11 +94,12 @@
   text-align: center; 
 }
 
+
 .sidebar ul li {
   padding: 10px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 868px) {
   .header {
     background-color: #333;
     display: flex;
@@ -115,13 +115,14 @@
   }
 
   .sidebar {
+    width:120%;
     z-index: 999;
     transform: translateX(-200px); 
     transition: transform 0.3s ease;
   }
 
   .sidebar.active {
-    transform: translateX(4);
+    transform: translateX(0);
   }
   .search-bar {
     display: flex;
@@ -138,7 +139,6 @@
     border: none;
     border-radius: 20px;
     margin-left:7%;
-    
     outline : none;
     box-shadow: 0 2px 6px 5px rgb(117, 114, 114);
   }

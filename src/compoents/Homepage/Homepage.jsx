@@ -67,29 +67,27 @@ function Homepage() {
               <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="80px" width="80px" />
               <p>Camers</p>
             </div>
-      
+
           </div>
         </div>
 
         <div className="image-all">
-          <div id="image-container">
             <img
               src={images[currentImage]}
               alt={`img${currentImage}`}
-              height="50%"
+              height="100%"
               width="100%"
             />
-            <button onClick={prevImage} className="arrow left-arrow">&#10094;</button>
-            <button onClick={nextImage} className="arrow right-arrow">&#10095;</button>
-          </div>
+  
+          
         </div>
         <div className="all-deals-sale">
           <div className="best-deals">
             <div className="up-head">
-            <h2>Best Electronics</h2>
-            <div className="b-ar">&#10095;</div>
+              <h2>Best Electronics</h2>
+              <div className="b-ar">&#10095;</div>
             </div>
-             
+
             <div className="best-electronics">
               <div className="best-camera">
                 <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="150px" width="150px" />
@@ -98,24 +96,24 @@ function Homepage() {
               </div>
               <div className="speaker-pic">
                 <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/projector/k/f/0/zeb-pixaplay-22-green-16-zeb-pixaplay-22-green-led-zebronics-original-imagpqgasyrg2gzv.jpeg?q=70" alt="speaker" height="150px" width="150px" />
-                 <h2>Speaker</h2>
-                 <h3>starting from  &#x20B9;999.</h3>
+                <h2>Speaker</h2>
+                <h3>starting from  &#x20B9;999.</h3>
               </div>
               <div className="card-pic">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/external-hard-drive/ssd/q/1/y/sdssde61-1t00-g25m-sandisk-original-imagsgpzfjagzdqf.jpeg?q=70" alt="disk" height="150px" width="150px"/>
+                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/external-hard-drive/ssd/q/1/y/sdssde61-1t00-g25m-sandisk-original-imagsgpzfjagzdqf.jpeg?q=70" alt="disk" height="150px" width="150px" />
                 <h2>sandisk</h2>
                 <h3>Shoap Now!</h3>
               </div>
-               <div className="monitor">
-                <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/monitor/t/q/r/g24e-20-full-hd-24-2023-66d7gar1in-lenovo-original-imagq53zdnffu2pz.jpeg?q=70" alt="monitor" height="150px" width="150px"/>
+              <div className="monitor">
+                <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/monitor/t/q/r/g24e-20-full-hd-24-2023-66d7gar1in-lenovo-original-imagq53zdnffu2pz.jpeg?q=70" alt="monitor" height="150px" width="150px" />
                 <h2>Monier</h2>
                 <h3> From &#x20B9;11999</h3>
-               </div>
-               <div className="printer">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/printer/v/f/q/1008a-hp-original-imagpzkkyazzc7tf.jpeg?q=70" alt="printer" height="150px" width="150px"/>
+              </div>
+              <div className="printer">
+                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/printer/v/f/q/1008a-hp-original-imagpzkkyazzc7tf.jpeg?q=70" alt="printer" height="150px" width="150px" />
                 <h2>Hp Printer</h2>
                 <h3>From  &#x20B9;13999</h3>
-               </div>
+              </div>
             </div>
           </div>
           <div className="deals-pic">
@@ -125,41 +123,41 @@ function Homepage() {
         <div className="toy-f-m">
           <div className="indiual">
             <div className="up-head">
-            <h2>Best Toys & More</h2>
-            <div className="b-ar">&#10095;</div>
+              <h2>Best Toys & More</h2>
+              <div className="b-ar">&#10095;</div>
             </div>
             <div className="sho">
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/612/612/kh0vonk0/art-set/h/h/6/pencil-smart-kit-doms-original-imafx4qrxrhv82bn.jpeg?q=70" alt="satasniory" height="150px" width="150px" />
-            <h2>Statsniory</h2>
-            <h3>From &#x20B9;85</h3>
-          </div>
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/electric-cycle/c/n/f/bolton-electric-cycle-for-men-women-ages-15-range-35-km-li-ion-original-imagxn5ewecmptsk.jpeg?q=70" alt="bicycle" height="150px" width="150px" />
-            <h2>Bicycle</h2>
-            <h3>From &#x20B9;1565</h3>
-          </div>
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/416/416/kw85bww0/action-figure/p/9/q/6-death-note-anime-action-figure-19-cm-for-home-decors-office-original-imag8ymahvqj4kk3.jpeg?q=70&crop=false" alt="toys" height="150px" width="150px" />
-            <h2>Toys</h2>
-            <h3>From &#x20B9;185</h3>
-          </div>
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/612/612/ks99aq80/stuffed-toy/f/g/q/vtb-retail-3-feet-teddy-bear-for-valentine-anniversary-birthday-original-imag5uwbtftsdywm.jpeg?q=70" alt="teddy" height="150px" width="150px" />
-            <h2>Teddy</h2>
-            <h3>From &#x20B9;99</h3>
-          </div>
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/612/612/remote-control-toy/r/d/b/toy-car-like-ferrari-with-open-and-closed-doors-with-remote-original-imaebrkhhycnwyzj.jpeg?q=70" alt="control car" height="150px" width="150px" />
-            <h2>control car</h2>
-            <h3>From &#x20B9;85</h3>
-          </div>
-          <div className="st">
-            <img src="https://rukminim2.flixcart.com/image/612/612/kapoo7k0/coffee/a/p/m/200-classic-stabilo-200g-pouch-instant-coffee-pouch-nescafe-original-imafs7xhajfwuzdz.jpeg?q=70" alt="Cofee" height="150px" width="150px" />
-            <h2>Cofee</h2>
-            <h3>Discount upto 70%</h3>
-          </div>
-          </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/612/612/kh0vonk0/art-set/h/h/6/pencil-smart-kit-doms-original-imafx4qrxrhv82bn.jpeg?q=70" alt="satasniory" height="150px" width="150px" />
+                <h2>Statsniory</h2>
+                <h3>From &#x20B9;85</h3>
+              </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/electric-cycle/c/n/f/bolton-electric-cycle-for-men-women-ages-15-range-35-km-li-ion-original-imagxn5ewecmptsk.jpeg?q=70" alt="bicycle" height="150px" width="150px" />
+                <h2>Bicycle</h2>
+                <h3>From &#x20B9;1565</h3>
+              </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/416/416/kw85bww0/action-figure/p/9/q/6-death-note-anime-action-figure-19-cm-for-home-decors-office-original-imag8ymahvqj4kk3.jpeg?q=70&crop=false" alt="toys" height="150px" width="150px" />
+                <h2>Toys</h2>
+                <h3>From &#x20B9;185</h3>
+              </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/612/612/ks99aq80/stuffed-toy/f/g/q/vtb-retail-3-feet-teddy-bear-for-valentine-anniversary-birthday-original-imag5uwbtftsdywm.jpeg?q=70" alt="teddy" height="150px" width="150px" />
+                <h2>Teddy</h2>
+                <h3>From &#x20B9;99</h3>
+              </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/612/612/remote-control-toy/r/d/b/toy-car-like-ferrari-with-open-and-closed-doors-with-remote-original-imaebrkhhycnwyzj.jpeg?q=70" alt="control car" height="150px" width="150px" />
+                <h2>control car</h2>
+                <h3>From &#x20B9;85</h3>
+              </div>
+              <div className="st">
+                <img src="https://rukminim2.flixcart.com/image/612/612/kapoo7k0/coffee/a/p/m/200-classic-stabilo-200g-pouch-instant-coffee-pouch-nescafe-original-imafs7xhajfwuzdz.jpeg?q=70" alt="Cofee" height="150px" width="150px" />
+                <h2>Cofee</h2>
+                <h3>Discount upto 70%</h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ const Login = () => {
     });
   };
   const logins = () => {
+        user.email=user.email.toLowerCase()
         axios.post("https://new-backend-s80n.onrender.com/api/users/login", user,{withCredentials: true})
       .then(function (response) {
         console.log(response)

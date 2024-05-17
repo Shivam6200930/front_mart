@@ -30,14 +30,14 @@ const Register = () => {
 
   const registers = async () => {
     const { name, email, password, password_confirm, phone } = user;
-    if (password === password_confirm) {
-        if (name && email && phone) {
+    if ((password === password_confirm) && !(password.match(/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/)) ) {
+        if ((name && name.length >= 2) && email && phone) {
           try {
             const response = await axios.post(
               "http://localhost:5858/api/users/register",
               {
                 name,
-                email,
+                email:email.toLowerCase(),
                 password,
                 password_confirm,
                 phone,

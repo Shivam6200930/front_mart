@@ -1,43 +1,59 @@
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-.all-catogaries, .best-deals {
+
+.all-catogaries, .best-electronics {
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: darkgrey lightgrey;
 }
 
-.all-catogaries::-webkit-scrollbar, .best-deals::-webkit-scrollbar {
+.all-catogaries::-webkit-scrollbar, .best-electronics::-webkit-scrollbar {
   width: 10px;
 }
 
-.all-catogaries::-webkit-scrollbar-thumb, .best-deals::-webkit-scrollbar-thumb {
+.all-catogaries::-webkit-scrollbar-thumb, .best-electronics::-webkit-scrollbar-thumb {
   background-color: darkgrey;
 }
 
-.all-catogaries::-webkit-scrollbar-thumb:hover, .best-deals::-webkit-scrollbar-thumb:hover {
+.all-catogaries::-webkit-scrollbar-thumb:hover, .best-deals::-webkit-scrollbar-thumb:hover{
+  background-color: #555;
+}
+.sho {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: darkgrey lightgrey;
+}
+
+.sho::-webkit-scrollbar {
+  width: 10px;
+}
+
+.sho::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+.sho::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
 .image-all{
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   margin:2.5%;
+  height:100%;
   width:95%;
 }
 .left-arrow{
-  color:black;
-  margin-left:3%;
-  margin-top: 9%;
+  position:absolute;
+  background: transparent;
+  border: none;
+  font-size: 24px;
 }
 .right-arrow{
+  position:absolute;
+  
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
   color:black;
-  margin-right:3%;
-  margin-top: 9%;
 }
 .left-arrow:hover{
   padding:10px;
@@ -225,42 +241,132 @@
 }
 @media (max-width: 768px) {
   
+  .st>img{
+    height:70px;
+  width:70px;
+  }
+  .st>h2{
+    font-size: 20px;
+  }
+  .st>h3{
+    font-size: 10px;
+  }
+   .catogaries {
+     overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .best-electronics {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .best-camera, .speaker-pic, .card-pic, .monitor, .printer {
+    flex: 0 0 auto;
+    margin: 10px;
+    white-space: normal;
+    text-align: center;
+  }
+  .best-camera>h2, .speaker-pic>h2, .card-pic>h2, .monitor>h2, .printer>h2 {
+    font-size: 20px; 
+  }
+  .best-camera>h3, .speaker-pic>h3, .card-pic>h3, .monitor>h3, .printer>h3{
+    font-size: 15px; 
+  }
+  .best-camera>img, .speaker-pic>img, .card-pic>img, .monitor>img, .printer>img{
+    height:70px;
+   width:70px;
+  } 
+  .st>h2{
+    font-size: 20px; 
+  }
+  .st>h3{
+    font-size: 20px; 
+  }
+  .all-deals-sale{
+  flex-direction: column;
+  }
+ 
+  .sho {
+    flex-wrap: nowrap;
+  }
+
+  .st {
+    flex: 0 0 auto;
+    margin: 10px;
+    text-align: center;
+    white-space: normal;
+  }
+  .catogaries {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .best-electronics {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+ .deals-pic>img{
+  height: 0px;
+  width:0px;
+ }
+  .best-camera, .speaker-pic, .card-pic, .monitor, .printer  {
+    flex: 0 0 auto;
+    margin: 10px;
+    white-space: normal;
+    text-align: center;
+  }
   .arrow {
-    font-size: 18px;
+    font-size: 25px;
   }
   .left-arrow{
     color:black;
-    top:20%;
+    top:42%;
   }
   .left-arrow:hover{
     color:white;
   }
   .right-arrow{
     color:black;
-    top:20%;
+    top:42%;
+    
   }
   .right-arrow:hover{
     color:white;
+  }
+  .image-all{
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+    margin:2.5%;
+    height:100%;
+    width:95%;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .arrow {
-    font-size: 20px; 
+    font-size: 50px; 
   }
   .left-arrow{
     color:black;
-    top:30%;
+    top:45%;
   }
   .left-arrow:hover{
     color:white;
   }
   .right-arrow{
     color:black;
-    top:30%;
+    top:45%;
   }
   .right-arrow:hover{
     color:white;
+  }
+  .image-all{
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+    margin:2.5%;
+    height:100%;
+    width:95%;
   }
 }
 
@@ -274,38 +380,3 @@
 
 
 
-
-
-.slider {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-
-.slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-  flex: 0 0 100%;
-}
-
-.arrow1 {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.prev {
-  left: 0;
-}
-
-.next {
-  right: 0;
-}

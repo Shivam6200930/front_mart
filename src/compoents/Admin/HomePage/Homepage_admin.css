@@ -1,11 +1,4 @@
-.arrow {
-  position: absolute;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
+
 .all-catogaries, .best-electronics {
   overflow-x: auto;
   scrollbar-width: thin;
@@ -44,12 +37,22 @@
 .image-all{
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   margin:2.5%;
+  height:100%;
   width:95%;
 }
 .left-arrow{
-  color:black;
+  position:absolute;
+  background: transparent;
+  border: none;
+  font-size: 24px;
 }
 .right-arrow{
+  position:absolute;
+  
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
   color:black;
 }
 .left-arrow:hover{
@@ -333,6 +336,12 @@
   .right-arrow:hover{
     color:white;
   }
+  .image-all{
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+    margin:2.5%;
+    height:100%;
+    width:95%;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -353,6 +362,12 @@
   .right-arrow:hover{
     color:white;
   }
+  .image-all{
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
+    margin:2.5%;
+    height:100%;
+    width:95%;
+  }
 }
 
 .left-arrow {
@@ -364,12 +379,4 @@
 }
 
 
-
-.prev {
-  left: 0;
-}
-
-.next {
-  right: 0;
-}
 

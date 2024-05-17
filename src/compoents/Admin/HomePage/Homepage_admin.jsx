@@ -79,8 +79,6 @@ function Homepage() {
               width="100%"
 
             />
-            <button onClick={prevImage} className="arrow left-arrow">&#10094;</button>
-            <button onClick={nextImage} className="arrow right-arrow">&#10095;</button>
           </div>
         </div>
         <div className="all-deals-sale">
