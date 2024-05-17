@@ -14,20 +14,20 @@ const Footer = () => {
 </p>
         </div>
         <div className="footer-section">
-          <h3>Contact Us</h3>
-          <p>Email: mandalshivam962@com</p>
-          <p>Phone: 6200874410</p>
-        </div>
+  <h3>Contact Us</h3>
+  <p>Email: <a href="mailto:mandalshivam962@com">mandalshivam962@com</a></p>
+  <p>Phone: <a href="tel:+6200874410">6200874410</a></p>
+</div>
         <div className="footer-section">
           <h3>Follow Us</h3>
           <p>Connect with us on social media</p>
-          <a className="social-icon" href=""> <Instagram /></a>
+          <a className="social-icon" href="#"> <Instagram /></a>
           <a className="social-icon" href='https://github.com/Shivam6200930'><Github /></a>
           <a className="social-icon" href="https://www.linkedin.com/in/shivam-mandal-664a71253/"><Linkedin /></a>
         </div>
       </div>
       <div className="copyright">
-        <p>&copy; 2024 Your E-commerce Website. All rights reserved.</p>
+        <p>&copy; 2024 Shivam Mart Website. All rights reserved.</p>
       </div>
     </footer>
   );
