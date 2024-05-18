@@ -23,6 +23,8 @@ import Search_admin from "./compoents/Admin/search_admin/Search_admin";
 import Products_details_admin from "./compoents/Admin/Products_details_admin/Products_d_admin";
 import ChangePassword_admin from "./compoents/Admin/changepassword/changePassword_admin";
 import Edit_admin from "./compoents/Admin/edit/Edit_admin";
+import OrderHistory from "./compoents/oder_history/OrderHistory";
+import PaymentUser from "./compoents/Payment_User/Payment_User";
 function App() {
   return (
     <>
@@ -31,6 +33,12 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<Layout />}>
             <Route index element={<Homepage />} />
+          </Route>
+          <Route path="/orderhistory" element={<Layout />}>
+            <Route index element={<OrderHistory />} />
+          </Route>
+          <Route path="/buy" element={<Layout />}>
+            <Route index element={<PaymentUser />} />
           </Route>
           <Route path="/search_products" element={<Layout />}>
             <Route index element={<Search_products />} />

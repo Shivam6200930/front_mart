@@ -107,7 +107,7 @@ const Header = () => {
           <ul>
             <li><a href="/profile"><CircleUserRound/>profile</a></li>
             <li><a href="/cart"><ShoppingCart/>cart</a></li>
-            <li><a href="#"><History />oder History</a></li>
+            <li><a href="/orderhistory"><History />oder History</a></li>
           </ul>
         </div>
       )}

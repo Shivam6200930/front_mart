@@ -2,7 +2,7 @@
 import React from 'react';
 import './footer.css';
 import { Instagram } from 'lucide-react';
-import { Linkedin } from 'lucide-react';
+import { Linkedin,Mail,Phone } from 'lucide-react';
 import { Github } from 'lucide-react';
 const Footer = () => {
   return (
@@ -15,8 +15,8 @@ const Footer = () => {
         </div>
         <div className="footer-section">
   <h3>Contact Us</h3>
-  <p>Email: <a href="mailto:mandalshivam962@com">mandalshivam962@com</a></p>
-  <p>Phone: <a href="tel:+6200874410">6200874410</a></p>
+  <p><Mail /> <a href="mailto:mandalshivam962@com">mandalshivam962@gmail.com</a></p>
+  <p><Phone /> <a href="tel:+6200874410">6200874410</a></p>
 </div>
         <div className="footer-section">
           <h3>Follow Us</h3>

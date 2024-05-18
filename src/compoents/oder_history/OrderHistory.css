@@ -1,0 +1,60 @@
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .order-history {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .no-orders {
+    text-align: center;
+    color: #666;
+  }
+  
+  /* Tablet styles */
+  @media (min-width: 600px) and (max-width: 1024px) {
+    .container {
+      width: 80%;
+    }
+  
+    .order-item {
+      padding: 20px;
+      font-size: 1.1em;
+    }
+  }
+  
+  /* Laptop styles */
+  @media (min-width: 1025px) {
+    .container {
+      width: 70%;
+    }
+  
+    .order-item {
+      padding: 25px;
+      font-size: 1.2em;
+    }
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 599px) {
+    .container {
+      width: 95%;
+    }
+  
+    .order-item {
+      padding: 10px;
+      font-size: 0.9em;
+    }
+  }

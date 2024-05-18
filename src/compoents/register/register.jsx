@@ -70,7 +70,7 @@ const Register = () => {
       password: "",
       password_confirm: "",
       phone: "",
-    });
+    })
   };
 
   return (
