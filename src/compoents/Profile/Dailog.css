@@ -27,6 +27,10 @@
     cursor: pointer;
     color:black;
   }
+  .closeButton:hover {
+    background:transparent;
+    border: none;
+  }
   
   .confirm-dialog-buttons {
     margin-top: 20px;
