@@ -8,7 +8,7 @@ const ResetPasswordPage = () => {
   const [resetStatus, setResetStatus] = useState('');
 
   useEffect(() => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/validate-token`, { userId, token })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/validate-token`, { userId, token })
       .then(response => {
         if (response.status === 200) {
           setResetStatus('valid');
@@ -20,7 +20,7 @@ const ResetPasswordPage = () => {
   }, [userId, token]);
 
   const handleResetPassword = () => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/resetPassword/${userId}/${token}`, { password: newPassword })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/resetPassword/${userId}/${token}`, { password: newPassword })
       .then(response => {
         if (response.status === 200) {
           setResetStatus('success');

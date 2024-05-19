@@ -7,7 +7,7 @@ function OrderHistory() {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const response = await axios.get(`https://new-backend-s80n.onrender.com/api/users/loggedUser`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`);
         if (response.data.user && response.data.user.OrderHistory) {
           setOrderHistory(response.data.user.OrderHistory);
         } else {

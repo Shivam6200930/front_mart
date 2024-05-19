@@ -35,7 +35,7 @@ const ProductForm = ({ onAddProduct }) => {
   };
  
   const add_product= async()=>{
-    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/product`, product,{withCredentials: true})
+    await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/product`, product,{withCredentials: true})
     .then(function () {
       toast.success("Product added successfully")
       Navigate('/admin')

@@ -34,7 +34,7 @@ const Register = () => {
         if ((name && name.length >= 2) && email && phone) {
           try {
             const response = await axios.post(
-              `${import.meta.env.VITE_BACKEND_URL}/register`,
+              `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
               {
                 name,
                 email:email.toLowerCase(),

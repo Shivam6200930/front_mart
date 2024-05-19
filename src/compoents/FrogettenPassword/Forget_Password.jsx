@@ -26,14 +26,15 @@ function Forget_Password() {
         alert('Please enter your mail')
       }else{
        await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/sendresetPassword`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/sendresetPassword`,
         {
           email: user.email
         },
         { withCredentials: true }
       );
-      navigate('/login'); 
+      
       toast.success('Mail sent successfully; this is only valid for 10 minutes');
+      navigate('/login'); 
     }
     } catch (err) {
       console.log(err);

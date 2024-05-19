@@ -19,7 +19,7 @@ const SearchProducts = () => {
                 setLoading(true);
                 setError(null);
 
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/search?q=${searchQuery}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/search?q=${searchQuery}`);
                 toast.success(`Search query: ${searchQuery}`);
                 setProducts(response.data.data);
             } catch (error) {

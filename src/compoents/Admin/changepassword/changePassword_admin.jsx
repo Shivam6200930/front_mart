@@ -26,7 +26,7 @@ function ChangePassword_admin() {
   const change_Password = async () => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/changepassword`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/changepassword`,
         {
           password: user.password,
           password_confirm: user.confirm_password

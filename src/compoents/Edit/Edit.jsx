@@ -26,7 +26,7 @@ function Edit() {
         toast.info('Name is required'); 
         return;
       }
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/edit/${id}`, { user_name: user.name }, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/edit/${id}`, { user_name: user.name }, { withCredentials: true });
       toast.success("Updated successfully!!");
       navigate("/profile");
     } catch (err) {

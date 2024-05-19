@@ -24,7 +24,7 @@ const Profile = () => {
   async function fetchData() {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/loggedUser`, { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
       const temp = {
         name: response.data.user.name,
         email: response.data.user.email,
@@ -45,7 +45,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/logout`, { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');
@@ -56,7 +56,7 @@ const Profile = () => {
 
   const deleteId = async () => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/delete/${data.id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/delete/${data.id}`, { withCredentials: true });
 
 
       toast.success(`${name} Delete your id successfully!`);
@@ -78,7 +78,7 @@ const Profile = () => {
       setLoading(true)
       const formData = new FormData();
       formData.append('image', selectedImage);
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/imageupload/${id}`, formData, { withCredentials: true });
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/imageupload/${id}`, formData, { withCredentials: true });
       if (response.data && response.data.image) {
         setImageUrl(response.data.image);
 
@@ -104,7 +104,7 @@ const Profile = () => {
   const deleteImage = async () => {
     try {
       setLoading(true);
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/deleteImage/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/deleteImage/${id}`, { withCredentials: true });
       setData(prevData => ({
         ...prevData,
         image: ""
