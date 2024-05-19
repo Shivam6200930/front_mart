@@ -61,7 +61,7 @@ const Cart = () => {
     localStorage.setItem('orderPlaced', JSON.stringify(updatedOrderPlaced));
     localStorage.setItem('cartItems', JSON.stringify([]));
     setCartItems([]);
-    Navigate('/buy');
+    Navigate('/buy_admin');
     {state:totalPrice}
   };
 
@@ -107,7 +107,7 @@ const Cart = () => {
       </div>
 
       <div className="bottom-bar">
-        <button className="continue-shopping-btn" onClick={() => Navigate("/admin")}>
+        <button className="continue-shopping-btn" onClick={() => Navigate("/")}>
           Continue Shopping
         </button>
         {flag && (
