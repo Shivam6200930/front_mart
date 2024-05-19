@@ -41,7 +41,7 @@ const Login = () => {
         }
       })
       .catch(function (error) {
-        toast.error("something went wrong");
+        toast.error(error.message);
         console.log(error);
       });
     setUser({
