@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './changePassword_admin.css';
 
-function ChangePassword_admin() {
+function ChangePassword_admin({onClose}) {
   const Navigate = useNavigate();
   const [changePassword, setChangePassword] = useState(true);
   const changeIcon = changePassword === true ? false : true;
@@ -49,6 +49,7 @@ function ChangePassword_admin() {
   return (
     <>
       <div className="Change-container">
+      <button className="closeChangePasswordButton"onClick={onClose}><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></button>
         <div className="change-password">
           <input
             type={changePassword ? "password" : "text"}

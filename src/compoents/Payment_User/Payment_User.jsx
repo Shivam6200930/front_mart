@@ -12,7 +12,8 @@ function Payment() {
   const [Amounts, setAmounts] = useState(0)
   const [userData, setUserData] = useState({
     name: "",
-    email: ""
+    email: "",
+    phone:""
   });
 const navigate=useNavigate()
   useEffect(() => {
@@ -21,7 +22,8 @@ const navigate=useNavigate()
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
         const userData = {
           name: response.data.user.name,
-          email: response.data.user.email
+          email: response.data.user.email,
+          phone:response.data.user.phone
         };
         setUserData(userData);
       } catch (error) {
@@ -81,7 +83,7 @@ const navigate=useNavigate()
           }
           setPaymentId(response.razorpay_payment_id);
           try {
-            const verifySignatureResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/verify-signature`, sucessData, { withCredentials: true });
+            const verifySignatureResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/verify-signature`, sucessData, { withCredentials: true });
             if (verifySignatureResponse.data.success) {
               setPaymentId(response.razorpay_payment_id);
               toast.success('Payment Successfully!!');
@@ -115,7 +117,7 @@ const navigate=useNavigate()
       if (window.Razorpay) {
         const rzp1 = new window.Razorpay(options);
         rzp1.on('payment.failed', function (response) {
-          axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/verify-signature`, response)
+          axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/verify-signature`, response)
           alert(response.error.description);
           rzp1.close()
           navigate('/')

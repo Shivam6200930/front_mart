@@ -4,8 +4,17 @@ import axios from "axios";
 import './Profile_admin.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const Profile = () => {
+import Dailog from "./Dailog";
+import Edit_admin from "../edit/Edit_admin";
+import DailogDelete from "./DailogDelete";
+import ChangePassword_admin from "../changepassword/changePassword_admin";
+import { Mail, PhoneCall } from 'lucide-react';
 
+const Profile = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showDeleteId , setShowDeleteId] = useState(false);
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,29 +22,28 @@ const Profile = () => {
   const name = localStorage.getItem('name');
   const navigate = useNavigate();
   const [data, setData] = useState({
-    id:"",
+    id: "",
     name: "",
-    email: ""
+    email: "",
+    phone: ""
   });
-  
- var response
 
   async function fetchData() {
     try {
       setLoading(true);
-        response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-       
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
       const temp = {
-        id:response.data.user._id,
+        id: response.data.user._id,
         name: response.data.user.name,
         email: response.data.user.email,
-        image:response.data.user.profileImageUrl
+        image: response.data.user.profileImageUrl,
+        phone: response.data.user.phone
       };
       setData(temp);
     } catch (err) {
       console.log(err);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -56,14 +64,10 @@ const Profile = () => {
 
   const deleteId = async () => {
     try {
-      
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/delete/${data.id}`, { withCredentials: true });
-      localStorage.clear()
-      
       toast.success(`${name} Delete your id successfully!`);
-      navigate('/login')
-      
-      
+      navigate('/login');
+      localStorage.clear();
     } catch (error) {
       console.error('Failed to delete user ID:', error);
     }
@@ -71,61 +75,109 @@ const Profile = () => {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    handleUpload(e.target.files[0]); 
+    handleUpload(e.target.files[0]);
   };
 
   const handleUpload = async (selectedImage) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const formData = new FormData();
       formData.append('image', selectedImage);
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/imageupload/${id}`, formData, { withCredentials: true });
-
       if (response.data && response.data.image) {
         setImageUrl(response.data.image);
-        
+
         // Update data.image state
         setData(prevData => ({
           ...prevData,
           image: response.data.image
         }));
-  
-        toast.success('image upload successfully!');
-        navigate('/profile_admin');
+
+        toast.success('Image upload successfully!');
+        navigate('/profile');
       } else {
         toast.error('Failed to upload image');
       }
     } catch (error) {
       console.error('Error uploading image:', error);
       toast.error('Failed to upload image');
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
-  
+
+  const deleteImage = async () => {
+    try {
+      setLoading(true);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/deleteImage/${id}`, { withCredentials: true });
+      setData(prevData => ({
+        ...prevData,
+        image: ""
+      }));
+      toast.success('Image deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting image:', error);
+      toast.error('Failed to delete image');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openFileInput = () => {
+    setShowDialog(true);
+  };
+
+  const handleConfirm = () => {
     document.getElementById('fileInput').click();
+    setShowDialog(false);
+  };
+
+  const handleCancel = () => {
+    deleteImage();
+    setShowDialog(false);
+  };
+
+  const handleClose = () => {
+    setShowDialog(false);
+  }
+
+  const handleEditClose = () => {
+    setShowEdit(false);
+  }
+
+  const handleChangePasswordClose = () => {
+    setShowChangePassword(false);
   }
 
   const preventDefault = (e) => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    console.log('showChangePassword:', showChangePassword);
+  }, [showChangePassword]);
+
   return (
     <>
       <div className="profile-container">
-        <div className="left-section" >
+        <div className="left-section">
           <div className="profile-image-box">
-          {loading && (
-                        <div className="loading-container">
-                            <div className="loading-spinner"></div>
-                            <p>updated</p>
-                        </div>
-                    )}
-          <img key={data.image} src={data.image} onClick={openFileInput} alt="Profile" />
-          <input id="fileInput" type="file" onChange={handleImageChange} style={{ display: 'none' }} />
-
+            {loading && (
+              <div id="loading-container">
+                <div id="loading-spinner"></div>
+                <p>Loading.....</p>
+              </div>
+            )}
+            <div className="i-n">
+              {data.image ? (
+                <img key={data.image} src={data.image} onClick={openFileInput} alt="Profile" />
+              ) : (
+                !loading ? (
+                  <svg onClick={openFileInput} xmlns="http://www.w3.org/2000/svg" width="100" height="105" viewBox="3 2 17 19" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></svg>
+                ) : (<></>)
+              )}
+            </div>
+            <input id="fileInput" type="file" onChange={handleImageChange} style={{ display: 'none' }} />
           </div>
           <div className="h1-admin">
             <h1>{data.name}</h1>
@@ -134,17 +186,43 @@ const Profile = () => {
         <div className="vertical-line"></div>
         <div className="right-section">
           <div className="user-information">
-            <p>Email: {data.email}</p>
+            <p><Mail /> {data.email}</p>
+            <p><PhoneCall /> {data.phone}</p>
             <p></p>
           </div>
           <div className="bottom-section">
-            <button className="change-password-btn" onClick={() => navigate('/changePassword_admin')} onMouseDown={preventDefault}>Change Password</button>
+            <button className="change-password-btn" onClick={() => setShowChangePassword(true)} onMouseDown={preventDefault}>Change Password</button>
             <button onClick={clearData} className="logout-btn">Logout</button>
-            <button className="change-password-btn" onClick={() => navigate('/editprofile_admin')} onMouseDown={preventDefault}>Edit Profile</button>
+            <button className="change-password-btn" onClick={() => setShowEdit(true)} onMouseDown={preventDefault}>Edit Profile</button>
             <button className="change-password-btn" onClick={() => navigate('/admin')} onMouseDown={preventDefault}>Homepage</button>
-            <button className="change-password-btn" onClick={deleteId} onMouseDown={preventDefault}>Delete ID</button>
+            <button className="change-password-btn" onClick={()=>setShowDeleteId(true)} onMouseDown={preventDefault}>Delete ID</button>
           </div>
         </div>
+        {showDialog && (
+          <Dailog
+            message="Do you want to update the image or delete it?"
+            onConfirm={handleConfirm}
+            onCancel={handleCancel}
+            onClose={handleClose}
+          />
+        )}
+        {showEdit && (
+          <Edit_admin
+            onClose={handleEditClose}
+          />
+        )}
+        {showChangePassword && (
+          <ChangePassword_admin onClose={handleChangePasswordClose} />
+        )}
+        {
+         showDeleteId && (
+         <DailogDelete
+           message="Do you want to delete this account?"
+           onConfirm={deleteId}
+           onCancel={()=>{setShowDeleteId(false)}}
+           onClose={()=>{setShowDeleteId(false)}}
+         />)
+        }
         <ToastContainer position="top-center" reverseOrder={false} />
       </div>
     </>

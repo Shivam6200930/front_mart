@@ -1,8 +1,14 @@
 #container-edit {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .edit-container {
@@ -23,7 +29,18 @@
   margin-bottom: 15px;
   font-size: 16px;
 }
-
+.closeEditButton{
+  position: absolute;
+  top:32%;
+  right: 40%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color:black;
+}
+.closeEditButton:hover{
+  background:transparent;
+}
 #btn-edit {
   background-color: #ff0000;
   color: white;
@@ -49,4 +66,16 @@
   cursor: pointer;
   font-size: 16px;
   background-color:orangered;
+}
+
+@media (max-width: 868px) {
+  .closeEditButton{
+    position: absolute;
+    top:36%;
+    right: 12.5%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color:black;
+  }
 }

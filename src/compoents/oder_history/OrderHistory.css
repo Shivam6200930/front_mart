@@ -1,4 +1,4 @@
-
+/* 
 .container {
     width: 90%;
     margin: 0 auto;
@@ -23,7 +23,6 @@
     color: #666;
   }
   
-  /* Tablet styles */
   @media (min-width: 600px) and (max-width: 1024px) {
     .container {
       width: 80%;
@@ -34,8 +33,7 @@
       font-size: 1.1em;
     }
   }
-  
-  /* Laptop styles */
+
   @media (min-width: 1025px) {
     .container {
       width: 70%;
@@ -47,7 +45,7 @@
     }
   }
   
-  /* Mobile styles */
+
   @media (max-width: 599px) {
     .container {
       width: 95%;
@@ -57,4 +55,50 @@
       padding: 10px;
       font-size: 0.9em;
     }
+  } */
+
+
+  /* Base styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 600px) {
+  /* Hide table headers */
+  thead {
+    display: none;
   }
+
+  /* Display table rows as blocks */
+  tbody, tr {
+    display: block;
+  }
+
+  /* Set width of table cells to 100% */
+  td {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Add spacing between rows */
+  tr {
+    margin-bottom: 10px;
+  }
+
+  /* Hide image on small screens */
+  td:nth-child(2) {
+    display: none;
+  }
+
+  /* Add border to bottom of table cells */
+  td {
+    border-bottom: 1px solid #ddd;
+  }
+}

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './Edit.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-function Edit() {
+function Edit({onClose}) {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
@@ -37,6 +37,7 @@ function Edit() {
   return (
     <>
      <div id="container-edit">
+      <button className="closeEditButton"onClick={onClose}><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></button>
       <div className="edit-container">
        <h1>Edit your profile</h1>
         <input

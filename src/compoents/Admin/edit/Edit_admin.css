@@ -16,7 +16,18 @@
     text-align: center;
     margin-bottom: 20px;
   }
-  
+  .closeEditButton{
+    position: absolute;
+    top:28%;
+    right: 34%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color:black;
+  }
+  .closeEditButton:hover{
+    background:transparent;
+  }
   .edit-container input {
     width: 100%;
     padding: 10px;
@@ -49,4 +60,16 @@
     cursor: pointer;
     font-size: 16px;
     background-color:orangered;
+  }
+
+  @media (max-width: 868px) {
+    .closeEditButton{
+      position: absolute;
+      top:36%;
+      right: 12.5%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color:black;
+    }
   }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Cart.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+
 const Cart = () => {
   const Navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
@@ -15,9 +16,8 @@ const Cart = () => {
     if (storedCartItems.length === 0) {
       setFlag(false);
     }
-    
     calculateTotalPrice(storedCartItems);
-    toast.success("Add to cart sucessfull!!")
+    toast.success("Add to cart sucessfull!!"); 
   }, []);
 
   const calculateTotalPrice = (items) => {
@@ -27,14 +27,13 @@ const Cart = () => {
     });
     setTotalPrice(total);
   };
-
   const removeFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
     calculateTotalPrice(updatedCartItems);
-    toast.success("Remove from cart")
+    toast.success("Remove from cart");
   };
 
   const increaseQuantity = (index) => {
@@ -56,30 +55,27 @@ const Cart = () => {
   };
 
   const buyNow = () => {
-    const orderPlaced = JSON.parse(localStorage.getItem('orderPlaced')) || [];
-    const updatedOrderPlaced = [...orderPlaced, ...cartItems];
-    localStorage.setItem('orderPlaced', JSON.stringify(updatedOrderPlaced));
+    const temp_cart=[cartItems]
+    localStorage.setItem('buyProducts',JSON.stringify(temp_cart));
+    // const updatedOrderPlaced = [...cartItems,cartItems];
+    // localStorage.setItem('old_orderPlaced', JSON.stringify(updatedOrderPlaced));
     localStorage.setItem('cartItems', JSON.stringify([]));
     setCartItems([]);
-    Navigate('/buy_admin');
-    {state:totalPrice}
+    Navigate('/buy');
   };
 
   return (
-    <>
-    <div className="c">
-    <div className="container-cart">
-      <div className="cart-header">
+    <div className="container">
+      {/* <div className="cart-header">
         <span>Shopping Cart</span>
         <span>Total Price: ₹{totalPrice}</span>
-      </div>
-
+      </div> */}
       <div className="cart-items">
         {cartItems.map((item, index) => (
           <div key={index} className="cart-item">
             <img src={item.imageUrl} alt={item.name} />
-            <p className="cart-item-title">{item.name}</p>
-            <p className="cart-item-price">₹{item.price}</p>
+            <p id="cart-item-title">{item.name}</p>
+            <p id="cart-item-price">₹{item.price}</p>
             
             <div className="quantity-container">
               <button className="quantity-btn" onClick={() => decreaseQuantity(index)}>-</button>
@@ -103,23 +99,23 @@ const Cart = () => {
         <div className="price-details-row">
           <span>Total Price:</span>
           <span>₹{totalPrice}</span>
-        </div>
-      </div>
-
-      <div className="bottom-bar">
+          <div className="bottom-bar">
+            <div className="continue">
         <button className="continue-shopping-btn" onClick={() => Navigate("/")}>
           Continue Shopping
         </button>
+        </div>
+        <div className="buy-now">
         {flag && (
           <button className="buy-now-btn" onClick={buyNow}>
             Buy Now
           </button>
         )}
+        </div>
       </div>
-      <ToastContainer position="top-center" reverseOrder={false} />
+        </div>
+      </div>
     </div>
-    </div>
-    </>
   );
 };
 
