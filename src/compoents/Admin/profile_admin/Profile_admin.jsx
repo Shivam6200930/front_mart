@@ -23,7 +23,7 @@ const Profile = () => {
   async function fetchData() {
     try {
       setLoading(true);
-        response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
+        response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/loggedUser`, { withCredentials: true });
        
       const temp = {
         id:response.data.user._id,
@@ -45,7 +45,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get("https://new-backend-s80n.onrender.com/api/users/logout", { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/logout`, { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');
@@ -57,7 +57,7 @@ const Profile = () => {
   const deleteId = async () => {
     try {
       
-      await axios.delete(`https://new-backend-s80n.onrender.com/api/users/delete/${data.id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/delete/${data.id}`, { withCredentials: true });
       localStorage.clear()
       
       toast.success(`${name} Delete your id successfully!`);
@@ -79,7 +79,7 @@ const Profile = () => {
       setLoading(true)
       const formData = new FormData();
       formData.append('image', selectedImage);
-      const response = await axios.post(`https://new-backend-s80n.onrender.com/api/users/imageupload/${id}`, formData, { withCredentials: true });
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/imageupload/${id}`, formData, { withCredentials: true });
 
       if (response.data && response.data.image) {
         setImageUrl(response.data.image);

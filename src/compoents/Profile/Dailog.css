@@ -20,8 +20,8 @@
   
   .closeButton {
     position: absolute;
-    bottom: 78px;
-    right: 10px;
+    bottom: 93px;
+    right: 1px;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -34,6 +34,9 @@
   
   .confirm-dialog-buttons {
     margin-top: 20px;
+  }
+  .confirm-dialog-content p{
+    margin-top:11%;
   }
   
   .confirm-dialog-buttons button {

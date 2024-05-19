@@ -26,7 +26,7 @@ function Forget_Password() {
         alert('Please enter your mail')
       }else{
        await axios.post(
-        'https://new-backend-s80n.onrender.com/api/users/sendresetPassword',
+        `${import.meta.env.VITE_BACKEND_URL}/sendresetPassword`,
         {
           email: user.email
         },

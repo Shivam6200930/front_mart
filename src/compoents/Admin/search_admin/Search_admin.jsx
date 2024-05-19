@@ -18,7 +18,7 @@ const search_products = () => {
                 setLoading(true);
                 setError(null);
     
-                const response = await axios.get(`https://new-backend-s80n.onrender.com/api/users/search?q=${searchQuery}`);
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/search?q=${searchQuery}`);
                 toast.success(searchQuery)
                 setProducts(response.data.data);
             } catch (error) {

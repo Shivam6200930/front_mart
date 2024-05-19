@@ -16,7 +16,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
-        const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/loggedUser`, { withCredentials: true });
         const temp = {
           name: response.data.user.name,
           email: response.data.user.email,
@@ -34,7 +34,7 @@ const Header = () => {
   const handleSearch = async () => {
     navigate(`/search_products/?q=${searchQuery}`);
     try {
-      const response = await fetch(`https://new-backend-s80n.onrender.com/api/users/search?q=${searchQuery}`, { withCredentials: true });
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/search?q=${searchQuery}`, { withCredentials: true });
       if (response.ok) {
         const data = await response.json();
         console.log('Search results:', data);

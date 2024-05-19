@@ -26,7 +26,7 @@ function Edit() {
         toast.info('Name is required'); 
         return;
       }
-      await axios.put(`https://new-backend-s80n.onrender.com/api/users/edit/${id}`, { user_name: user.name ,user_phone:user.phone}, { withCredentials: true });
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/edit/${id}`, { user_name: user.name ,user_phone:user.phone}, { withCredentials: true });
       toast.success("Updated successfully!!");
       navigate("/profile");
     } catch (err) {

@@ -26,7 +26,7 @@ function ChangeUserPassword() {
   const change_Password = async () => {
     try {
       const response = await axios.post(
-        "https://new-backend-s80n.onrender.com/api/users/changepassword",
+        `${import.meta.env.VITE_BACKEND_URL}/changepassword`,
         {
           password: user.password,
           password_confirm: user.confirm_password

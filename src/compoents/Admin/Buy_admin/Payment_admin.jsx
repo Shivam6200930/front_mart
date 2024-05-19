@@ -20,7 +20,7 @@ const navigate=useNavigate()
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("https://new-backend-s80n.onrender.com/api/users/loggedUser", { withCredentials: true });
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/loggedUser`, { withCredentials: true });
         const userData = {
           name: response.data.user.name,
           email: response.data.user.email,
@@ -62,10 +62,10 @@ const navigate=useNavigate()
 
   const handlePayment = async () => {
     try {
-      const orderResponse = await axios.post('https://new-backend-s80n.onrender.com/api/users/razorpay/order', {
+      const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/order`, {
         amount: totalPrice * 100
       }, { withCredentials: true });
-      console.log(`oderrtesponse:${JSON.stringify(orderResponse.data)}`)
+      console.log(`oderResponse:${JSON.stringify(orderResponse.data)}`)
       const orderData = orderResponse.data;
       setAmounts(orderData.amount);
       setOrderId(orderData.id);
@@ -85,12 +85,12 @@ const navigate=useNavigate()
           }
           setPaymentId(response.razorpay_payment_id);
           try {
-            const verifySignatureResponse = await axios.post('https://new-backend-s80n.onrender.com/api/users/razorpay/verify-signature', sucessData, { withCredentials: true });
+            const verifySignatureResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/verify-signature`, sucessData, { withCredentials: true });
             if (verifySignatureResponse.data.success) {
               setPaymentId(response.razorpay_payment_id);
               toast.success('Payment Successfully!!');
 
-              await axios.post(`https://new-backend-s80n.onrender.com/api/users/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
+              await axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
 
             } else {
               console.log("Signature verification failed");
@@ -118,7 +118,7 @@ const navigate=useNavigate()
       if (window.Razorpay) {
         const rzp1 = new window.Razorpay(options);
         rzp1.on('payment.failed', function (response) {
-          axios.post('https://new-backend-s80n.onrender.com/api/users/razorpay/verify-signature', response)
+          axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/verify-signature`, response)
           alert(response.error.description);
           rzp1.close()
           navigate('/admin')
@@ -130,7 +130,7 @@ const navigate=useNavigate()
       }
       const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
       const userId = localStorage.getItem("user_id");
-      const response = await axios.post(`https://new-backend-s80n.onrender.com/api/users/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
       console.log("Order history saved:", response.data);
       const loadscript=src=>{
         return new Promise(function(resolve, reject) {
