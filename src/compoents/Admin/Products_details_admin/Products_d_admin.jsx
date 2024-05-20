@@ -40,7 +40,7 @@ function Products_details_admin() {
           </button>):(
             <></>
           )}
-          <button className="home" onClick={() => navigate("/")}>
+          <button className="home" onClick={() => navigate("/admin")}>
             Home
           </button>
         </div>

@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import { UserRound } from 'lucide-react';
-import axios from 'axios';
 import { CircleUserRound , History  ,ShoppingCart } from 'lucide-react';
+import axios from 'axios';
 
 const Header = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [userPhoto, setUserPhoto] = useState(null);
   const [data, setData] = useState({
-    image: ''
+    image: ""
   });
   const [showSidebar, setShowSidebar] = useState(false); 
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     const fetchUserPhoto = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
+        console.log(`image:${response.data.user.profileImageUrl}`);
         const temp = {
           name: response.data.user.name,
           email: response.data.user.email,
@@ -52,68 +54,71 @@ const Header = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   return (
-    <div className="header">
-      <div className="logo">
-        <a href="/admin">Shivam Mart</a>
-      </div>
-      <div className="s-bar">
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="Search products..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
+    <>
+      <div className="header">
+        <div className="logo">
+          <a href="/">Shivam Mart</a>
         </div>
-      </div>
-      <div className="user-actions">
-        {localStorage.getItem('loggedIn') ? (
-          <button className="profile-button-admin-15" onClick={() => navigate("/profile")}>
-            {data.image ? (
-              <img src={data.image} alt="User" />
-            ) : (
-              <UserRound />
-            )}
-          </button>
-        ) : (
-          <button className="login-button" onClick={() => navigate("/login")}>
-            Login
-          </button>
-        )}
-        
-        {localStorage.getItem('loggedIn') && (
-          <div className="cart">
-            <a href="/cart">
-              <span role="img" aria-label="cart">🛒</span>
-            </a>
+        <div className="s-bar">
+          <div className="search-bar">
+            <input 
+              type="text" 
+              placeholder="Search products..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
           </div>
-        )}
-
-        {localStorage.getItem('loggedIn')&& (
-           <div className="sidebar-trigger" onClick={() => setShowSidebar(!showSidebar)}>
-           ☰
-         </div>
-        )}
-        
-      </div>
-
-      {showSidebar && (
-        <div className="sidebar"> 
-        <div className="cut" onClick={() => setShowSidebar(!showSidebar)}>
-         X
         </div>
-          <ul>
-            <li><a href="/profile"><CircleUserRound/>profile</a></li>
+        <div className="user-actions">
+          {localStorage.getItem('loggedIn') ? (
+            <button className="profile-button-admin-15" onClick={() => navigate("/profile")}>
+              {data.image ? (
+                <img src={data.image} alt="User" />
+              ) : (
+                <CircleUserRound />
+              )}
+            </button>
+          ) : (
+            <button className="login-button" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          )}
+          {localStorage.getItem('loggedIn') && (
+            <div className="additems-admin">
+              <a href="/additems">
+                <span role="img" aria-label="add items">+</span>
+              </a>
+            </div>
+          )}
+          {localStorage.getItem('loggedIn') && (
+            <div className="cart">
+              <a href="/cart_admin">
+                <span role="img" aria-label="cart">🛒</span>
+              </a>
+            </div>
+          )}
+          {
+            showSidebar ? (<div className="cut" onClick={toggleSidebar}>X</div>):( <div className="sidebar-trigger" onClick={toggleSidebar}>
+            ☰
+          </div>)
+          }
+        </div>
+      </div>
+      <div className={`sidebar ${showSidebar ? 'active' : ''}`} ref={sidebarRef}>
+        <ul>
+        <li><a href="/profile"><CircleUserRound/>profile</a></li>
             <li><a href="/cart"><ShoppingCart/>cart</a></li>
             <li><a href="/orderhistory"><History />oder History</a></li>
-          </ul>
-        </div>
-      )}
-    </div>
+        </ul>
+      </div>
+    </>
   );
 };
 
 export default Header;
-

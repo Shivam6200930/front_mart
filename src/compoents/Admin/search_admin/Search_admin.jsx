@@ -17,7 +17,6 @@ const search_products = () => {
             try {
                 setLoading(true);
                 setError(null);
-    
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/search?q=${searchQuery}`);
                 toast.success(searchQuery)
                 setProducts(response.data.data);

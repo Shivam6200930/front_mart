@@ -1,21 +1,22 @@
 .header {
-  background-color: #06cdff;
-  color: #fff;
-  padding: 8px;
+  background-color: #0f0f0f;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
   position: sticky;
   top:0;
-  width:100%;
+  width:100%; 
 }
 
 .logo>a{
-  text-shadow: 4px 3px 4px #c3c66c;
-  color:black;
+  text-decoration: none;
+  color: #ffffff;
   font-size: 30px;
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 25px;
 }
 .search-bar {
   display: flex;
@@ -24,6 +25,7 @@
 }
 .s-bar{
   display: flex;
+  flex: 1;
   justify-content:space-between;
 }
 .search-bar input {
@@ -31,14 +33,18 @@
   padding: 12px;
   border: none;
   border-radius: 20px;
-  margin-right:2%;
+  margin-left:9%;
   width : 60%;
   outline : none;
   box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
 }
-
+.user-actions {
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+}
 .cut{
-  margin-left:90%;
+  
   font-weight: 900;
   font-size: x-large;
   cursor: pointer;
@@ -61,25 +67,10 @@
   background:transparent;
 
 }
-#user-actions {
-  display: flex;
-  align-items: center;
-  
-}
 
-.profile-button {
-  background-color: #e89818;
-  color: #fff;
-  padding: 13px;
-  border: none;
-  cursor: pointer;
-  margin-right: 30px;
-  margin-bottom:7px;
-  border-radius: 50%;
-  box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
-}
+
 .login-button{
-  background-color: #e89818;
+  background-color: #007bff;
   color: #fff;
   padding: 10px;
   border: none;
@@ -92,14 +83,13 @@
 }
 
 .login-button:hover{
-  background-color: #d28508;
-  padding: 12px;
+  background-color: #006bde;
+  padding: 9px;
 }
 
-.sidebar.hidden {
-  display:none;
-}
+
 .additems-admin{
+  display:none;
   background-color: #f39c12;
   color: #fff;
   padding: 15px 20px;
@@ -111,6 +101,7 @@
   box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
 }
 .cart {
+  display:none;
   background-color: #f39c12;
   color: #fff;
   padding: 15px;
@@ -128,85 +119,130 @@
 
 }
 .cart-button{
+  display:none;
   background: none;
 }
-@media (max-width: 768px) {
-  .sidebar-trigger{
-    display:block;
-    cursor :pointer;
+
+.sidebar-trigger {
+  color:#ffffff;
+  cursor: pointer;
+  font-size: 40px;
+  padding: 0 10px;
+  margin: 0 10px; /* Add margin to separate icons */
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60%;
+  width: 30%;
+  background-color: #333;
+  color: #fff;
+  margin-left:70%;
+  margin-top:5.2%;
+  padding-top: 50px;
+  transform: translateY(-235%);
+  transition: transform 0.5s ease;
+  z-index: 999;
+}
+
+.sidebar.active {
+  transform: translateY(0);
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}
+
+.sidebar ul li {
+  padding: 10px;
+  margin: 15px ; 
+  background-color: #444; 
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  background-color: #555; 
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  width: 100%; 
+  height: 100%;
+  padding: 10px 0;
+}
+.cut{
+  margin-right:10%;
+}
+
+@media (max-width: 868px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #0f0f0f;
+    width: 100%;
   }
+
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 200vh;
+    height: 100%;
+    width: 80%;
     background-color: #333;
     color: #fff;
-    padding: 20px;
+    padding-top: 50px;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    
+    transition: transform 0.5s ease;
+    z-index: 999;
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
   }
   
   .sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    text-align: left; 
   }
   
   .sidebar ul li {
-    margin-bottom: 10px;
+    padding: 10px;
+    margin: 15px;
+    background-color: #444;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar ul li:hover {
+    background-color: #555; /* Darker background on hover */
   }
   
   .sidebar ul li a {
-    color: #fff;
     text-decoration: none;
-    font-size: 16px;
-  }
-  
-  .login-button{
-    background-color: #e89818;
     color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
-    width:5rem;
+    display: block;
+    width: 100%; /* Ensures the link takes up the full item */
+    height: 100%;
+    padding: 10px 0;
   }
-  .search-bar {
-    display: flex;
-    flex: 1;
-    width : 13.8rem;
-  }
-  .logo>a{
-    color:white;
-    font-size: 20px;
-  }
-  .header{
-    background-color: rgb(32, 31, 31);
-    width:100%;
-  }
-  .search-bar input {
-    flex: 1; 
-    padding: 12px;
-    border: none;
-  }
-  .additems-admin{
-    display:none
-  }
-  .cart {
-    display:none;
-  }
-  .profile-button-admin-15 img {
 
-    width: 40px;
-    height:40px;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px 4px rgba(0,0,0,0.4);
+  .logo>a{
+    font-size:20px;
   }
-  .sidebar {
-    transform: translateX(0);
+
+  .profile-button-admin-15 {
+    display: none;
   }
 }
 

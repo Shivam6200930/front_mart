@@ -12,7 +12,9 @@
 .logo a {
   text-decoration: none;
   color: #ffffff;
-  font-size: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  margin-right: 25px;
 }
 
 .search-bar {
@@ -45,12 +47,19 @@
 }
 
 .profile-button-admin-15 {
+  display:none;
   background: none;
   border: none;
   cursor: pointer;
-  margin: 0 10px; /* Add margin to separate icons */
+  margin: 0 10px; 
 }
 
+.cut{
+  font-weight: 900;
+  font-size: x-large;
+  cursor: pointer;
+  color:white;
+}
 .login-button {
   background-color: #007bff;
   color: #fff;
@@ -60,16 +69,21 @@
   cursor: pointer;
   margin: 0 10px; /* Add margin to separate icons */
 }
+.login-button:hover{
+  background-color: #006bde;
+  padding: 9px;
+}
 
 .cart {
   margin-left: 10px;
-  margin: 0 10px; /* Add margin to separate icons */
+  margin: 0 10px;
+  display:none;
 }
 
 .sidebar-trigger {
-  display: none; 
+  color:#ffffff;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 40px;
   padding: 0 10px;
   margin: 0 10px; /* Add margin to separate icons */
 }
@@ -78,32 +92,35 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  height: 60%;
+  width: 30%;
   background-color: #333;
   color: #fff;
+  margin-left:70%;
+  margin-top:5.2%;
   padding-top: 50px;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transform: translateY(-235%);
+  transition: transform 0.5s ease;
+  z-index: 999;
 }
 
 .sidebar.active {
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 .sidebar ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  text-align: right;
+  text-align: left; 
 }
 
 .sidebar ul li {
   padding: 10px;
-  margin: 15px ; /* Adds some space between each item */
-  background-color: #444; /* Slightly different background for items */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s ease; /* Smooth hover effect */
+  margin: 15px;
+  background-color: #444;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar ul li:hover {
@@ -119,6 +136,7 @@
   padding: 10px 0;
 }
 
+
 @media only screen and (max-width: 868px) {
   .header {
     display: flex;
@@ -128,49 +146,95 @@
     background-color: #0f0f0f;
     width: 100%;
   }
-
   .sidebar-trigger {
-    margin-left: 3%;
-    display: block;
+    color:#ffffff;
+    cursor: pointer;
+    font-size: 30px;
+    padding: 0 10px;
+    margin: 0 10px; /* Add margin to separate icons */
   }
-
   .sidebar {
-    width: 120%;
-    z-index: 999;
-    transform: translateX(-200px);
-    transition: transform 0.3s ease;
+    position: fixed;
+  top: 0;
+  left: 0;
+  height: 50%;
+  width: 68%;
+  background-color: #333;
+  color: #fff;
+  margin-left:30%;
+  margin-top:18.5%;
+  padding-top: 50px;
+  transform: translateY(-235%);
+  transition: transform 0.5s ease;
+  z-index: 999;
   }
   
   .sidebar.active {
     transform: translateX(0);
   }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left; 
+  }
+  
+  .sidebar ul li {
+    padding: 10px;
+    margin: 15px;
+    background-color: #444;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar ul li:hover {
+    background-color: #555; /* Darker background on hover */
+  }
+  
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    width: 100%; /* Ensures the link takes up the full item */
+    height: 100%;
+    padding: 10px 0;
+  }
 
+  
+
+  .profile-button-admin-15 {
+    display: none;
+  }
+  .logo a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 0px;
+  }
+  
   .search-bar {
     display: flex;
     flex: 1;
-    width: 15rem;
+    max-width: 17rem;
   }
-
+  
   .s-bar {
     display: flex;
     justify-content: space-between;
+    flex: 1; 
   }
-
+  
   .search-bar input {
     flex: 1;
     padding: 12px;
     border: none;
     border-radius: 20px;
-    margin-left: 7%;
+    margin-right: 2%;
+    width: 100%;  
     outline: none;
-    box-shadow: 0 2px 6px 5px rgb(117, 114, 114);
-  }
-
-  .sidebar ul {
-    margin: 5%;
-  }
-
-  .profile-button-admin-15 {
-    display: none;
+    box-shadow: 0 6px 6px 5px rgba(0,0,0,0.4);
   }
 }
