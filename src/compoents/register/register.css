@@ -13,11 +13,13 @@ body {
   }
   
   .register {
-    background-color: #fff;
+    background-color: white;
     padding: 20px;
+    width:40%;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     text-align: center;
+    border:solid 1px black;
   }
   
   h1 {
@@ -47,7 +49,7 @@ body {
   }
   
 #button1{
-    background-color: #4caf50; /* Green color for the button */
+  background-color: #00c0f0;
     color: #fff;
     padding: 2%;
     width:96%;
@@ -62,7 +64,7 @@ body {
 
 
   #button {
-    background-color: #4caf50; /* Green color for the button */
+    background-color: #00c0f0; /* Green color for the button */
     color: #fff;
     padding: 2%;
     width:100%;
@@ -75,20 +77,20 @@ body {
   }
   
   #button:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #00c0f0; /* Darker shade on hover */
   }
   
   #button:active {
-    background-color: #398439; /* Change the color when the button is clicked */
+    background-color: #00c0f0;/* Change the color when the button is clicked */
   }
   
 
   #button1:hover {
-    background-color: #45a049; /* Darker shade on hover */
+    background-color: #00c0f0; /* Darker shade on hover */
   }
   
   #button1:active {
-    background-color: #398439; /* Change the color when the button is clicked */
+    background-color: #00c0f0; /* Change the color when the button is clicked */
   }
   /* Additional styles for the 'or' text */
   .or {

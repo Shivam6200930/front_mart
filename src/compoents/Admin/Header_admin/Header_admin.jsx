@@ -104,7 +104,7 @@ const Header = () => {
             </div>
           )}
           {
-            showSidebar ? (<div className="cut" onClick={toggleSidebar}>X</div>):( <div className="sidebar-trigger" onClick={toggleSidebar}>
+            (showSidebar) ? (<div className="cut" onClick={toggleSidebar}>X</div>):( <div className="sidebar-trigger" onClick={toggleSidebar}>
             ☰
           </div>)
           }

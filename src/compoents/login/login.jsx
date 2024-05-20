@@ -82,16 +82,16 @@ const Login = () => {
                  {changeIcon ? <Eye/> : <EyeOff/>}
               </span>
            
-          <button id="button" onClick={logins}>
+          <button id="button-l" onClick={logins}>
             Login
           </button>
-          <div className="or">or</div>
+          <div className="or-l">or</div>
           <a href="/register">
-          <button id="button">
+          <button id="button-l">
           Register
            </button>
             </a>
-          <a id="forget" href="/forgetpassword">Forget Password</a>
+          <a id="forget-l" href="/forgetpassword">Forget Password</a>
         </div>
         <ToastContainer position="top-center" reverseOrder={false} />
       </div>

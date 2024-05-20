@@ -3,19 +3,20 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color:rgb(239, 227, 227);
+    background-color:white;
   }
   
   .login {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    border: solid 1px black;
   }
   
   h1 {
-    color: #333;
+    color: #000000;
   }
   
   hr {
@@ -30,8 +31,8 @@
     box-sizing: border-box;
   }
   
-  #button {
-    background-color: #4caf50; /* Green color for the button */
+  #button-l {
+    background-color: #00c0f0; /* Green color for the button */
     color: #fff;
     padding: 2%;
     width:100%;
@@ -43,28 +44,19 @@
     transition: background-color 0.3s; 
   }
   
-  #button:hover {
-    background-color: #45a049; /* Darker shade on hover */
+  #button-l:hover {
+    background-color: #006fb4; /* Darker shade on hover */
   }
   
-  .or {
+  .or-l {
     margin: 10px 0;
-    color: #777;
-  }
-  
-  a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  a:hover {
-    text-decoration: none;
+    color: #000000;
   }
   
   #forget {
     display: block;
     margin-top: 10px;
-    color: #777;
+    color: #000000;
   }
   
   #icon {
@@ -72,10 +64,17 @@
     position:absolute;
     right:36.5%;
     top:60%;
+    display: inline-block;
   }
+
+  
   
   #icon:hover {
     color: #007bff;
+  }
+  #forget-l{
+    text-decoration: none;
+    color:black;
   }
   @media (max-width: 768px) {
     .login {
@@ -83,9 +82,35 @@
     }
     #icon {
       cursor: pointer;
+      display: inline-block;
       position:absolute;
       right:23.5%;
-      top:60.5%;
+      top:58.5%;
+    }
+    #button-l {
+      background-color: #00c0f0; /* Green color for the button */
+      color: #fff;
+      padding: 2%;
+      width:100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s; 
+    }
+    
+    #button-l:hover {
+      background-color: #006fb4; /* Darker shade on hover */
+    }
+    .or-l {
+      margin: 10px 0;
+      color: #000000;
+    }
+    #forget {
+      display: block;
+      margin-top: 10px;
+      color: #777;
     }
   }
   

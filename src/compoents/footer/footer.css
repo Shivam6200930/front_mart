@@ -30,6 +30,9 @@
 .social-icons {
   margin-left:5%;
 }
+.footer-section a{
+  text-decoration: none;
+} 
 @media (max-width: 768px) {
   .footer-container {
     display: flex;
@@ -50,6 +53,9 @@
   .footer-section h3 {
     font-size: 1rem;
   }
+  .footer-section a{
+    text-decoration: none;
+  }
 }
 @media (min-width: 768px) and (max-width:1024px) {
   
@@ -62,5 +68,8 @@
   }
   .footer-section h3 {
     font-size: 1.2rem;
+  }
+  .footer-section a{
+    text-decoration: none;
   }
 }

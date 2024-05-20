@@ -13,6 +13,7 @@ const Header = () => {
   });
   const [showSidebar, setShowSidebar] = useState(false); 
   const sidebarRef = useRef(null);
+  const loggedIn=localStorage.getItem('loggedIn');
 
   useEffect(() => {
     const fetchUserPhoto = async () => {
@@ -104,10 +105,11 @@ const Header = () => {
             </div>
           )}
           {
-            showSidebar ? (<div className="cut" onClick={toggleSidebar}>X</div>):( <div className="sidebar-trigger" onClick={toggleSidebar}>
+            (showSidebar) ? (<div className="cut" onClick={toggleSidebar}>X</div>):(loggedIn?(<div className="sidebar-trigger" onClick={toggleSidebar}>
             ☰
-          </div>)
+          </div>):(<></>))
           }
+         
         </div>
       </div>
       <div className={`sidebar ${showSidebar ? 'active' : ''}`} ref={sidebarRef}>

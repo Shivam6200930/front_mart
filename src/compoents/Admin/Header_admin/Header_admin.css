@@ -68,7 +68,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 10px; 
+  margin-right:5%; 
 }
 .login-button:hover{
   background-color: #006bde;
@@ -147,6 +147,19 @@
     background-color: #0f0f0f;
     width: 100%;
   }
+  .login-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right:15%; 
+  }
+  .login-button:hover{
+    background-color: #006bde;
+    padding: 9px;
+  }
   .sidebar-trigger {
     color:#ffffff;
     cursor: pointer;
@@ -219,7 +232,7 @@
   .search-bar {
     display: flex;
     flex: 1;
-    max-width: 17rem;
+    max-width: 15rem;
   }
   
   .s-bar {
