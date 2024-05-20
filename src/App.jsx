@@ -69,9 +69,7 @@ function App() {
         {
           role === 'user' ?(
           <>
-            <Route path="/" element={<Layout />}>
-            <Route index element={<Homepage />} />
-          </Route>
+            
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
           </Route>
@@ -114,6 +112,9 @@ function App() {
           </Route>
           <Route path="/register" element={<Layout />}>
             <Route index element={<Register />} />
+          </Route>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Homepage />} />
           </Route>
         </Routes>
       </Router>
