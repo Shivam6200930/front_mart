@@ -26,12 +26,50 @@ import Edit_admin from "./compoents/Admin/edit/Edit_admin";
 import OrderHistory from "./compoents/oder_history/OrderHistory";
 import PaymentUser from "./compoents/Payment_User/Payment_User";
 function App() {
+  const role=localStorage.getItem('role')
   return (
     <>
+    
       <Router>
         <Routes>
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/" element={<Layout />}>
+        {
+           role === 'admin'?(<><Route path="/profile_admin" element={<Layout_admin />}>
+            <Route index element={<Profile_admin />} />
+          </Route>
+          <Route path="/changePassword_admin" element={<Layout_admin />}>
+            <Route index element={<ChangePassword_admin/>} />
+          </Route>
+            
+          <Route path="/cart_admin" element={<Layout_admin />}>
+            <Route index element={<Cart_admin />} />
+          </Route>
+          <Route path="/admin" element={<Layout_admin />}>
+            <Route index element={<Homepage_admin />} />
+          </Route>
+          <Route path="/search_admin" element={<Layout_admin />}>
+            <Route index element={<Search_admin />} />
+          </Route>
+          <Route path="/view_admin" element={<Layout_admin />}>
+            <Route index element={<Products_details_admin />} />
+          </Route>
+          <Route path="/editprofile_admin" element={<Layout_admin />}>
+            <Route index element={<Edit_admin />} />
+          </Route>
+          <Route path="/additems" element={<Layout_admin />}>
+            <Route index element={<AddItems />} />
+          </Route>  
+          <Route path="/buy_admin" element={<Layout_admin />}>
+            <Route index element={<Payment_admin />} />
+          </Route>
+          </>)
+          :(
+          <Route path="*" element={<PageNotFound />} 
+          />)
+        }
+        {
+          role === 'user' ?(
+          <>
+            <Route path="/" element={<Layout />}>
             <Route index element={<Homepage />} />
           </Route>
           <Route path="/orderhistory" element={<Layout />}>
@@ -58,49 +96,25 @@ function App() {
           <Route path="/profile" element={<Layout />}>
             <Route index element={<Profile />} />
           </Route>
-          <Route path="/profile_admin" element={<Layout_admin />}>
-            <Route index element={<Profile_admin />} />
-          </Route>
-          <Route path="/changePassword_admin" element={<Layout_admin />}>
-            <Route index element={<ChangePassword_admin/>} />
-          </Route>
-          <Route path="/cart_admin" element={<Layout_admin />}>
-            <Route index element={<Cart_admin />} />
-          </Route>
-          <Route path="/admin" element={<Layout_admin />}>
-            <Route index element={<Homepage_admin />} />
-          </Route>
-          <Route path="/search_admin" element={<Layout_admin />}>
-            <Route index element={<Search_admin />} />
-          </Route>
-          <Route path="/view_admin" element={<Layout_admin />}>
-            <Route index element={<Products_details_admin />} />
-          </Route>
-          
           <Route path="/changepassword" element={<Layout />}>
             <Route index element={<ChangeUserPassword />} />
           </Route>
           <Route path="/editprofile" element={<Layout />}>
             <Route index element={<Edit />} />
           </Route>
-          <Route path="/editprofile_admin" element={<Layout_admin />}>
-            <Route index element={<Edit_admin />} />
-          </Route>
-          <Route path="/additems" element={<Layout_admin />}>
-            <Route index element={<AddItems />} />
-          </Route>  
+          
           <Route path="/cart" element={<Layout />}>
             <Route index element={<Cart />} />
           </Route>
+          </>):(<Route path="*" element={<PageNotFound />} />)
+        }
           <Route path="/api/users/resetpassword/:userId/:token" element={<Layout />}>
             <Route index element={<ResetPasswordPage />} />
           </Route>
           <Route path="/contact" element={<Layout />}>
             <Route index element={<Contact />} />
           </Route>
-          <Route path="/buy_admin" element={<Layout_admin />}>
-            <Route index element={<Payment_admin />} />
-          </Route>
+         
         </Routes>
       </Router>
     </>

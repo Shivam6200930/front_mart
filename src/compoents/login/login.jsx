@@ -33,9 +33,11 @@ const Login = () => {
           Navigate('/admin') 
         localStorage.setItem('loggedIn',true)
         localStorage.setItem('user_id',response.data.user._id)
+        localStorage.setItem('role',response.data.user.role)
         }else{
         localStorage.setItem('loggedIn',true)
         localStorage.setItem('user_id',response.data.user._id)
+        localStorage.setItem('role',response.data.user.role)
         toast.success("login successfully");
         Navigate("/");
         }
