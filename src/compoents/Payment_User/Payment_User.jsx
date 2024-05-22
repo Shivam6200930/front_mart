@@ -87,6 +87,7 @@ const navigate=useNavigate()
             if (verifySignatureResponse.data.success) {
               setPaymentId(response.razorpay_payment_id);
               toast.success('Payment Successfully!!');
+              navigate('/')
 
               await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
               
@@ -102,7 +103,7 @@ const navigate=useNavigate()
         prefill: {
           name: userData.name,
           email: userData.email,
-          contact: '+916200874410',
+          contact: userData.phone,
         },
         notes: {
           address: 'Your Address',

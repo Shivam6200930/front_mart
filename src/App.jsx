@@ -68,8 +68,7 @@ function App() {
         }
         {
           role === 'user' ?(
-          <>
-            
+          <>    
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
           </Route>

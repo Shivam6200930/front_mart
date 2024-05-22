@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Cart.css';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [flag, setFlag] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 3;
 
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartItems(storedCartItems);
-    if (storedCartItems.length === 0) {
-      setFlag(false);
-    }
     calculateTotalPrice(storedCartItems);
-    toast.success("Add to cart sucessfull!!"); 
+    if (storedCartItems.length > 0) {
+      toast.success("Add to cart successful!!");
+    }
   }, []);
 
   const calculateTotalPrice = (items) => {
@@ -27,13 +28,14 @@ const Cart = () => {
     });
     setTotalPrice(total);
   };
+
   const removeFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
     setCartItems(updatedCartItems);
     calculateTotalPrice(updatedCartItems);
-    toast.success("Remove from cart");
+    toast.success("Removed from cart");
   };
 
   const increaseQuantity = (index) => {
@@ -55,64 +57,78 @@ const Cart = () => {
   };
 
   const buyNow = () => {
-    const temp_cart=[cartItems]
-    localStorage.setItem('buyProducts',JSON.stringify(temp_cart));
-    // const updatedOrderPlaced = [...cartItems,cartItems];
-    // localStorage.setItem('old_orderPlaced', JSON.stringify(updatedOrderPlaced));
+    const temp_cart = [cartItems];
+    localStorage.setItem('buyProducts', JSON.stringify(temp_cart));
     localStorage.setItem('cartItems', JSON.stringify([]));
     setCartItems([]);
-    Navigate('/buy');
+    navigate('/buy');
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedItems = cartItems.slice(startIndex, endIndex);
+
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(nextPage => Math.min(nextPage + 1, Math.ceil(cartItems.length / itemsPerPage)));
   };
 
   return (
     <div className="container">
-      {/* <div className="cart-header">
-        <span>Shopping Cart</span>
-        <span>Total Price: ₹{totalPrice}</span>
-      </div> */}
-      <div className="cart-items">
-        {cartItems.map((item, index) => (
-          <div key={index} className="cart-item">
-            <img src={item.imageUrl} alt={item.name} />
-            <p id="cart-item-title">{item.name}</p>
-            <p id="cart-item-price">₹{item.price}</p>
-            
-            <div className="quantity-container">
-              <button className="quantity-btn" onClick={() => decreaseQuantity(index)}>-</button>
-              <span>{item.quantity}</span>
-              <button className="quantity-btn" onClick={() => increaseQuantity(index)}>+</button>
-            </div>
+      <div className="cart-container">
+        <div className="prev-next">
+        
+          <div className="cart-items">
+            {displayedItems.map((item, index) => (
+              <div key={index} className="cart-item">
+                <img src={item.imageUrl} alt={item.name} />
+                <p className="cart-item-title">{item.name}</p>
+                <p className="cart-item-price">₹{item.price}</p>
 
-            <button className="remove-btn" onClick={() => removeFromCart(index)}>
-              Remove
-            </button>
+                <div className="quantity-container">
+                  <button className="quantity-btn" onClick={() => decreaseQuantity(startIndex + index)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button className="quantity-btn" onClick={() => increaseQuantity(startIndex + index)}>+</button>
+                </div>
+
+                <button className="remove-btn" onClick={() => removeFromCart(startIndex + index)}>
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="price-details">
-        <h2>Price Details</h2>
-        <div className="price-details-row">
-          <span>Total Items:</span>
-          <span>{cartItems.length}</span>
+          {cartItems.length > itemsPerPage && (
+            <div className="pagination">
+              <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+              <button onClick={handleNextPage} disabled={currentPage === Math.ceil(cartItems.length / itemsPerPage)}>Next</button>
+            </div>
+          )}
         </div>
-        <div className="price-details-row">
-          <span>Total Price:</span>
-          <span>₹{totalPrice}</span>
+
+        <div className="price-details">
+          <h2>Price Details</h2>
+          <div className="price-details-row">
+            <span>Total Items:</span>
+            <span>{cartItems.length}</span>
+          </div>
+          <div className="price-details-row">
+            <span>Total Price:</span>
+            <span>₹{totalPrice}</span>
+          </div>
           <div className="bottom-bar">
-            <div className="continue">
-        <button className="continue-shopping-btn" onClick={() => Navigate("/")}>
-          Continue Shopping
-        </button>
-        </div>
-        <div className="buy-now">
-        {flag && (
-          <button className="buy-now-btn" onClick={buyNow}>
-            Buy Now
-          </button>
-        )}
-        </div>
-      </div>
+            <button className="continue-shopping-btn" onClick={() => navigate("/")}>
+              Continue Shopping
+            </button>
+            {cartItems.length > 0 && (
+              <button className="buy-now-btn" onClick={buyNow}>
+                Buy Now
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
