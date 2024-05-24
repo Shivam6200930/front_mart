@@ -68,7 +68,8 @@ function OrderHistory() {
             ))
           ))
         ) : (
-          <div className="no-order">No order history available.</div>
+          setLoading ? (<></>):( <div className="no-order">No order history available.</div>)
+         
         )}
       </div>
     </div>
