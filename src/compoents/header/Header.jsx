@@ -64,7 +64,7 @@ const Header = () => {
       <div className="header">
         <div className="logo">
           <a href="/">Shivam Mart</a>
-          <img src=".././public/s-logo.svg" alt="logo" height="40" width="40" />
+          <img src='./s-logo.svg' alt="logo" height="40" width="40" />
         </div>
         <div className="s-bar">
           <div className="search-bar">
