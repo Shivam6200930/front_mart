@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import './OrderHistory.css'
 function OrderHistory() {
   const [orderHistory, setOrderHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
         console.log('Response:', response.data);
         if (response.data.user && response.data.user.orderHistory) {
@@ -16,6 +18,8 @@ function OrderHistory() {
         }
       } catch (err) {
         console.error('Error fetching order history:', err.message);
+      }finally{
+        setLoading(false);
       }
     };
 
@@ -25,6 +29,12 @@ function OrderHistory() {
   return (
     <div className="container">
       <div className="order-items">
+      {loading && (
+          <div id="loading-container">
+              <div id="loading-spinner"></div>
+              <p>Loading...</p>
+          </div>
+      )}
         {orderHistory.length > 0 ? (
           orderHistory.map((ordersArray, index) => (
             ordersArray.map((order, subIndex) => (
