@@ -118,9 +118,9 @@ function Payment() {
           navigate('/');
         },
         prefill: {
-          name: userData.name,
+          name: addressData.name,
           email: userData.email,
-          contact: userData.phone,
+          contact: addressData.phone,
         },
         notes: {
           address: 'Your Address',
@@ -205,6 +205,9 @@ function Payment() {
               <p>Name: {addressData.name}</p>
               <p>Email: {userData.email}</p>
               <p>Phone: {addressData.phone}</p>
+              <p>adress:<br></br>state: {addressData.state}<br></br>city: {addressData.city}<br></br>country:India<br></br>
+              Pincode:{addressData.pincode}<br></br>
+              </p>
               <p>Total Price: ₹{totalPrice}</p>
               <button onClick={handlePayment}>Proceed to Payment</button>
             </div>
