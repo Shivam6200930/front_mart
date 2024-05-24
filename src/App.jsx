@@ -33,7 +33,8 @@ function App() {
       <Router>
         <Routes>
         {
-           role === 'admin'?(<><Route path="/profile_admin" element={<Layout_admin />}>
+           role === 'admin'?(<>
+           <Route path="/profile_admin" element={<Layout_admin />}>
             <Route index element={<Profile_admin />} />
           </Route>
           <Route path="/changePassword_admin" element={<Layout_admin />}>
@@ -60,6 +61,9 @@ function App() {
           </Route>  
           <Route path="/buy_admin" element={<Layout_admin />}>
             <Route index element={<Payment_admin />} />
+          </Route>
+          <Route path="/orderhistory" element={<Layout />}>
+            <Route index element={<OrderHistory />} />
           </Route>
           </>)
           :(

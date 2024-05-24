@@ -61,9 +61,9 @@ const navigate=useNavigate()
   const handlePayment = async () => {
     try {
       const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/order`, {
-        amount: totalPrice * 100
+        amount: totalPrice*100
       }, { withCredentials: true });
-      console.log(`oderrtesponse:${JSON.stringify(orderResponse.data)}`)
+      console.log(`oderesponse:${JSON.stringify(orderResponse.data)}`)
       const orderData = orderResponse.data;
       setAmounts(orderData.amount);
       setOrderId(orderData.id);
@@ -86,12 +86,8 @@ const navigate=useNavigate()
             const verifySignatureResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/razorpay/verify-signature`, sucessData, { withCredentials: true });
             if (verifySignatureResponse.data.success) {
               setPaymentId(response.razorpay_payment_id);
-              toast.success('Payment Successfully!!');
-              navigate('/')
-
               await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
               
-
             } else {
               console.log("Signature verification failed");
               toast.error('Payment Failure');
@@ -99,6 +95,8 @@ const navigate=useNavigate()
           } catch (error) {
             console.error("Error capturing payment:", error);
           }
+          toast.success('Payment Successfully!!');
+          navigate('/')
         },
         prefill: {
           name: userData.name,
@@ -111,9 +109,8 @@ const navigate=useNavigate()
         theme: {
           color: '#3399cc',
         },
+        
       };
-
-     
 
       if (window.Razorpay) {
         const rzp1 = new window.Razorpay(options);
@@ -125,9 +122,13 @@ const navigate=useNavigate()
 
         })
         rzp1.open();
+        
       } else {
+       
         console.error("Razorpay script is not loaded.");
       }
+      
+      const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
       const userId = localStorage.getItem("user_id");
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
       console.log("Order history saved:", response.data);
@@ -138,23 +139,11 @@ const navigate=useNavigate()
         })
       }
       
-      const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
+      // const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
     } catch (error) {
       console.error("Error initiating payment:", error);
     }
 
-    
-
-    // try {
-    //   const id=JSON.parse(localStorage.getItem("user_id"));
-    //   const response = await axios.post(`http://localhost:5858/api/users/csv_file/${id}`, {
-    //     order_id: orderId,
-    //     buyProducts_data: buyProducts
-    //   },{ withCredentials: true });
-    //   console.log(`response of csv: ${response.data}`);
-    // } catch (e) {
-    //   console.log(e);
-    // }
   };
 
 
@@ -163,14 +152,15 @@ const navigate=useNavigate()
       <div className="login-success">
         <h1>Login Successfully ✓</h1>
         <h2>{userData.name}</h2>
+        <h2>{userData.phone}</h2>
       </div>
       <div className="payment-form">
         <form>
-          <input type="text" className="form-control" placeholder="Enter your address" />
+          <input type="text" name="address" value={userData.address}className="form-control" placeholder="Enter your address" />
         </form>
       </div>
       <button onClick={handlePayment}>Pay ₹{totalPrice}</button>
-      {paymentId && <p>Payment successful! Payment ID: {paymentId}</p>}
+      {/* {paymentId && <p>Payment successful! Payment ID: {paymentId}</p>} */}
     </div>
   );
 }

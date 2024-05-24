@@ -18,6 +18,11 @@
   font-weight: bold;
   margin-right: 25px;
 }
+.logo img{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 .search-bar {
   display: flex;
   flex: 1;
@@ -203,6 +208,7 @@
     transform: translateX(-100%);
     transition: transform 0.5s ease;
     z-index: 999;
+    
   }
   
   .sidebar.active {
@@ -239,6 +245,13 @@
 
   .logo>a{
     font-size:20px;
+    display: none;
+  }
+  .logo img{
+    display: block;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
   }
 
   .profile-button-admin-15 {

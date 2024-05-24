@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+import './OrderHistory.css'
 function OrderHistory() {
   const [orderHistory, setOrderHistory] = useState([]);
 
@@ -23,42 +23,44 @@ function OrderHistory() {
   }, []);
 
   return (
-    <div>
-      {orderHistory.length > 0 ? (
-        <div>
-          <h2>Order History</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Product Name</th>
-                <th>Image</th>
-                <th>Price</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orderHistory.map((ordersArray, index) => (
-                ordersArray.map((order, subIndex) => (
-                  <tr key={index + '-' + subIndex}>
-                    <td>{order.name}</td>
-                    <td>
-                      {order.imageUrl ? (
-                        <img src={order.imageUrl} alt={order.name} style={{ width: '20%' }} />
+    <div className="container">
+      <div className="order-items">
+        {orderHistory.length > 0 ? (
+          orderHistory.map((ordersArray, index) => (
+            ordersArray.map((order, subIndex) => (
+              <div key={`${index}-${subIndex}`} className="order-item"> 
+                <div className="order-content">
+                  <img src={order.imageUrl || 'placeholder-image-url'} alt={order.name} />
+                  <div className="details">
+                    <h2>{order.name}</h2>
+                    <p>Color: {order.color || 'N/A'} Size: {order.size || 'N/A'}</p>
+                    <p>₹{order.price}</p>
+                    <div className="order-status">
+                      {order.refundStatus ? (
+                        <span className="refund-status">Refund Completed</span>
                       ) : (
-                        <span>No Image</span>
+                        <span className="delivery-status">Delivered on {order.deliveryDate}</span>
                       )}
-                    </td>
-                    <td>${order.price}</td>
-                    <td>{order.quantity}</td>
-                  </tr>
-                ))
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p>No order history available.</p>
-      )}
+                    </div>
+                  </div>
+                </div>
+                {order.refundDetails && (
+                  <div className="refund-details">
+                    <p>Refund ID: {order.refundId}</p>
+                    <ul>
+                      {order.refundDetails.map((detail, detailIndex) => (
+                        <li key={detailIndex}>{detail}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))
+          ))
+        ) : (
+          <div className="no-order">No order history available.</div>
+        )}
+      </div>
     </div>
   );
 }

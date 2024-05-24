@@ -103,7 +103,7 @@ function Payment() {
                 address: address
               }, { withCredentials: true });
               localStorage.removeItem("buyProducts");
-              navigate('/')
+              
             } else {
               console.log("Signature verification failed");
               toast.error('Payment Failure');
@@ -111,6 +111,7 @@ function Payment() {
           } catch (error) {
             console.error("Error capturing payment:", error);
           }
+          navigate('/')
         },
         prefill: {
           name: userData.name,

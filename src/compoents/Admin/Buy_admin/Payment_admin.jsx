@@ -88,7 +88,6 @@ const navigate=useNavigate()
             const verifySignatureResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/verify-signature`, sucessData, { withCredentials: true });
             if (verifySignatureResponse.data.success) {
               setPaymentId(response.razorpay_payment_id);
-              toast.success('Payment Successfully!!');
 
               await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/capture/${response.razorpay_payment_id}`, { email: userData.email, amount: totalPrice * 100 }, { withCredentials: true });
 
@@ -99,6 +98,8 @@ const navigate=useNavigate()
           } catch (error) {
             console.error("Error capturing payment:", error);
           }
+          toast.success('Payment Successfully!!');
+          navigate('/admin')
         },
         prefill: {
           name: userData.name,
