@@ -27,6 +27,8 @@ import OrderHistory from "./compoents/oder_history/OrderHistory";
 import PaymentUser from "./compoents/Payment_User/Payment_User";
 function App() {
   const role=localStorage.getItem('role')
+  const cart=JSON.parse(localStorage.getItem('cartItems'))
+  const buyP=JSON.parse(localStorage.getItem('buyProducts'))
   return (
     <>
     
@@ -58,12 +60,14 @@ function App() {
           </Route>
           <Route path="/additems" element={<Layout_admin />}>
             <Route index element={<AddItems />} />
-          </Route>  
-          <Route path="/buy_admin" element={<Layout_admin />}>
-            <Route index element={<Payment_admin />} />
           </Route>
+
+          
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
+          </Route>
+          <Route path="/buy_admin" element={<Layout_admin />}>
+            <Route index element={<Payment_admin />} />
           </Route>
           </>)
           :(

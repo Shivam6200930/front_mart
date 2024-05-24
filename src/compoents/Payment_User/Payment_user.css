@@ -1,0 +1,149 @@
+/* Payment_user.css */
+
+/* Base styles */
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .address-form,
+  .order-details {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .address-form h2,
+  .order-details h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .address-form input,
+  .order-details input {
+    width: calc(100% - 20px);
+    margin: 10px 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .address-form .address-type {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .address-form .address-type label {
+    font-size: 16px;
+  }
+  
+  .address-form button,
+  .order-details button {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 20px 10px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #3399cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .address-form button:hover,
+  .order-details button:hover {
+    background-color: #287ba9;
+  }
+  
+  /* Styles for laptops and desktops */
+  @media (min-width: 1024px) {
+    .payment-container {
+      padding: 40px;
+    }
+  
+    .address-form,
+    .order-details {
+      max-width: 800px;
+    }
+  
+    .address-form input,
+    .order-details input {
+      padding: 15px;
+      font-size: 18px;
+    }
+  
+    .address-form button,
+    .order-details button {
+      padding: 15px;
+      font-size: 20px;
+    }
+  }
+  
+  /* Styles for tablets */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .payment-container {
+      padding: 30px;
+    }
+  
+    .address-form,
+    .order-details {
+      max-width: 700px;
+    }
+  
+    .address-form input,
+    .order-details input {
+      padding: 12px;
+      font-size: 17px;
+    }
+  
+    .address-form button,
+    .order-details button {
+      padding: 12px;
+      font-size: 19px;
+    }
+  }
+  
+  /* Styles for phones */
+  @media (max-width: 767px) {
+    .payment-container {
+      padding: 20px;
+    }
+  
+    .address-form,
+    .order-details {
+      max-width: 90%;
+    }
+  
+    .address-form input,
+    .order-details input {
+      padding: 10px;
+      font-size: 16px;
+    }
+  
+    .address-form button,
+    .order-details button {
+      padding: 10px;
+      font-size: 18px;
+    }
+  
+    .address-form .address-type {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .address-form .address-type label {
+      margin: 5px 0;
+    }
+  }
+  

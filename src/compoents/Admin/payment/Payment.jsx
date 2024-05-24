@@ -141,28 +141,65 @@ function Payment() {
       console.error("Error initiating payment:", error);
     }
   };
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddressData(prevState => ({ ...prevState, [name]: value }));
+  };
+  const saveAddress = async() => {
+    // const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/adress/${userId}`,{adressDetails:addressData},{withCredentials:true})
+    // console.log(`response of adress:${response}`)
+    const {name,phone,pincode,locality,address,city,state}=addressData
+    if(name && phone && pincode && locality && address && city && state){
+      setShowAddressForm(false);
+    }else{
+      alert("all flied are requried except option ")
+    }
+
+  
+};
 
   return (
-    <div className="payment-gateway">
-      <div className="login-success">
-        <h1>Login Successfully ✓</h1>
-        <h2>{userData.name}</h2>
-      </div>
-      <div className="payment-form">
-        <form onSubmit={(e) => { e.preventDefault(); handlePayment(); }}>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter your address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-          <button type="submit">Pay ₹{totalPrice}</button>
-        </form>
-      </div>
-      {paymentId && <p>Payment successful! Payment ID: {paymentId}</p>}
-    </div>
+   <>
+    {!loggedIn ? (
+        <Login />
+      ) : (
+        <div className="payment-container">
+          {showAddressForm ? (
+            <div className="address-form">
+              <h2>Delivery Address</h2>
+              <input type="text" name="name" placeholder="Name" value={addressData.name} onChange={handleAddressChange} />
+              <input type="number" name="phone" placeholder="10-digit mobile number" value={addressData.phone} onChange={handleAddressChange} />
+              <input type="number" name="pincode" placeholder="Pincode" value={addressData.pincode} onChange={handleAddressChange} />
+              <input type="text" name="locality" placeholder="Locality" value={addressData.locality} onChange={handleAddressChange} />
+              <input type="text" name="address" placeholder="Address (Area and Street)" value={addressData.address} onChange={handleAddressChange} />
+              <input type="text" name="city" placeholder="City/District/Town" value={addressData.city} onChange={handleAddressChange} />
+              <input type="text" name="state" placeholder="State" value={addressData.state} onChange={handleAddressChange} />
+              <input type="text" name="landmark" placeholder="Landmark (Optional)" value={addressData.landmark} onChange={handleAddressChange} />
+              <input type="text" name="alternatePhone" placeholder="Alternate Phone (Optional)" value={addressData.alternatePhone} onChange={handleAddressChange} />
+              <div className="address-type">
+                <label>
+                  <input type="radio" name="addressType" value="Home" checked={addressData.addressType === 'Home'} onChange={handleAddressChange} /> Home (All day delivery)
+                </label>
+                <label>
+                  <input type="radio" name="addressType" value="Work" checked={addressData.addressType === 'Work'} onChange={handleAddressChange} /> Work (Delivery between 10 AM - 5 PM)
+                </label>
+              </div>
+              <button onClick={saveAddress}>Save and Deliver Here</button>
+            </div>
+          ) : (
+            <div className="order-details">
+              <div className="login-d"><h1>Login✅</h1></div>
+              <h2>Order Details</h2>
+              <p>Name: {addressData.name}</p>
+              <p>Email: {userData.email}</p>
+              <p>Phone: {addressData.phone}</p>
+              <p>Total Price: ₹{totalPrice}</p>
+              <button onClick={handlePayment}>Proceed to Payment</button>
+            </div>
+          )}
+        </div>
+      )}
+   </>
   );
 }
 
