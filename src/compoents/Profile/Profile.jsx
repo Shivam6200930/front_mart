@@ -9,6 +9,7 @@ import Edit from '../Edit/Edit';
 import ChangePassword from '../changeUserPassword/ChangeUserPassword';
 import DailogDelete from "./DailogDelete";
 import { Mail, PhoneCall } from 'lucide-react';
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -28,6 +29,8 @@ const Profile = () => {
     phone: ""
   });
 
+  const responses =useSelector(state=>state.login)
+    console.log(responses)
   async function fetchData() {
     try {
       setLoading(true);
@@ -53,7 +56,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout/${data.id}`, { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');
@@ -109,15 +112,20 @@ const Profile = () => {
   const deleteImage = async () => {
     try {
       setLoading(true);
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/deleteImage/${id}`, { withCredentials: true });
-      setData(prevData => ({
-        ...prevData,
-        image: ""
-      }));
-      toast.success('Image deleted successfully!');
+      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/profileImageDelete/${id}`, { withCredentials: true });
+      console.log(response);
+      if (response.data.status === 'success') {
+        setData(prevData => ({
+          ...prevData,
+          image: ""
+        }));
+        toast.success('Image deleted successfully!');
+      } else {
+        toast.error(response.data.message || 'Failed to delete image');
+      }
     } catch (error) {
       console.error('Error deleting image:', error);
-      toast.error('Failed to delete image');
+      alert('Failed to delete image');
     } finally {
       setLoading(false);
     }

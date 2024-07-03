@@ -25,13 +25,24 @@ import ChangePassword_admin from "./compoents/Admin/changepassword/changePasswor
 import Edit_admin from "./compoents/Admin/edit/Edit_admin";
 import OrderHistory from "./compoents/oder_history/OrderHistory";
 import PaymentUser from "./compoents/Payment_User/Payment_User";
+import { useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './redux/reduxStore/store';
+import { useEffect } from "react";
+import axios from "axios";
 function App() {
-  const role=localStorage.getItem('role')
-  const cart=JSON.parse(localStorage.getItem('cartItems'))
-  const buyP=JSON.parse(localStorage.getItem('buyProducts'))
+  const { role } = useSelector((state) => state.login);
+
+  // useEffect(() => {
+  //   fetchData()
+  // },[])
+  // const fetchData=async () => {
+  //   const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
+  //     console.log(`response`)
+  // }
   return (
     <>
-    
+     <Provider store={store}>
       <Router>
         <Routes>
         {
@@ -61,8 +72,6 @@ function App() {
           <Route path="/additems" element={<Layout_admin />}>
             <Route index element={<AddItems />} />
           </Route>
-
-          
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
           </Route>
@@ -103,8 +112,7 @@ function App() {
           </Route>
           </>):(<Route path="*" element={<PageNotFound />} />)
         }
-          <Route path="/api/users/resetpassword/:userId/:token" element={<Layout />}>
-            <Route index element={<ResetPasswordPage />} />
+          <Route path="/api/users/resetPassword/:id/:token" element={<ResetPasswordPage />} >
           </Route>
           <Route path="/contact" element={<Layout />}>
             <Route index element={<Contact />} />
@@ -123,6 +131,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </Provider>
     </>
   )
 }

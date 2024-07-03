@@ -9,7 +9,8 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [userPhoto, setUserPhoto] = useState(null);
   const [data, setData] = useState({
-    image: ""
+    image: "",
+    loggedExpire: "",
   });
   const [showSidebar, setShowSidebar] = useState(false); 
   const sidebarRef = useRef(null);
@@ -19,11 +20,12 @@ const Header = () => {
     const fetchUserPhoto = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-        console.log(`image:${response.data.user.profileImageUrl}`);
+        // console.log(`image:${response.data.user.profileImageUrl}`);
         const temp = {
           name: response.data.user.name,
           email: response.data.user.email,
-          image: response.data.user.profileImageUrl
+          image: response.data.user.profileImageUrl,
+          loggedExpire:response.data.user.loggedExpire
         };
         setData(temp);
       } catch (error) {
@@ -78,7 +80,7 @@ const Header = () => {
           </div>
         </div>
         <div className="user-actions">
-          {localStorage.getItem('loggedIn') ? (
+          {localStorage.getItem('loggedIn') && (data.loggedExpire != Date.now())? (
             <button className="profile-button-admin-15" onClick={() => navigate("/profile")}>
               {data.image ? (
                 <img src={data.image} alt="User" />
@@ -106,7 +108,7 @@ const Header = () => {
             </div>
           )}
           {
-            (showSidebar) ? (<div className="cut" onClick={toggleSidebar}>X</div>):(loggedIn?(<div className="sidebar-trigger" onClick={toggleSidebar}>
+            (showSidebar) ? (<div className="cut" onClick={toggleSidebar}>X</div>):(loggedIn && (data.loggedExpire != Date.now())?(<div className="sidebar-trigger" onClick={toggleSidebar}>
             ☰
           </div>):(<></>))
           }

@@ -1,13 +1,18 @@
+// src/components/Register.js
 import React, { useState } from "react";
 import "./register.css";
 import axios from "axios";
-import { Eye } from "lucide-react";
-import { EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerRequest, registerSuccess, registerFailure } from "../../redux/action/Actions";
 import { toast } from "react-toastify";
-// import bcrypt from 'bcrypt';
+
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, successMessage, errorMessage } = useSelector(state => state.register);
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -21,7 +26,6 @@ const Register = () => {
 
   const HandaleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setUser({
       ...user,
       [name]: value,
@@ -31,53 +35,53 @@ const Register = () => {
   const registers = async () => {
     const { name, email, password, password_confirm, phone } = user;
     if ((password === password_confirm) && !(password.match(/^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/)) ) {
-        if ((name && name.length >= 2) && email && phone) {
-          try {
-            const response = await axios.post(
-              `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
-              {
-                name,
-                email:email.toLowerCase(),
-                password,
-                password_confirm,
-                phone,
-              },
-              { withCredentials: true }
-            );
-
-            navigate("/login");
-            console.log(response);
-          } catch (error) {
-            if(error.response.data.email) {
-              alert(error.response.data.email.message);
-            }
-            else if(error.response.data) {
-              alert(error.response.data?.phone?.message);
-            }
-            console.log(error);
+      if ((name && name.length >= 2) && email && phone) {
+        dispatch(registerRequest());
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
+            {
+              name,
+              email: email.toLowerCase(),
+              password,
+              password_confirm,
+              phone,
+            },
+            { withCredentials: true }
+          );
+          console.log(response);
+          dispatch(registerSuccess("Register successfully"));
+          alert("Register successfully");
+          navigate("/login");
+        } catch (error) {
+          if (error.response.data.email) {
+            dispatch(registerFailure(error.response.data.email.message));
+          } else if (error.response.data) {
+            dispatch(registerFailure(error.response.data.phone.message));
+          } else {
+            dispatch(registerFailure("Registration failed"));
           }
-          if (response.ok) toast.success("register successfully");
-        } else {
-          alert("All field are required");
         }
-      
+      } else {
+        setUser({
+          name: "",
+          email: "",
+          password: "",
+          password_confirm: "",
+          phone: "",
+        });
+        alert("All fields are required");
+      }
     } else {
-      alert("Please enter a same password in re-enter password");
+      alert("Please enter the same password in re-enter password");
     }
-    setUser({
-      name: "",
-      email: "",
-      password: "",
-      password_confirm: "",
-      phone: "",
-    })
   };
 
   return (
     <>
       <div className="Login-container">
         <div className="register">
-          <h1>Rgesister</h1>
+          <h1>Register</h1>
           <hr></hr>
           <input
             type="text"
@@ -124,12 +128,12 @@ const Register = () => {
             className="input"
             name="password_confirm"
             value={user.password_confirm}
-            placeholder="re-enter Password"
+            placeholder="Re-enter Password"
             onChange={HandaleChange}
           ></input>
 
           <div id="button1" onClick={registers}>
-            register
+            Register
           </div>
           <div className="">or</div>
           <a href="/login">

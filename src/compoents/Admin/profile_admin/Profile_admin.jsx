@@ -53,7 +53,7 @@ const Profile = () => {
 
   async function clearData() {
     try {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout`, { withCredentials: true });
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout/${data.id}`, { withCredentials: true });
       localStorage.clear();
       toast.success("Logout successfully!");
       navigate('/');
@@ -94,7 +94,7 @@ const Profile = () => {
         }));
 
         toast.success('Image upload successfully!');
-        navigate('/profile');
+        navigate('/profile_admin');
       } else {
         toast.error('Failed to upload image');
       }
@@ -109,7 +109,7 @@ const Profile = () => {
   const deleteImage = async () => {
     try {
       setLoading(true);
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/deleteImage/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/users/profileImageDelete/${id}`, { withCredentials: true });
       setData(prevData => ({
         ...prevData,
         image: ""

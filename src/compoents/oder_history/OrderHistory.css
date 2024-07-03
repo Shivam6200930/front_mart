@@ -147,7 +147,7 @@
 
 @media (max-width: 768px){
   .container {
-    width: 100%;
+    width: 95%;
     padding: 20px;
     font-family: Arial, sans-serif;
   }

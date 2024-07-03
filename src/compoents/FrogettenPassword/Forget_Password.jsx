@@ -33,7 +33,7 @@ function Forget_Password() {
         { withCredentials: true }
       );
       
-      toast.success('Mail sent successfully; this is only valid for 10 minutes');
+      alert('Mail sent successfully; this is only valid for 10 minutes');
       navigate('/login'); 
     }
     } catch (err) {

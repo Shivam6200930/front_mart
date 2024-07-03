@@ -90,9 +90,9 @@ function Homepage() {
 
             <div className="best-electronics">
               <div className="best-camera">
-                <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="150px" width="150px" />
+               <a href="#"> <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="150px" width="150px" />
                 <h2>Camera</h2>
-                <h3>Shoap Now!</h3>
+                <h3>Shoap Now!</h3></a>
               </div>
               <div className="speaker-pic">
                 <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/projector/k/f/0/zeb-pixaplay-22-green-16-zeb-pixaplay-22-green-led-zebronics-original-imagpqgasyrg2gzv.jpeg?q=70" alt="speaker" height="150px" width="150px" />

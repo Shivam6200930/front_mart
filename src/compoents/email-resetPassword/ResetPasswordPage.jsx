@@ -1,67 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import {  useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const ResetPasswordPage = () => {
-  const { userId, token } = useParams();
-  const [newPassword, setNewPassword] = useState('');
-  const [resetStatus, setResetStatus] = useState('');
+  const navigate=useNavigate()
+  const { id, token } = useParams();
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  useEffect(() => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/validate-token`, { userId, token })
-      .then(response => {
-        if (response.status === 200) {
-          setResetStatus('valid');
-        }
-      })
-      .catch(error => {
-        setResetStatus('invalid');
-      });
-  }, [userId, token]);
+  const handlePasswordReset = async (e) => {
+    e.preventDefault();
 
-  const handleResetPassword = () => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/resetPassword/${userId}/${token}`, { password: newPassword })
-      .then(response => {
-        if (response.status === 200) {
-          setResetStatus('success');
-        }
-      })
-      .catch(error => {
-        setResetStatus('error');
-      });
+    if (password !== passwordConfirm) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/resetPassword/${id}/${token}`, {
+        password,
+        password_confirm: passwordConfirm,
+      },{withCredentials:true});
+
+      alert(response.data.message);
+       navigate("/login")
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+        console.log(error)
+      } else {
+        alert('An error occurred',);
+        console.log(error)
+      }
+    }
   };
 
   return (
-    <div>
-      {resetStatus === 'valid' && (
+    <div className="password-reset-container">
+      <h2>Reset Password</h2>
+      <form onSubmit={handlePasswordReset}>
         <div>
-          <h2>Reset Your Password</h2>
           <label>New Password:</label>
           <input
             type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={handleResetPassword}>Reset Password</button>
         </div>
-      )}
-      {resetStatus === 'invalid' && (
         <div>
-          <p>Invalid or expired reset link. Please try again.</p>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+          />
         </div>
-      )}
-      {resetStatus === 'success' && (
-        <div>
-          <p>Password reset successfully. You can now log in with your new password.</p>
-        </div>
-      )}
-      {resetStatus === 'error' && (
-        <div>
-          <p>An error occurred. Please try again later.</p>
-        </div>
-      )}
+        <button type="submit">Reset Password</button>
+      </form>
+      
     </div>
   );
 };
+
+
 
 export default ResetPasswordPage;

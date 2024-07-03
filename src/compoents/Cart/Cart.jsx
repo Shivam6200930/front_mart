@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import './Cart.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,12 +8,23 @@ import 'react-toastify/dist/ReactToastify.css';
 const Cart = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
+  const[c,setC]=useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 3;
 
   useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
+        // console.log(response.data.user.cartItem)
+         setC(response.data.user.cartItem)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+    
     const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     setCartItems(storedCartItems);
     calculateTotalPrice(storedCartItems);

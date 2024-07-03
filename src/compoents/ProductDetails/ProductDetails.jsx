@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./productDetails.css";
-
+import { useEffect } from "react";
 function ProductDetails() {
+  const [userdata,useUserdata]=useState({
+    id:"",
+    cartItem:""
+  })
   const navigate = useNavigate();
   const { state } = useLocation();
   console.log(state);
-
+  const fetchData=(async () => {
+    try {
+      const response=await axios.get(`${import.meta.VITE_BACKEND_URL}/api/users/loggedUser`,{withCredentials:ṭrue})
+      const temp = {
+        id: response.data.user._id,
+        cartItem:response.data.cartItem
+      };
+      setData(temp);
+    } catch (error) {
+      resizeBy.stats(404).json({"status":"failed","message":error})
+    }
+  })
+  useEffect(()=>{
+    fetchData()
+  },[])
   const addToCart = () => {
     const existingCartItems =
       JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -26,6 +45,7 @@ function ProductDetails() {
         },
       ];
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+      
     }
     navigate("/cart");
   };
