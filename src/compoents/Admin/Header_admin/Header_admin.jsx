@@ -117,7 +117,6 @@ const Header = () => {
         <li><a href="/profile_admin" ><CircleUserRound/> Profile</a></li>
             <li><a href="/additems"><StretchHorizontal />  Add Items</a></li>
             <li><a href="/cart_admin"><ShoppingCart />Cart</a></li>
-            <li><a href="/orderhistory">< History/>order history</a></li>
         </ul>
       </div>
     </>

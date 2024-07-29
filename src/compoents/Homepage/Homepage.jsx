@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Homepage.css';
-
+import { useNavigate } from 'react-router-dom';
 function Homepage() {
+  const Navigate=useNavigate()
   const [currentImage, setCurrentImage] = useState(0);
-
   const images = [
     "https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg",
     "https://static.vecteezy.com/system/resources/thumbnails/006/828/785/small/paper-art-shopping-online-on-smartphone-and-new-buy-sale-promotion-pink-backgroud-for-banner-market-ecommerce-women-concept-free-vector.jpg",
@@ -27,6 +27,9 @@ function Homepage() {
     setCurrentImage((currentImage - 1 + images.length) % images.length);
   };
 
+  const search_products = async() => {
+    Navigate('/search_products/?q=p')
+  }
   return (
     <>
       <div className="Homepage-container">
@@ -85,7 +88,7 @@ function Homepage() {
           <div className="best-deals">
             <div className="up-head">
               <h2>Best Electronics</h2>
-              <div className="b-ar">&#10095;</div>
+              <button onClick={search_products}>&#10095;</button>
             </div>
 
             <div className="best-electronics">
@@ -124,7 +127,7 @@ function Homepage() {
           <div className="indiual">
             <div className="up-head">
               <h2>Best Toys & More</h2>
-              <div className="b-ar">&#10095;</div>
+              <button onClick={search_products}>&#10095;</button>
             </div>
             <div className="sho">
               <div className="st">

@@ -30,7 +30,7 @@ import { Provider } from 'react-redux';
 import store from './redux/reduxStore/store';
 import { useEffect } from "react";
 import axios from "axios";
-function App() {
+function App() {              
   const { role } = useSelector((state) => state.login);
 
   // useEffect(() => {

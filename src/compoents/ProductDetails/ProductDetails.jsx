@@ -1,53 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./productDetails.css";
-import { useEffect } from "react";
+
 function ProductDetails() {
-  const [userdata,useUserdata]=useState({
-    id:"",
-    cartItem:""
-  })
+  const [userdata, setUserdata] = useState({
+    id: "",
+    cartItem: [],
+    loggedIn: false
+  });
+
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
-  const fetchData=(async () => {
+
+  const fetchData = async () => {
     try {
-      const response=await axios.get(`${import.meta.VITE_BACKEND_URL}/api/users/loggedUser`,{withCredentials:ṭrue})
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
       const temp = {
         id: response.data.user._id,
-        cartItem:response.data.cartItem
+        cartItem: response.data.user.cartItem,
+        loggedIn: response.data.user.loggedIn
       };
-      setData(temp);
+      setUserdata(temp);
     } catch (error) {
-      resizeBy.stats(404).json({"status":"failed","message":error})
+      console.error(error);
     }
-  })
-  useEffect(()=>{
-    fetchData()
-  },[])
-  const addToCart = () => {
-    const existingCartItems =
-      JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductInCart = existingCartItems.some(
-      (item) => item.name === state.name
-    );
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const addToCart = async () => {
+    const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const isProductInCart = existingCartItems.some(item => item.id === state.id);
 
     if (!isProductInCart) {
-      const updatedCartItems = [
-        ...existingCartItems,
-        {
-          name: state.name,
-          imageUrl: state.imageUrl,
-          price: state.price,
-          quantity: state.quantity,
-        },
-      ];
+      const newItem = {
+        id: state.id,
+        name: state.name,
+        imageUrl: state.imageUrl,
+        price: state.price,
+        quantity: state.quantity
+      };
+
+      const updatedCartItems = [...existingCartItems, newItem];
+      const updatedUserCartItems = [...userdata.cartItem, newItem];
+
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-      
+
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartadd/${userdata.id}`, { cartItem: updatedUserCartItems }, { withCredentials: true });
+        console.log(response.data);
+        setUserdata(prev => ({ ...prev, cartItem: updatedUserCartItems }));
+        navigate("/cart");
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      navigate("/cart");
     }
-    navigate("/cart");
   };
 
   return (
@@ -55,9 +67,11 @@ function ProductDetails() {
       <div className="image-box">
         <img src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {localStorage.getItem('loggedIn')?(<button className="add-to-cart" onClick={addToCart}>
-            Add to Cart
-          </button>):(
+          {userdata.loggedIn ? (
+            <button className="add-to-cart" onClick={addToCart}>
+              Add to Cart
+            </button>
+          ) : (
             <></>
           )}
           <button className="home" onClick={() => navigate("/")}>
@@ -71,13 +85,11 @@ function ProductDetails() {
         <p className="price">Price: {state.price}</p>
         <p className="offers">Available Offers: 10% off with code</p>
 
-        {/* Delivery Pincode Search Bar */}
         <div className="delivery-search">
           <input type="text" placeholder="Enter Pincode" />
           <button className="search-button">Search</button>
         </div>
 
-        {/* Highlights */}
         <div className="highlights">
           <p className="highlight-title">Highlights:</p>
           <ul className="highlight-list">
@@ -86,12 +98,10 @@ function ProductDetails() {
           </ul>
         </div>
 
-        {/* Description */}
         <div className="description">
           <p className="description-title">Description:</p>
           <p className="description-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in
-            nisl vel justo fringilla ullamcorper.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in nisl vel justo fringilla ullamcorper.
           </p>
         </div>
       </div>

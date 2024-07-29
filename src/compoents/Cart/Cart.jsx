@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
+  const userId = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const[c,setC]=useState([]);
@@ -18,7 +19,7 @@ const Cart = () => {
     (async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-        // console.log(response.data.user.cartItem)
+        console.log(response.data.user.cartItem)
          setC(response.data.user.cartItem)
       } catch (error) {
         console.log(error)
@@ -54,8 +55,19 @@ const Cart = () => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity += 1;
     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+    
     setCartItems(updatedCartItems);
     calculateTotalPrice(updatedCartItems);
+    try{
+      (async()=>{
+        const response= await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartupdate/${userId}`,{updateCart:updatedCartItems},{withCredentials:true})
+        console.log(response.data)
+
+      })()
+       
+    }catch(e){
+         console.log(e.message)
+    }
   };
 
   const decreaseQuantity = (index) => {
@@ -65,6 +77,15 @@ const Cart = () => {
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
       setCartItems(updatedCartItems);
       calculateTotalPrice(updatedCartItems);
+    }
+    try{
+      (async()=>{
+        const response= await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartupdate/${userId}`,{updateCart:updatedCartItems},{withCredentials:true})
+        console.log(response.data)
+      })()
+       
+    }catch(e){
+          console.log(e.message)
     }
   };
 
