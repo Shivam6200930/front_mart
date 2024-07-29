@@ -34,6 +34,13 @@ To get started with the project, follow these steps:
 ```
 npm install
 ```
+3.Environment Variables:
+
+Create a .env file in the root directory and configure the following variables:
+
+```
+VITE_BACKEND_URL=<your backend url>
+```
 
 # Usage
 To run the project locally, use the following command:
