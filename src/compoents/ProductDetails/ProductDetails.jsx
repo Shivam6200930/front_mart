@@ -26,41 +26,45 @@ function ProductDetails() {
       console.error(error);
     }
   };
-
   useEffect(() => {
+    // Log the state object to ensure the product details are correctly passed
+    console.log("Product state:", state);
+    
+    fetchData();
+  }, [state]);
+  
+  useEffect(() => {
+    
     fetchData();
   }, []);
 
   const addToCart = async () => {
-    const existingCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isProductInCart = existingCartItems.some(item => item.id === state.id);
-
-    if (!isProductInCart) {
-      const newItem = {
-        id: state.id,
-        name: state.name,
-        imageUrl: state.imageUrl,
-        price: state.price,
-        quantity: state.quantity
-      };
-
-      const updatedCartItems = [...existingCartItems, newItem];
-      const updatedUserCartItems = [...userdata.cartItem, newItem];
-
-      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartadd/${userdata.id}`, { cartItem: updatedUserCartItems }, { withCredentials: true });
-        console.log(response.data);
-        setUserdata(prev => ({ ...prev, cartItem: updatedUserCartItems }));
-        navigate("/cart");
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
+    console.log("Product ID:", state._id)
+    const newItem = {
+      productId: state._id,
+      name: state.name,
+      imageUrl: state.imageUrl,
+      price: state.price,
+      quantity: 1 // Default quantity is 1, you can allow the user to specify quantity
+    };
+  
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/add/${userdata.id}`,
+        { productId: newItem.productId, quantity: newItem.quantity }, // Only sending necessary info
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      setUserdata((prev) => ({
+        ...prev,
+        cartItem: response.data.cart, // Assuming the updated cart is returned from the backend
+      }));
       navigate("/cart");
+    } catch (e) {
+      console.error(e);
     }
   };
+  
 
   return (
     <div className="product-container">

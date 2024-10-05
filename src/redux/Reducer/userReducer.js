@@ -20,6 +20,7 @@ import {
     profileImageUrl: '',
     orderHistory: [],
     role: '',
+    
   },
   error: null,
   };

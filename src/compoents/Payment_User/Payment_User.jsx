@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; 
 import Login from '../login/login';
 import './Payment_user.css';
 
@@ -10,7 +11,6 @@ function Payment() {
   const [orderId, setOrderId] = useState('');
   const [buyProducts, setBuyProduct] = useState([]);
   const [paymentId, setPaymentId] = useState('');
-  const [totalPrice, setTotalPrice] = useState(0);
   const [flag, setFlag] = useState(true);
   const [Amounts, setAmounts] = useState(0);
   const [userData, setUserData] = useState({
@@ -36,6 +36,9 @@ function Payment() {
   const loggedIn = localStorage.getItem('loggedIn');
   const navigate = useNavigate();
 
+  // Fetch the total price from the Redux store
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -49,6 +52,7 @@ function Payment() {
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
+     
     };
 
     const fetchBuyProducts = async () => {
@@ -57,8 +61,6 @@ function Payment() {
         setBuyProduct(storeBuyProduct);
         if (storeBuyProduct.length === 0) {
           setFlag(false);
-        } else {
-          calculateTotal(storeBuyProduct);
         }
       } catch (error) {
         console.error("Error fetching buyProducts data:", error);
@@ -67,17 +69,11 @@ function Payment() {
 
     fetchUserData();
     fetchBuyProducts();
-  }, []);
-
-  const calculateTotal = (buyProductsData) => {
-    let total = 0;
-    buyProductsData.forEach(item => {
-      item.forEach(item => {
-        total += (parseFloat(item.price) || 0) * (parseInt(item.quantity) || 0);
-      });
-    });
-    setTotalPrice(total);
-  };
+    if (totalPrice === 0) {
+      toast.error('Your cart is empty!');
+      navigate('/cart'); // Redirect if cart is empty
+    }
+  }, [totalPrice, navigate]);
 
   const handlePayment = async () => {
     try {
@@ -157,17 +153,13 @@ function Payment() {
     setAddressData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const saveAddress = async() => {
-      // const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/adress/${userId}`,{adressDetails:addressData},{withCredentials:true})
-      // console.log(`response of adress:${response}`)
-      const {name,phone,pincode,locality,address,city,state}=addressData
-      if(name && phone && pincode && locality && address && city && state){
-        setShowAddressForm(false);
-      }else{
-        alert("all flied are requried except option ")
-      }
-
-    
+  const saveAddress = async () => {
+    const { name, phone, pincode, locality, address, city, state } = addressData;
+    if (name && phone && pincode && locality && address && city && state) {
+      setShowAddressForm(false);
+    } else {
+      alert("All fields are required except optional fields.");
+    }
   };
 
   return (
@@ -205,10 +197,8 @@ function Payment() {
               <p>Name: {addressData.name}</p>
               <p>Email: {userData.email}</p>
               <p>Phone: {addressData.phone}</p>
-              <p>adress:<br></br>state: {addressData.state}<br></br>city: {addressData.city}<br></br>country:India<br></br>
-              Pincode:{addressData.pincode}<br></br>
-              </p>
-              <p>Total Price: ₹{totalPrice}</p>
+              <p>Address:<br />State: {addressData.state}<br />City: {addressData.city}<br />Country: India<br />Pincode: {addressData.pincode}</p>
+              <p>Total Price: ₹{totalPrice}</p> 
               <button onClick={handlePayment}>Proceed to Payment</button>
             </div>
           )}

@@ -1,169 +1,163 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Cart.css';
+import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType'
 const Cart = () => {
   const userId = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-  const[c,setC]=useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [updateFlag, setUpdateFlag] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
   const itemsPerPage = 3;
-
   useEffect(() => {
-    (async () => {
+    const fetchCartItems = async () => {
+      setIsLoading(true); 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-        console.log(response.data.user.cartItem)
-         setC(response.data.user.cartItem)
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getCart/${userId}`, { withCredentials: true });
+        setCartItems(response.data.cart);
       } catch (error) {
-        console.log(error)
+        console.error("Error fetching cart items:", error);
+        toast.error("Failed to load cart items");
+      } finally {
+        setIsLoading(false);
       }
-    })()
-    
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCartItems(storedCartItems);
-    calculateTotalPrice(storedCartItems);
-    if (storedCartItems.length > 0) {
-      toast.success("Add to cart successful!!");
-    }
-  }, []);
+    };
 
-  const calculateTotalPrice = (items) => {
-    let total = 0;
-    items.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    setTotalPrice(total);
-  };
+    fetchCartItems();
+  }, [userId, updateFlag]); 
 
-  const removeFromCart = (index) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    setCartItems(updatedCartItems);
-    calculateTotalPrice(updatedCartItems);
-    toast.success("Removed from cart");
-  };
+  
+  const totalPrice = useMemo(() => {
+    const total = cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
+    dispatch({ type: SET_TOTAL_PRICE, payload: total }); // Dispatch totalPrice to Redux store
+    return total;
+  }, [cartItems, dispatch]);
 
-  const increaseQuantity = (index) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems[index].quantity += 1;
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-    
-    setCartItems(updatedCartItems);
-    calculateTotalPrice(updatedCartItems);
-    try{
-      (async()=>{
-        const response= await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartupdate/${userId}`,{updateCart:updatedCartItems},{withCredentials:true})
-        console.log(response.data)
-
-      })()
-       
-    }catch(e){
-         console.log(e.message)
+  
+  const updateQuantity = async (productId, newQuantity) => {
+    if (newQuantity < 1) return;
+    try {
+      setIsLoading(true); // Set loading true during update
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/update/${userId}`,
+        { productId, quantity: newQuantity },
+        { withCredentials: true }
+      );
+      setCartItems(response.data.cart);
+      setUpdateFlag((prev) => !prev);
+      toast.success("Cart updated");
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      toast.error("Failed to update cart");
+    } finally {
+      setIsLoading(false); // Stop loading after update
     }
   };
 
-  const decreaseQuantity = (index) => {
-    const updatedCartItems = [...cartItems];
-    if (updatedCartItems[index].quantity > 1) {
-      updatedCartItems[index].quantity -= 1;
-      localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-      setCartItems(updatedCartItems);
-      calculateTotalPrice(updatedCartItems);
-    }
-    try{
-      (async()=>{
-        const response= await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/cartupdate/${userId}`,{updateCart:updatedCartItems},{withCredentials:true})
-        console.log(response.data)
-      })()
-       
-    }catch(e){
-          console.log(e.message)
+  // Remove item from cart
+  const removeFromCart = async (productId) => {
+    try {
+      setIsLoading(true); // Set loading true during removal
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/remove/${userId}/${productId}`,
+        { withCredentials: true }
+      );
+      setCartItems(response.data.cart);
+      setUpdateFlag((prev) => !prev);
+      toast.success("Item removed from cart");
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+      toast.error("Failed to remove item");
+    } finally {
+      setIsLoading(false); // Stop loading after removal
     }
   };
 
+  // Buy Now functionality
   const buyNow = () => {
-    const temp_cart = [cartItems];
-    localStorage.setItem('buyProducts', JSON.stringify(temp_cart));
+    localStorage.setItem('buyProducts', JSON.stringify(cartItems));
     localStorage.setItem('cartItems', JSON.stringify([]));
     setCartItems([]);
     navigate('/buy');
   };
 
+  // Pagination logic
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const displayedItems = cartItems.slice(startIndex, endIndex);
+  const displayedItems = cartItems.slice(startIndex, startIndex + itemsPerPage);
 
-  const handlePrevPage = () => {
-    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
-  };
+  const handlePrevPage = () => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
 
   const handleNextPage = () => {
-    setCurrentPage(nextPage => Math.min(nextPage + 1, Math.ceil(cartItems.length / itemsPerPage)));
+    setCurrentPage((nextPage) => Math.min(nextPage + 1, Math.ceil(cartItems.length / itemsPerPage)));
   };
 
   return (
     <div className="container">
-      <div className="cart-container">
-        <div className="prev-next">
-        
-          <div className="cart-items">
-            {displayedItems.map((item, index) => (
-              <div key={index} className="cart-item">
-                <img src={item.imageUrl} alt={item.name} />
-                <p className="cart-item-title">{item.name}</p>
-                <p className="cart-item-price">₹{item.price}</p>
+      {isLoading ? (
+         <div id="loading-container">
+         <div id="loading-spinner"></div>
+         <p>Loading...</p>
+     </div>
+      ) : (
+        <div className="cart-container">
+          <div className="prev-next">
+            <div className="cart-items">
+              {displayedItems.map((item) => (
+                <div key={item.productId._id} className="cart-item">
+                  <img src={item.productId?.imageUrl} alt={item.productId?.name} />
+                  <p className="cart-item-title">{item.productId?.name}</p>
+                  <p className="cart-item-price">₹{item.productId?.price}</p>
 
-                <div className="quantity-container">
-                  <button className="quantity-btn" onClick={() => decreaseQuantity(startIndex + index)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button className="quantity-btn" onClick={() => increaseQuantity(startIndex + index)}>+</button>
+                  <div className="quantity-container">
+                    <button className="quantity-btn" onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button className="quantity-btn" onClick={() => updateQuantity(item.productId._id, item.quantity + 1)}>+</button>
+                  </div>
+
+                  <button className="remove-btn" onClick={() => removeFromCart(item.productId._id)}>
+                    Remove
+                  </button>
                 </div>
-
-                <button className="remove-btn" onClick={() => removeFromCart(startIndex + index)}>
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {cartItems.length > itemsPerPage && (
-            <div className="pagination">
-              <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-              <button onClick={handleNextPage} disabled={currentPage === Math.ceil(cartItems.length / itemsPerPage)}>Next</button>
+              ))}
             </div>
-          )}
-        </div>
 
-        <div className="price-details">
-          <h2>Price Details</h2>
-          <div className="price-details-row">
-            <span>Total Items:</span>
-            <span>{cartItems.length}</span>
-          </div>
-          <div className="price-details-row">
-            <span>Total Price:</span>
-            <span>₹{totalPrice}</span>
-          </div>
-          <div className="bottom-bar">
-            <button className="continue-shopping-btn" onClick={() => navigate("/")}>
-              Continue Shopping
-            </button>
-            {cartItems.length > 0 && (
-              <button className="buy-now-btn" onClick={buyNow}>
-                Buy Now
-              </button>
+            {cartItems.length > itemsPerPage && (
+              <div className="pagination">
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+                <button onClick={handleNextPage} disabled={currentPage === Math.ceil(cartItems.length / itemsPerPage)}>Next</button>
+              </div>
             )}
           </div>
+
+          <div className="price-details">
+            <h2>Price Details</h2>
+            <div className="price-details-row">
+              <span>Total Items:</span>
+              <span>{cartItems.length}</span>
+            </div>
+            <div className="price-details-row">
+              <span>Total Price:</span>
+              <span>₹{totalPrice}</span>
+            </div>
+            <div className="bottom-bar">
+              <button className="continue-shopping-btn" onClick={() => navigate("/")}>
+                Continue Shopping
+              </button>
+              {cartItems.length > 0 && (
+                <button className="buy-now-btn" onClick={buyNow}>
+                  Buy Now
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

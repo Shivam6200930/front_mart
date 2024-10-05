@@ -1,4 +1,3 @@
-// src/components/login/login.jsx
 import React, { useState } from "react";
 import './login.css';
 import axios from "axios";
@@ -14,34 +13,71 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, user, error } = useSelector(state => state.login);
-  const temp= useSelector(state =>console.log(state.login.user))
 
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
-    loggedIn:false
   });
   const [changePassword, setChangePassword] = useState(true);
-  const changeIcon = changePassword === true ? false : true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserDetails({
-      ...userDetails,
+    setUserDetails(prevState => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
   };
 
   const login = async () => {
-    userDetails.email = userDetails.email.toLowerCase();
-    dispatch(loginRequest(userDetails));
+    const updatedDetails = {
+      ...userDetails,
+      email: userDetails.email.toLowerCase()
+    };
+
+    // Basic validation to check if fields are empty
+    if (!updatedDetails.email || !updatedDetails.password) {
+      toast.error("Please enter both email and password");
+      return;
+    }
+
+    dispatch(loginRequest(updatedDetails));
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
-        userDetails,
+        updatedDetails,
         { withCredentials: true }
       );
       const user = response.data.user;
+      if ('mandalshivam962@gmail.com' === user.email) {
+        toast.success('Login successful');
+        navigate('/admin');
+      } else {
+        toast.success("Login successful");
+        navigate("/");
+      }
+      dispatch(loginSuccess(user));
+    } catch (error) {
+      toast.error(error.message);
+      dispatch(loginFailure(error.message));
+      console.log(error);
+    }
+    setUserDetails({
+      email: "",
+      password: ""
+    });
+  };
+
+  const loginWithGoogle = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const user = result.user;
+      const token = await user.getIdToken();
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/google-login`,
+        { token },
+        { withCredentials: true }
+      );
+      localStorage.setItem('role', JSON.stringify(response.data.user.role));
       if ('mandalshivam962@gmail.com' === user.email) {
         toast.success('Login successful');
         navigate('/admin');
@@ -53,39 +89,6 @@ const Login = () => {
     } catch (error) {
       toast.error(error.message);
       dispatch(loginFailure(error.message));
-      console.log(error);
-    }
-    setUserDetails({
-      email: "",
-      password: "",
-      loggedIn:true
-    });
-  };
-
-  const loginWithGoogle = async () => {
-    try {
-      const result = await signInWithGoogle();
-      const user = result.user;
-      console.log(user);
-      const token = await user.getIdToken();
-      console.log(`token:${token}`)
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/google-login`,
-        { token },
-        { withCredentials: true }
-      );
-        localStorage.setItem('role',JSON.stringify(response.data.user.role));
-      if ('mandalshivam962@gmail.com' === user.email) {
-        toast.success('Login successful');
-        navigate('/admin');
-      } else {
-        toast.success("Login successfully");
-        navigate("/");
-      }
-      dispatch(loginSuccess(user));
-    } catch (error) {
-     alert(error.message);
-      dispatch(loginFailure(error.message));
       console.error(error);
     }
   };
@@ -95,7 +98,7 @@ const Login = () => {
       <div className="Login-container">
         <div className="login">
           <h1>Login</h1>
-          <hr></hr>
+          <hr />
           <input
             type="text"
             className="input"
@@ -103,7 +106,7 @@ const Login = () => {
             value={userDetails.email}
             placeholder="Enter your Email"
             onChange={handleChange}
-          ></input>
+          />
           <input
             type={changePassword ? "password" : "text"}
             className="input"
@@ -111,21 +114,23 @@ const Login = () => {
             value={userDetails.password}
             placeholder="Enter Your Password"
             onChange={handleChange}
-          ></input>
+          />
           <span id="icon"
             onClick={() => {
-              setChangePassword(changeIcon);
+              setChangePassword(prev => !prev);
             }}
           >
-            {changeIcon ? <Eye /> : <EyeOff />}
+            {changePassword ? <EyeOff /> : <Eye />}
           </span>
 
           <button id="button-l" onClick={login} disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
+
           {/* <button id="button-l" onClick={loginWithGoogle} disabled={loading}>
             {loading ? 'Logging in...' : 'Login with Google'}
           </button> */}
+          
           <div className="or-l">or</div>
           <a href="/register">
             <button id="button-l">

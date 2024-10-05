@@ -1,6 +1,8 @@
 // actions.jsimport Cookies from 'js-cookie';
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../ActionType/actionType'
 import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT} from '../ActionType/actionType'
+import { SET_TOTAL_PRICE } from '../ActionType/actionType';
+
 export const registerRequest = () => ({
   type: REGISTER_REQUEST,
 });
@@ -43,3 +45,9 @@ export const loginRequest = () => ({
       type: LOGOUT,
     };
   };
+
+  export const setTotalPrice = (totalPrice) => ({
+    type: SET_TOTAL_PRICE,
+    payload:totalPrice
+  });
+  

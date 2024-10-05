@@ -17,8 +17,6 @@ import Cart from "./compoents/Cart/Cart";
 import ResetPasswordPage from "./compoents/email-resetPassword/ResetPasswordPage";
 import Profile_admin from "./compoents/Admin/profile_admin/Profile_admin";
 import Contact from "./compoents/contact/Contact";
-import Payment_admin from './compoents/Admin/Buy_admin/Payment_admin'
-import Cart_admin from "./compoents/Admin/cart/Cart_admin"
 import Search_admin from "./compoents/Admin/search_admin/Search_admin";
 import Products_details_admin from "./compoents/Admin/Products_details_admin/Products_d_admin";
 import ChangePassword_admin from "./compoents/Admin/changepassword/changePassword_admin";
@@ -53,10 +51,6 @@ function App() {
           <Route path="/changePassword_admin" element={<Layout_admin />}>
             <Route index element={<ChangePassword_admin/>} />
           </Route>
-            
-          <Route path="/cart_admin" element={<Layout_admin />}>
-            <Route index element={<Cart_admin />} />
-          </Route>
           <Route path="/admin" element={<Layout_admin />}>
             <Route index element={<Homepage_admin />} />
           </Route>
@@ -74,9 +68,6 @@ function App() {
           </Route>
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
-          </Route>
-          <Route path="/buy_admin" element={<Layout_admin />}>
-            <Route index element={<Payment_admin />} />
           </Route>
           </>)
           :(
