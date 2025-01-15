@@ -1,83 +1,203 @@
-#Home-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  #product_container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  #le {
-    flex: 1;
+/* search_products.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+.unique-home-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.unique-cut-discount{
+  display: flex;
+  flex-direction: row;
+  gap:7px;
+}
+
+.unique-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.unique-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ccc;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+.unique-error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.unique-product-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.unique-product-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.unique-product-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.unique-product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.unique-product-image {
+  width:180px;
+  height: 180px;
+  object-fit: fill;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.unique-product-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.unique-product-features {
+  list-style: none;
+  padding: 0;
+  margin: 30px 60px;
+  color: #555;
+}
+
+.unique-product-speci h3{
+  margin:10px 30px;
+}
+.unique-product-price-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px; /* Space between elements */
+  padding: 15px; /* Inner spacing */
+  width: 100%; /* Ensure it takes up full width */
+  max-width: 300px; /* Limit max width */
+}
+
+.unique-original-price {
+  font-size: 1.2rem;
+  color: #000;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+
+.unique-cut-price {
+  font-size: 1rem;
+  color: #888;
+  text-decoration: line-through;
+  margin: 0;
+}
+
+.unique-discount {
+  font-size: 1rem;
+  color: #d32f2f; /* Highlight discount in red */
+  margin: 0;
+}
+
+.unique-delivery-items {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0;
+}
+
+.unique-delivery-items h5 {
+  display: inline;
+  font-size: 1rem;
+  color: #007bff; /* Blue for emphasis */
+  font-weight: bold;
+  margin: 0;
+}
+
+.unique-offer {
+  font-size: 1rem;
+  color: #28a745; /* Green for positive offer */
+  margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .unique-product-item {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start;
+    height:300px; /* Align items to the left */
   }
 
-  #loading-container {
-    display: flex;
-    flex-direction: column;
+  .unique-product-image {
+    width: 150px;
+    height: 150px;
+    object-fit: fill;
+    margin-bottom: 15px; /* Add space between image and text */
     align-items: center;
-    justify-content: center;
-    min-height: 200px; /* Change height to min-height */
   }
-  
-  #loading-spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+  .unique-product-features {
+    display:none;
   }
-  
-      
-  
-  #product-details {
-    margin-top: 20px;
-  }
-  
-  #product-details ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  #product-details li {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  #product-details img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
-  
-  #button-vh {
+
+  .unique-product-info {
+    flex-direction: column; /* Stack info vertically */
+    align-items: flex-start; /* Align items to the left */
     text-align: center;
-    margin-top: 20px;
   }
-  
-  #button-vh Button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+
+  .unique-product-price-details {
+    position:relative;
+    bottom:35px;
+    right:10px;
+    width: 100%; /* Take full width */
+    max-width: none; /* Remove the max width limit */
+    padding: 10px; /* Reduce padding */
   }
-  
-  #button-vh Button:hover {
-    background-color: #217dbb;
+  .unique-cut-discount {
+    position:relative;
+    bottom:25px;
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+
+  .unique-delivery-items{
+    position:relative;
+    bottom:35px;
+    right:10px;
   }
-  
+  .unique-product-speci h3 {
+    margin:  0; /* Adjust margin */
+  }
+}

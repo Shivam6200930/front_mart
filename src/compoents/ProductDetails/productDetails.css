@@ -1,139 +1,482 @@
+/* General Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
+.product-container {
+  margin-top:7%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  flex-wrap: wrap;
+  background-color: #f7f7f7;
+}
+
+.image-box {
+  width: 40%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add to Cart Button Styling */
+.add-to-cart {
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #ff6f61;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-to-cart:hover {
+  background-color: #f15952;
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.add-to-cart:active {
+  background-color: #d94b42;
+  transform: scale(1);
+}
+
+.add-to-cart:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 111, 97, 0.7);
+}
+
+/* Home Button Styling */
+.home {
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #42a5f5;
+  border: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home:hover {
+  background-color: #3691e0;
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.home:active {
+  background-color: #2c80c5;
+  transform: scale(1);
+}
+
+.home:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(66, 165, 245, 0.7);
+}
+
+/* Button Container to Align Buttons Horizontally */
+.button-container {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+
+
+
+.product-details {
+  width: 55%;
+}
+
+/* Product Details */
+.product-name {
+  font-size: 28px;
+  margin: 0;
+  color: #333;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e60000;
+  margin: 10px 0;
+}
+
+.description {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.offers {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.highlights,
+.product-specifications {
+  margin-bottom: 20px;
+}
+
+.highlight-title,
+.product-specifications h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.highlight-list,
+.product-specifications ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.product-specifications li {
+  margin-bottom: 5px;
+}
+
+/* Delivery Search Section */
+.delivery-search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-right:52%;
+}
+
+.delivery-search input {
+  width: 250px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: border 0.3s ease-in-out;
+}
+
+.delivery-search input:focus {
+  border-color: #0b74e5;
+}
+
+/* Search Button */
+.search-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  color: #fff;
+  background: linear-gradient(45deg, #0b74e5, #1e90ff);
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-button:hover {
+  background: linear-gradient(45deg, #1e90ff, #0b74e5);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+}
+
+.search-button:disabled {
+  cursor: not-allowed;
+  background: #ccc;
+  box-shadow: none;
+}
+
+/* Loading Spinner */
+.search-button:disabled::after {
+  content: '...';
+  position: absolute;
+  display: block;
+  left: 45%;
+  top: 50%;
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Button Tooltip */
+.search-button:after {
+  content: "Click to validate pincode";
+  position: absolute;
+  font-size: 0.875rem;
+  bottom: -30px;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.search-button:hover::after {
+  opacity: 1;
+}
+
+.search-button:disabled::after {
+  display: none;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media only screen and (max-width: 768px) {
+  /* Product Container */
   .product-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    margin-top: 18%;
   }
-  
-  /* Image Box Styles */
-  .product-container>.image-box {
-    max-height: 100vh;
-    margin-top: 2%;
-    margin-left: -20%;
+
+  /* Image Box */
+  .image-box {
+    width: 80%;
+    margin-right:6%;
+    margin-bottom: 20px;
   }
-  
-  .image-box img {
-    width: 100%;
+
+  .product-image {
     max-width: 100%;
     height: auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
-  
-  /* Button Styles */
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top:3%;
-  }
-  
-  .button-container button {
-    margin-right: 10px;
-    padding: 10px;
-    border: 2px solid;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .button-container button:hover {
-    filter: brightness(1.2);
-    transition: filter 0.3s ease-in-out;
-  }
-  
-  /* Product Details Column Styles */
+
+  /* Product Details */
   .product-details {
-    margin-left: 5%;
-    margin-top: 3%;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
   }
-  
-  /* Product Name Styles */
+
   .product-name {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 3%;
+    font-size: 24px;
+    color: #333;
+    margin: 15px 0;
   }
-  
-  /* Price Styles */
+
   .price {
-    font-size: 2.5rem;
+    font-size: 22px;
+    color: #e60000;
+    margin: 10px 0;
+  }
+
+  .description,
+  .offers,
+  .highlights,
+  .product-specifications {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #777;
+  }
+
+  .highlight-title,
+  .product-specifications h3 {
+    font-size: 16px;
     font-weight: bold;
-    margin-top: 7px;
+  }
+
+  .highlight-list,
+  .product-specifications ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  /* Button Container */
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .add-to-cart,
+  .home {
+    width: 100%;
+    padding: 18px 0;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .add-to-cart:hover,
+  .home:hover {
+    transform: scale(1.05);
+  }
+
+  /* Delivery Search Section */
+  .delivery-search {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  .delivery-search input {
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
     margin-bottom: 15px;
   }
-  
-  /* Offers Styles */
-  .offers {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
+
+  .delivery-search input:focus {
+    border-color: #0b74e5;
   }
-  
-  /* Delivery Search Bar Styles */
-  .delivery-search {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .delivery-search input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-  }
-  
-  .delivery-search button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .delivery-search button:hover {
-    filter: brightness(1.2);
-    transition: filter 0.3s ease-in-out;
-  }
-  
-  /* Highlights Styles */
-  .highlights {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .highlights p {
-    font-size: 0.8rem;
+
+  /* Search Button */
+  .search-button {
+    width: 80%;
+    padding: 12px;
+    font-size: 1rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    color: #fff;
+    background: linear-gradient(45deg, #0b74e5, #1e90ff);
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease-in-out;
+    margin-top: 10px;
   }
-  
-  /* Description Styles */
-  .description {
+
+  .search-button:hover {
+    background: linear-gradient(45deg, #1e90ff, #0b74e5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .search-button:disabled {
+    cursor: not-allowed;
+    background: #ccc;
+    box-shadow: none;
+  }
+
+  .search-button:disabled::after {
+    content: '...';
+    position: absolute;
+    display: block;
+    left: 45%;
+    top: 50%;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    border: 2px solid white;
+    border-top: 2px solid transparent;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Spinner Animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .search-button:after {
+    content: "Click to validate pincode";
+    position: absolute;
+    font-size: 0.875rem;
+    bottom: -30px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .search-button:hover::after {
+    opacity: 1;
+  }
+
+  .search-button:disabled::after {
+    display: none;
+  }
+}
+
+/* Mobile View - For screens <= 600px */
+@media only screen and (max-width: 600px) {
+  .product-container {
+    padding: 10px;
+  }
+
+  .image-box {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .product-name {
+    font-size: 22px;
+    margin: 10px 0;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+
+  .description,
+  .offers,
+  .highlight-list,
+  .product-specifications {
+    font-size: 14px;
+  }
+
+  .button-container {
+    width: 100%;
+  }
+
+  .add-to-cart,
+  .home {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
     margin-bottom: 10px;
   }
-  
-  .description p {
-    font-size: 0.8rem;
+
+  .delivery-search input {
+    width: 100%;
+    padding: 12px 18px;
   }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .image-box {
-      position: static;
-      max-width: 100%;
-      margin-left: 0;
-    }
-  
-    .button-container {
-      margin-left: 0;
-    }
-  
-    .product-details {
-      margin-left: 0;
-      margin-top: 20px;
-    }
-  } 
+
+  .search-button {
+    width: 100%;
+    margin-top: 15px;
+  }
+}

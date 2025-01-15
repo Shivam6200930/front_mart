@@ -1,170 +1,250 @@
 import React, { useState, useEffect } from 'react';
 import './Homepage.css';
 import { useNavigate } from 'react-router-dom';
+
 function Homepage() {
-  const Navigate=useNavigate()
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [watch, setWatch] = useState([]);
+  const [laptop, setLaptop] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
-  const images = [
+
+  const carouselImages = [
     "https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg",
     "https://static.vecteezy.com/system/resources/thumbnails/006/828/785/small/paper-art-shopping-online-on-smartphone-and-new-buy-sale-promotion-pink-backgroud-for-banner-market-ecommerce-women-concept-free-vector.jpg",
     "https://static.vecteezy.com/system/resources/thumbnails/004/299/815/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg",
-    "https://static.vecteezy.com/system/resources/thumbnails/004/591/189/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg"
+    "https://static.vecteezy.com/system/resources/thumbnails/004/591/189/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg",
   ];
 
+  const fetchCategoriesMobile = async () => {
+    let searchQuery = 'Mobile';
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/search?q=${searchQuery}`,
+        {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const data = await response.json();
+      setCategories(data || []);
+    } catch (error) {
+      console.error('Error fetching mobile categories:', error);
+    }
+  };
+
+  const fetchCategoriesWatch = async () => {
+    let searchQuery = 'Watch';
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/search?q=${searchQuery}`,
+        {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const data = await response.json();
+      setWatch(data || []);
+    } catch (error) {
+      console.error('Error fetching watch categories:', error);
+    }
+  };
+
+  const fetchCatgorieLaptop = async () => {
+    let searchQuery = 'Laptop';
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/search?q=${searchQuery}`,
+        {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const data = await response.json();
+      setLaptop(data || []);
+    } catch (error) {
+      console.error('Error fetching watch categories:', error);
+    }
+  };
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const fetchData = async () => {
+      await fetchCategoriesMobile();
+      await fetchCategoriesWatch();
+      await fetchCatgorieLaptop();
+    };
+
+    fetchData();
+
+    const interval = setInterval(() => {
       nextImage();
     }, 2000);
 
-    return () => clearInterval(intervalId);
-  }, [currentImage]);
+    return () => clearInterval(interval);
+  }, []);
 
   const nextImage = () => {
-    setCurrentImage((currentImage + 1) % images.length);
+    setCurrentImage((prevImage) => (prevImage + 1) % carouselImages.length);
   };
 
-  const prevImage = () => {
-    setCurrentImage((currentImage - 1 + images.length) % images.length);
+  const handleDotClick = (index) => {
+    setCurrentImage(index);
   };
 
-  const search_products = async() => {
-    Navigate('/search_products/?q=p')
-  }
+  const handleCategoryClick = (category) => {
+    navigate(`/view`, { state: category });
+  };
+
+  const round = (searchQuery) => {
+    navigate(`/search_products/?q=${searchQuery}`);
+  };
+
   return (
-    <>
-      <div className="Homepage-container">
-        <div className="all-catogaries">
-          <div className="catogaries">
-            <div className="cat-gor">
-              <img src="https://rukminim2.flixcart.com/flap/80/80/image/29327f40e9c4d26b.png?q=100" alt="Gorcery"></img>
-              <p>Gorcery</p>
-            </div>
-            <div className="mobile">
-              <img src="https://rukminim1.flixcart.com/flap/490/460/image/42f9a853f9181279.jpg?q=20" alt="mobile" height="120px" width="120px"></img>
+    <div className="Homepage-container">
+      {/* Carousel Section */}
+      <div className="carousel-container">
+        <div className="carousel">
+          <img
+            src={carouselImages[currentImage]}
+            alt={`slide-${currentImage}`}
+            height="100%"
+            width="100%"
+          />
+        </div>
+        {/* Dots Section */}
+        <div className="carousel-dots">
+          {carouselImages.map((_, index) => (
+            <span
+              key={index}
+              className={`dot ${currentImage === index ? 'active' : ''}`}
+              onClick={() => handleDotClick(index)}
+            ></span>
+          ))}
+        </div>
+      </div>
 
-            </div>
-            <div className="cat-col">
-              <img src="https://rukminim1.flixcart.com/flap/490/460/image/f07bb3e1c1392b47.jpg?q=20" alt="clothes" height="120px" width="120px" />
-
-            </div>
-            <div className="smart">
-              <img src="https://rukminim1.flixcart.com/flap/490/460/image/913e96c334d04395.jpg?q=20" alt="smart" height="120px" width="120px" />
-            </div>
-            <div className="furniture">
-              <img src="https://rukminim1.flixcart.com/flap/80/80/image/ab7e2b022a4587dd.jpg?q=100" alt="furniture" height="80px" width="80px" />
-              <p>Furnitures</p>
-            </div>
-            <div className="furniture">
-              <img src="https://rukminim1.flixcart.com/fk-p-flap/80/80/image/0139228b2f7eb413.jpg?q=100" alt="Applicents" height="80px" width="80px" />
-              <p>Applicants</p>
-            </div>
-            <div className="furniture">
-              <img src="https://rukminim1.flixcart.com/flap/80/80/image/71050627a56b4693.png?q=100" alt="Travel" height="80px" width="80px" />
-              <p>Travel</p>
-            </div>
-            <div className="furniture">
-              <img src="https://rukminim1.flixcart.com/flap/80/80/image/dff3f7adcf3a90c6.png?q=100" alt="Toys" height="80px" width="80px" />
-              <p>Toys</p>
-            </div>
-            <div className="furniture">
-              <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="80px" width="80px" />
-              <p>Camers</p>
-            </div>
-
+      {/* Mobiles Section */}
+      <div className="sect">
+        <div className="main-header">
+          <div className="text"><h2>Mobiles</h2></div>
+          <div className="rounded-div" onClick={() => { round('mobile') }}>
+            &#8594;
           </div>
         </div>
 
-        <div className="image-all">
-            <img
-              src={images[currentImage]}
-              alt={`img${currentImage}`}
-              height="100%"
-              width="100%"
-            />
-  
-          
-        </div>
         <div className="all-deals-sale">
-          <div className="best-deals">
-            <div className="up-head">
-              <h2>Best Electronics</h2>
-              <button onClick={search_products}>&#10095;</button>
-            </div>
-
-            <div className="best-electronics">
-              <div className="best-camera">
-               <a href="#"> <img src="https://m.media-amazon.com/images/I/916GGqnsG+L._AC_UY218_.jpg" alt="camera" height="150px" width="150px" />
-                <h2>Camera</h2>
-                <h3>Shoap Now!</h3></a>
-              </div>
-              <div className="speaker-pic">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/projector/k/f/0/zeb-pixaplay-22-green-16-zeb-pixaplay-22-green-led-zebronics-original-imagpqgasyrg2gzv.jpeg?q=70" alt="speaker" height="150px" width="150px" />
-                <h2>Speaker</h2>
-                <h3>starting from  &#x20B9;999.</h3>
-              </div>
-              <div className="card-pic">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/external-hard-drive/ssd/q/1/y/sdssde61-1t00-g25m-sandisk-original-imagsgpzfjagzdqf.jpeg?q=70" alt="disk" height="150px" width="150px" />
-                <h2>sandisk</h2>
-                <h3>Shoap Now!</h3>
-              </div>
-              <div className="monitor">
-                <img src="https://rukminim2.flixcart.com/image/312/312/xif0q/monitor/t/q/r/g24e-20-full-hd-24-2023-66d7gar1in-lenovo-original-imagq53zdnffu2pz.jpeg?q=70" alt="monitor" height="150px" width="150px" />
-                <h2>Monier</h2>
-                <h3> From &#x20B9;11999</h3>
-              </div>
-              <div className="printer">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/printer/v/f/q/1008a-hp-original-imagpzkkyazzc7tf.jpeg?q=70" alt="printer" height="150px" width="150px" />
-                <h2>Hp Printer</h2>
-                <h3>From  &#x20B9;13999</h3>
-              </div>
-            </div>
-          </div>
-          <div className="deals-pic">
-            <img src="https://rukminim1.flixcart.com/fk-p-flap/530/810/image/4e53722c1839b515.jpg?q=20" alt="sale" height="427px" width="400px" />
+          <div className="products-container">
+            {categories?.data?.length > 0 ? (
+              categories.data.slice(0, 10).map((category) => (
+                <div
+                  className="product-item"
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  <img
+                    src={category.imageUrl || 'https://via.placeholder.com/150'}
+                    alt={category.name || 'Category'}
+                    height="150px"
+                    width="150px"
+                  />
+                  <br />
+                  <h2>{category.name || 'Unnamed Category'}</h2>
+                  <h3>₹{category.price || '0.00'}</h3>
+                  <p>{category.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No products available</p>
+            )}
           </div>
         </div>
-        <div className="toy-f-m">
-          <div className="indiual">
-            <div className="up-head">
-              <h2>Best Toys & More</h2>
-              <button onClick={search_products}>&#10095;</button>
+      </div>
+
+      {/* Watches Section and laptop section*/}
+      <div className="watch-laptop">
+        <div className="sect-watch">
+          <div className="main-header">
+            <div className="text"><h2>Watches</h2></div>
+            <div className="rounded-div" onClick={() => { round('Watch') }}>
+              &#8594;
             </div>
-            <div className="sho">
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/612/612/kh0vonk0/art-set/h/h/6/pencil-smart-kit-doms-original-imafx4qrxrhv82bn.jpeg?q=70" alt="satasniory" height="150px" width="150px" />
-                <h2>Statsniory</h2>
-                <h3>From &#x20B9;85</h3>
-              </div>
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/electric-cycle/c/n/f/bolton-electric-cycle-for-men-women-ages-15-range-35-km-li-ion-original-imagxn5ewecmptsk.jpeg?q=70" alt="bicycle" height="150px" width="150px" />
-                <h2>Bicycle</h2>
-                <h3>From &#x20B9;1565</h3>
-              </div>
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/416/416/kw85bww0/action-figure/p/9/q/6-death-note-anime-action-figure-19-cm-for-home-decors-office-original-imag8ymahvqj4kk3.jpeg?q=70&crop=false" alt="toys" height="150px" width="150px" />
-                <h2>Toys</h2>
-                <h3>From &#x20B9;185</h3>
-              </div>
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/612/612/ks99aq80/stuffed-toy/f/g/q/vtb-retail-3-feet-teddy-bear-for-valentine-anniversary-birthday-original-imag5uwbtftsdywm.jpeg?q=70" alt="teddy" height="150px" width="150px" />
-                <h2>Teddy</h2>
-                <h3>From &#x20B9;99</h3>
-              </div>
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/612/612/remote-control-toy/r/d/b/toy-car-like-ferrari-with-open-and-closed-doors-with-remote-original-imaebrkhhycnwyzj.jpeg?q=70" alt="control car" height="150px" width="150px" />
-                <h2>control car</h2>
-                <h3>From &#x20B9;85</h3>
-              </div>
-              <div className="st">
-                <img src="https://rukminim2.flixcart.com/image/612/612/kapoo7k0/coffee/a/p/m/200-classic-stabilo-200g-pouch-instant-coffee-pouch-nescafe-original-imafs7xhajfwuzdz.jpeg?q=70" alt="Cofee" height="150px" width="150px" />
-                <h2>Cofee</h2>
-                <h3>Discount upto 70%</h3>
-              </div>
+          </div>
+
+          <div className="all-deals-sale-watch">
+            <div className="products-container-watch">
+              {watch?.data?.length > 0 ? (
+                watch.data.slice(0, 2).filter((_,index) => index !== 9).map((item) => (
+                  <div
+                    className="product-item-watch"
+                    key={item.id}
+                    onClick={() => handleCategoryClick(item)}
+                  >
+                    <img
+                      src={item.imageUrl || 'https://via.placeholder.com/150'}
+                      alt={item.name || 'Watch'}
+                      height="150px"
+                      width="150px"
+                    />
+                    <br />
+                    <h2>{item.name || 'Unnamed Watch'}</h2>
+                    <h3>₹{item.price || '0.00'}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No products available</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+
+        <div className="sect-watch">
+          <div className="main-header">
+            <div className="text"><h2>Laptop</h2></div>
+            <div className="rounded-div" onClick={() => { round('Watch') }}>
+              &#8594;
+            </div>
+          </div>
+
+          <div className="all-deals-sale-watch">
+            <div className="products-container-watch">
+              {laptop?.data?.length > 0 ? (
+                laptop.data.slice(0, 5).map((item) => (
+                  <div
+                    className="product-item-watch"
+                    key={item.id}
+                    onClick={() => handleCategoryClick(item)}
+                  >
+                    <img
+                      src={item.imageUrl || 'https://via.placeholder.com/150'}
+                      alt={item.name || 'Watch'}
+                      height="150px"
+                      width="150px"
+                    />
+                    <br />
+                    <h2>{item.name || 'Unnamed Watch'}</h2>
+                    <h3>₹{item.price || '0.00'}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No products available</p>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

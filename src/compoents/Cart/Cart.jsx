@@ -34,11 +34,16 @@ const Cart = () => {
 
   
   const totalPrice = useMemo(() => {
-    const total = cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
-    dispatch({ type: SET_TOTAL_PRICE, payload: total }); // Dispatch totalPrice to Redux store
+    const total = cartItems.reduce((total, item) => {
+      if (item.productId && item.productId.price) {
+        return total + item.productId.price * item.quantity;
+      }
+      return total; // Skip items with missing or invalid productId
+    }, 0);
+    dispatch({ type: SET_TOTAL_PRICE, payload: total }); 
     return total;
   }, [cartItems, dispatch]);
-
+  
   
   const updateQuantity = async (productId, newQuantity) => {
     if (newQuantity < 1) return;
@@ -108,23 +113,43 @@ const Cart = () => {
         <div className="cart-container">
           <div className="prev-next">
             <div className="cart-items">
-              {displayedItems.map((item) => (
-                <div key={item.productId._id} className="cart-item">
-                  <img src={item.productId?.imageUrl} alt={item.productId?.name} />
-                  <p className="cart-item-title">{item.productId?.name}</p>
-                  <p className="cart-item-price">₹{item.productId?.price}</p>
+            {displayedItems.map((item) => (
+  <div key={item.productId?._id || item.id || Math.random()} className="cart-item">
+    {item.productId ? (
+      <>
+        <img src={item.productId?.imageUrl} alt={item.productId?.name} />
+        <p className="cart-item-title">{item.productId?.name}</p>
+        <p className="cart-item-price">₹{item.productId?.price}</p>
 
-                  <div className="quantity-container">
-                    <button className="quantity-btn" onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button className="quantity-btn" onClick={() => updateQuantity(item.productId._id, item.quantity + 1)}>+</button>
-                  </div>
+        <div className="quantity-container">
+          <button
+            className="quantity-btn"
+            onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}
+          >
+            -
+          </button>
+          <span>{item.quantity}</span>
+          <button
+            className="quantity-btn"
+            onClick={() => updateQuantity(item.productId._id, item.quantity + 1)}
+          >
+            +
+          </button>
+        </div>
 
-                  <button className="remove-btn" onClick={() => removeFromCart(item.productId._id)}>
-                    Remove
-                  </button>
-                </div>
-              ))}
+        <button
+          className="remove-btn"
+          onClick={() => removeFromCart(item.productId._id)}
+        >
+          Remove
+        </button>
+      </>
+    ) : (
+      <p className="cart-item-error">This product is unavailable or has been removed.</p>
+    )}
+  </div>
+))}
+
             </div>
 
             {cartItems.length > itemsPerPage && (
