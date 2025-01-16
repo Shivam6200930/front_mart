@@ -166,7 +166,7 @@ const Profile = () => {
   }, [showChangePassword]);
 
   return (
-    
+    <div className="main-profile">
       <div className="profile-container">
         <div className="left-section">
           <div className="profile-image-box">
@@ -233,7 +233,7 @@ const Profile = () => {
         }
         <ToastContainer position="top-center" reverseOrder={false} />
       </div>
-    
+      </div>
   );
 };
 

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, successMessage, errorMessage } = useSelector(state => state.register);
+  
 
   const [user, setUser] = useState({
     name: "",
@@ -19,7 +19,7 @@ const Register = () => {
     password_confirm: "",
     phone: "",
   });
-
+  const [loading,setLoading]=useState(false)
   const [changePassword, setChangePassword] = useState(true);
   const [showPasswordRules, setShowPasswordRules] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState({
@@ -69,6 +69,7 @@ const Register = () => {
       if (name && name.length >= 2 && email && phone) {
         dispatch(registerRequest());
         try {
+          setLoading(true);
           const response = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
             {
@@ -80,10 +81,13 @@ const Register = () => {
             },
             { withCredentials: true }
           );
+          setLoading(false)
           dispatch(registerSuccess("Register successfully"));
-          toast.success("Register successfully");
+          alert("Register successfully");
           navigate("/login");
+          
         } catch (error) {
+          setLoading(false)
           const errorMessage = error.response?.data?.email?.message || error.response?.data?.phone?.message || "Registration failed";
           dispatch(registerFailure(errorMessage));
           toast.error(errorMessage);
@@ -170,8 +174,8 @@ const Register = () => {
           placeholder="Re-enter Password"
           onChange={handleInputChange}
         />
-        <button className={styles.registerButton} onClick={registerUser}>
-          Register
+        <button className={styles.registerButton} onClick={registerUser} >
+          {loading?'Register...':'Register'}
         </button>
         <div className={styles.orText}>or</div>
         <a href="/login">

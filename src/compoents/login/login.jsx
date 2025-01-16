@@ -7,7 +7,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginRequest, loginSuccess, loginFailure } from '../../redux/action/Actions';
-import { signInWithGoogle } from './firebase_config';
 
 const Login = () => {
   const navigate = useNavigate();

@@ -1,190 +1,262 @@
+body {
+  background-color: #f7f7f7;
+  color: #333;
+  overflow-x: hidden;
+  font-size: 16px;
+  margin: 0; /* Added to remove default margin */
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Profile Container */
 .profile-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  margin-top: 89px;
   padding: 20px;
-  background: linear-gradient(135deg, #f0f0f0, #e3e3e3);
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: 1500px;
-  margin-top: 100px;
-  margin-bottom: 30px;
+  max-width: 1200px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden; /* Prevent overflow */
+  box-sizing: border-box; /* Prevents box overflow */
 }
 
 /* Left Section */
 .left-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  padding-right: 10px; /* Added padding to prevent content from touching the edge */
 }
 
 .profile-image-box {
   position: relative;
-  width: 120px;
-  height: 120px;
-  border: 4px solid #4caf50;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
+  margin-bottom: 15px;
 }
 
-.profile-image-box img {
+.profile-image-box img,
+.profile-image-box svg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensures the image fills the container without distortion */
+  border-radius: 50%; /* Ensures the image is always round */
   cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.profile-image-box img:hover {
-  transform: scale(1.1);
 }
 
 .i-n svg {
-  cursor: pointer;
-  color: #757575;
-  transition: color 0.3s ease;
-}
-
-.i-n svg:hover {
-  color: #4caf50;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  padding: 15px;
 }
 
 .h1-admin h1 {
-  margin-top: 10px;
-  font-size: 1.8rem;
+  text-align: center;
+  font-size: 1.5rem;
   color: #333;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Vertical Line */
-.vertical-line {
-  width: 2px;
-  height: 100%;
-  background-color: #ddd;
-  margin: 0 20px;
+  margin: 0; /* Prevent any margin that might cause overflow */
 }
 
 /* Right Section */
 .right-section {
-  flex: 1;
-  text-align: center;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 30px;
+}
+
+.vertical-line {
+  width: 2px;
+  background-color: #e0e0e0;
+  height: 100%;
+  margin-left: 30px;
+}
+
+.user-information {
+  margin-bottom: 20px;
 }
 
 .user-information p {
   font-size: 1rem;
-  color: #444;
-  margin: 10px 0;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-right:1000px;
 }
-.user-information svg{
-  color:#e94560;
+
+.user-information p svg {
+  margin-right: 10px;
 }
-/* Buttons */
+
 .bottom-section {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.bottom-section button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background: linear-gradient(135deg, #4caf50, #087f23);
-  border: none;
-  border-radius: 25px;
+/* Button Styles */
+button {
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid transparent;
+  width: 100%; /* Ensure buttons take up full width */
+  box-sizing: border-box; /* Prevents overflow */
+  max-width: 300px; /* Limits button size on larger screens */
+  margin: 0 auto; /* Centers buttons */
 }
 
-.bottom-section button:hover {
-  background: linear-gradient(135deg, #087f23, #4caf50);
-  transform: translateY(-2px);
+/* Custom Button Styles */
+.change-password-btn {
+  background: linear-gradient(45deg, #28a745, #34d058);
+  color: white;
+  border: 2px solid #28a745;
+  box-shadow: 0px 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+.change-password-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #34d058, #28a745);
+  box-shadow: 0px 8px 20px rgba(40, 167, 69, 0.4);
 }
 
 .logout-btn {
-  background: linear-gradient(135deg, #ff5722, #d84315);
+  background: linear-gradient(45deg, #dc3545, #ff5f58);
+  color: white;
+  border: 2px solid #dc3545;
+  box-shadow: 0px 4px 10px rgba(220, 53, 69, 0.3);
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #d84315, #ff5722);
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff5f58, #dc3545);
+  box-shadow: 0px 8px 20px rgba(220, 53, 69, 0.4);
 }
 
-/* Loading Spinner */
+.homepage-btn {
+  background: linear-gradient(45deg, #ffc107, #ffcc29);
+  color: white;
+  border: 2px solid #ffc107;
+  box-shadow: 0px 4px 10px rgba(255, 193, 7, 0.3);
+}
+
+.homepage-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ffcc29, #ffc107);
+  box-shadow: 0px 8px 20px rgba(255, 193, 7, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(45deg, #17a2b8, #1c9fa3);
+  color: white;
+  border: 2px solid #17a2b8;
+  box-shadow: 0px 4px 10px rgba(23, 162, 184, 0.3);
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #1c9fa3, #17a2b8);
+  box-shadow: 0px 8px 20px rgba(23, 162, 184, 0.4);
+}
+
+/* Responsive design for mobile */
+@media only screen and (max-width: 768px) {
+  .profile-container {
+    flex-direction: column;
+    margin-top: 90px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    padding: 15px;
+    width:96%;
+  }
+
+  .left-section {
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .right-section {
+    margin-left: 0;
+    width: 100%; /* Ensure right section fits on mobile */
+  }
+
+  .vertical-line {
+    width: 100%;
+    height: 2px;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .bottom-section {
+    align-items: center;
+  }
+
+  .change-password-btn,
+  .logout-btn,
+  .homepage-btn,
+  .delete-btn {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px; /* Added margin for spacing */
+  }
+
+  .profile-image-box {
+    width: 120px; /* Reduced size of profile image on mobile */
+    height: 120px;
+  }
+
+  .h1-admin h1 {
+    font-size: 1.25rem; /* Smaller heading on mobile */
+  }
+}
+
+/* Loading spinner */
 #loading-container {
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
 }
 
 #loading-spinner {
-  width: 30px;
-  height: 30px;
-  border: 3px solid #4caf50;
-  border-top: 3px solid transparent;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
   border-radius: 50%;
+  width: 40px;
+  height: 40px;
   animation: spin 1s linear infinite;
 }
 
+#loading-container p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-/* Responsive Styles */
-@media (min-width: 768px) {
-  .profile-container {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 40px;
-  }
-
-  .left-section {
-    margin-bottom: 0;
-  }
-
-  .right-section {
-    text-align: left;
-  }
-
-  .vertical-line {
-    height: auto;
-  }
-
-  .bottom-section {
-    justify-content: flex-start;
-  }
-}
-
-@media (max-width: 767px) {
-  .profile-container {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .bottom-section {
-    flex-direction: column;
-    gap: 15px;
-  }
+/* Toast Notifications */
+.Toastify__toast-container {
+  z-index: 9999;
 }

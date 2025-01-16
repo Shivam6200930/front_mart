@@ -129,7 +129,7 @@ const Header = () => {
       {/* Sidebar for mobile view */}
       <div className={`mobile-sidebar ${showSidebar ? 'active' : ''}`} ref={sidebarRef}>
         <button className="close-sidebar" onClick={toggleSidebar}>
-          ✖
+          
         </button>
         <ul>
           <li onClick={() => { navigate('/profile'); setShowSidebar(false); }}>

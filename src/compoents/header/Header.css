@@ -261,8 +261,8 @@ body {
 
 .mobile-sidebar .close-sidebar {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 0px;
+  left: 5px;
   background: none;
   border: none;
   font-size: 20px;
