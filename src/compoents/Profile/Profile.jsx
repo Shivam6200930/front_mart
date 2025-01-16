@@ -166,7 +166,7 @@ const Profile = () => {
   }, [showChangePassword]);
 
   return (
-    <>
+    
       <div className="profile-container">
         <div className="left-section">
           <div className="profile-image-box">
@@ -194,9 +194,9 @@ const Profile = () => {
         <div className="vertical-line"></div>
         <div className="right-section">
           <div className="user-information">
-            <p><Mail /> {data.email}</p>
+            <p> <Mail /> {data.email}</p>
             <p><PhoneCall /> {data.phone}</p>
-            <p></p>
+            
           </div>
           <div className="bottom-section">
             <button className="change-password-btn" onClick={() => setShowChangePassword(true)} onMouseDown={preventDefault}>Change Password</button>
@@ -233,7 +233,7 @@ const Profile = () => {
         }
         <ToastContainer position="top-center" reverseOrder={false} />
       </div>
-    </>
+    
   );
 };
 
