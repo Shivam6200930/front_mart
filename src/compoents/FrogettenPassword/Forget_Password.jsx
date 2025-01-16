@@ -1,12 +1,12 @@
 import React from 'react';
-import './forgrt_password.css'
+import styles from './forget_password.module.css'; // Import the module CSS
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Forget_Password() {
+function ForgetPassword() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: ''
@@ -22,23 +22,22 @@ function Forget_Password() {
 
   const forget = async () => {
     try {
-      if(!user.email){
-        alert('Please enter your mail')
-      }else{
-       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/sendresetPassword`,
-        {
-          email: user.email
-        },
-        { withCredentials: true }
-      );
-      
-      alert('Mail sent successfully; this is only valid for 10 minutes');
-      navigate('/login'); 
-    }
+      if (!user.email) {
+        toast.warn('Please enter your email!');
+      } else {
+        await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/sendresetPassword`,
+          {
+            email: user.email
+          },
+          { withCredentials: true }
+        );
+        toast.success('Mail sent successfully! Check your inbox within 10 minutes.');
+        navigate('/login');
+      }
     } catch (err) {
-      console.log(err);
-      toast.error('Something went wrong');
+      console.error(err);
+      toast.error('Something went wrong. Try again later.');
     }
     setUser({
       email: ''
@@ -47,17 +46,20 @@ function Forget_Password() {
 
   return (
     <>
-      <div className="Forget-container">
-        <div className="Forget-f">
+      <div className={styles["forget-container"]}>
+        <div className={styles["forget-card"]}>
+          <h2>Reset Password</h2>
+          <p>Enter your registered email address to reset your password.</p>
           <input
-            type='text'
-            name='email'
-            placeholder='Enter your email'
+            type="email"
+            name="email"
+            placeholder="Enter your email"
             value={user.email}
             onChange={handleChange}
+            className={styles["input-field"]}
           />
-          <button onClick={forget} className='btn-edit'>
-            Forget Password
+          <button onClick={forget} className={styles["btn-reset"]}>
+            Submit
           </button>
         </div>
         <ToastContainer position="top-center" reverseOrder={false} />
@@ -66,4 +68,4 @@ function Forget_Password() {
   );
 }
 
-export default Forget_Password;
+export default ForgetPassword;

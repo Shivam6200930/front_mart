@@ -120,9 +120,10 @@ const Header = () => {
             </a>
           </div>
         )}
-        <div className="mobile-menu-icon" onClick={toggleSidebar}>
-          ☰
-        </div>
+         {loggedIn?(<div className="mobile-menu-icon" onClick={toggleSidebar}>
+            ☰
+          </div>):(<></>)}
+       
       </div>
 
       {/* Sidebar for mobile view */}

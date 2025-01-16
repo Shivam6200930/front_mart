@@ -1,0 +1,161 @@
+/* Background Styling */
+.registerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+  padding: 20px;
+}
+
+/* Register Box Styling */
+.registerBox {
+  margin-top: 7%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, #7f7fd5, transparent, #7f7fd5);
+  margin: 20px 0;
+}
+
+.inputField {
+  width: 94%;
+  padding: 15px 22px;
+  margin-bottom: 20px;
+  border: 2px solid #86a8e7;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.inputField:focus {
+  border-color: #7f7fd5;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(135, 208, 235, 0.5);
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #7f7fd5;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.icon:hover {
+  color: #91eae4;
+}
+
+.registerButton,
+.loginButton {
+  background: linear-gradient(135deg, #7f7fd5, #91eae4);
+  border: none;
+  color: black;
+  padding: 15px 20px;
+  border-radius: 25px;
+  font-size: 18px; /* Font size */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 96%;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(135, 208, 235, 0.4);
+}
+
+.registerButton:hover,
+.loginButton:hover {
+  background: linear-gradient(135deg, #91eae4, #7f7fd5);
+  box-shadow: 0 8px 20px rgba(135, 208, 235, 0.6);
+  transform: translateY(-3px);
+}
+
+.orText {
+  margin: 20px 0;
+  color: #7f7fd5;
+  font-size: 1rem;
+}
+/* General styling remains the same from the earlier CSS */
+.passwordRules {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.passwordRules p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.valid {
+  color: green;
+  font-weight: bold;
+}
+
+.invalid {
+  color: red;
+  font-weight: bold;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .registerBox {
+    margin-top:20%;
+    width: 90%;
+    padding: 30px;
+  }
+
+  .inputField {
+    font-size: 0.9rem;
+    padding: 12px 18px;
+  }
+
+  .registerButton,
+  .loginButton {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .registerBox {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .inputField {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+
+  .registerButton,
+  .loginButton {
+    font-size: 0.8rem;
+  }
+}

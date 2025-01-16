@@ -1,0 +1,157 @@
+/* Background with new colors */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #7f7fd5, #86a8e7, #91eae4);
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Login Box Styling */
+.loginBox {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  text-align: center;
+  box-sizing: border-box; /* Ensures padding is included in the box width */
+  overflow: hidden; /* Prevents content overflow */
+}
+
+/* Input Design with new color scheme */
+.inputField {
+  width: 100%;
+  padding: 15px 22px;
+  margin-bottom: 20px;
+  border: 2px solid #86a8e7;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+}
+
+.inputField:focus {
+  border-color: #7f7fd5;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(135, 208, 235, 0.5); /* Light blue glow */
+}
+
+
+.loginButton,
+.registerButton {
+  background: linear-gradient(135deg, #7f7fd5, #91eae4); /* Gradient blues */
+  border: none;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 25px;
+  font-size: 18px; /* Font size */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  width: 96%;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 15px rgba(135, 208, 235, 0.4); /* Light blue shadow */
+}
+
+.loginButton:hover,
+.registerButton:hover {
+  background: linear-gradient(135deg, #91eae4, #7f7fd5); /* Reverse gradient */
+  box-shadow: 0 8px 20px rgba(135, 208, 235, 0.6);
+  transform: translateY(-3px);
+}
+
+.loginButton:active,
+.registerButton:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px rgba(135, 208, 235, 0.4);
+}
+
+/* Divider */
+.divider {
+  margin: 20px 0;
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, #7f7fd5, transparent, #7f7fd5);
+}
+
+/* Forget Password Link with updated color */
+.forgetPasswordLink {
+  color: #7f7fd5;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease-in-out;
+}
+
+.forgetPasswordLink:hover {
+  color: #86a8e7;
+  text-decoration: underline;
+}
+
+.iconlogin {
+  position: absolute;
+  right: 700px; 
+  top: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color:black;
+  /* color: #7f7fd5; */
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.icon-login:hover {
+  color: #91eae4; /* Change color on hover */
+  transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.icon-login:active {
+  transform: scale(1); /* Reset size on click */
+  color: #86a8e7; /* Slightly darker color on click */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loginBox {
+    width: 90%; /* Adjusted for smaller screens */
+    padding: 30px;
+  }
+
+  .inputField {
+    font-size: 0.9rem;
+    padding: 12px 18px;
+  }
+
+  .loginButton,
+  .registerButton {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginBox {
+    width: 95%; /* Reduced width to prevent overflow */
+    padding: 20px;
+  }
+
+  .inputField {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+
+  .loginButton,
+  .registerButton {
+    font-size: 0.8rem;
+  }
+
+  .icon-login {
+    
+    font-size: 1.3rem;
+  }
+}
