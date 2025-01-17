@@ -223,31 +223,29 @@ function Payment() {
             </div>
           ) : (
             <div className="order-details">
-              <h2>Order Details</h2>
-              <p>Total Price: ₹{totalPrice}</p>
-
-              {/* Map through all addresses */}
-              {userData.moreaddress.map(
-                (addr, index) => (
-                  <div
-                    key={index}
-                    className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
-                    onClick={()=>handlePayment(addr)}
-                  >
-                    <p>name:{addr.name}</p>
-                    <p>
-                      locality:{addr.locality}
-                    </p>
-                    <p>village:{addr.address}</p>
-                    <p>district:{addr.city}</p>
-                    <p>State:{addr.state}</p>
-                    <p>pincode:{addr.pincode}</p>
-                  </div>
-                )
-              )}
-
-              <button onClick={() => setShowAddressForm(true)}>Add Address</button>
-            </div>
+            <h2>Order Details</h2>
+            <p>Total Price: ₹{totalPrice}</p>
+            {userData.moreaddress.length > 0 ? (
+              userData.moreaddress.map((addr, index) => (
+                <div
+                  key={index}
+                  className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
+                  onClick={() => handlePayment(addr)}
+                >
+                  <p>Name: {addr.name}</p>
+                  <p>Locality: {addr.locality}</p>
+                  <p>Village: {addr.address}</p>
+                  <p>District: {addr.city}</p>
+                  <p>State: {addr.state}</p>
+                  <p>Pincode: {addr.pincode}</p>
+                </div>
+              ))
+            ) : (
+              <p>Please add the address</p>
+            )}
+            <button onClick={() => setShowAddressForm(true)}>Add Address</button>
+          </div>
+          
 
           )}
         </div>
