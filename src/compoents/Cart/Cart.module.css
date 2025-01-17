@@ -1,0 +1,234 @@
+/* General Styles */
+.container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.cartContainer {
+  margin-top:8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Loading Spinner */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #007bff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Cart Items */
+.cartItems {
+  padding: 20px;
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap:190px;
+}
+
+.cartItem img {
+  width: 100px;
+  height: 100px;
+  object-fit: fill;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.cartItemTitle {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.cartItemPrice {
+  color: #ff6b6b;
+  font-size: 1rem;
+}
+
+.quantityContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantityBtn {
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  padding: 10px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.quantityBtn:hover {
+  background-color: #5a3392;
+  transform: scale(1.1);
+}
+
+.removeBtn {
+  background: linear-gradient(45deg, #ff5252, #ff1744);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.9rem;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.removeBtn:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  transform: scale(1.1);
+}
+
+/* Price Details */
+.priceDetails {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.priceDetails h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.priceDetailsRow {
+  display: flex;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.bottomBar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.continueShoppingBtn,
+.buyNowBtn {
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  padding: 10px 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.continueShoppingBtn {
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+}
+
+.buyNowBtn {
+  background: linear-gradient(45deg, #00c853, #64dd17);
+}
+
+.continueShoppingBtn:hover,
+.buyNowBtn:hover {
+  transform: scale(1.1);
+}
+
+/* Pagination Buttons */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto 0;
+  gap: 10px;
+}
+
+.pagination button {
+  background-color: #ffc107;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  color: #343a40;
+  padding: 8px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.pagination button:hover {
+  background-color: #ff9800;
+}
+
+.pagination button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+
+/* Mobile */
+@media (max-width: 768px) {
+  .cartContainer{
+    margin-top:20%;
+  }
+  .cartItem {
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+  }
+
+  .cartItemTitle {
+    text-align: center;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .bottomBar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

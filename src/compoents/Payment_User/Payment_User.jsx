@@ -3,79 +3,94 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 import Login from '../login/login';
 import './Payment_user.css';
 
 function Payment() {
   const [orderId, setOrderId] = useState('');
-  const [buyProducts, setBuyProduct] = useState([]);
-  const [paymentId, setPaymentId] = useState('');
-  const [flag, setFlag] = useState(true);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [buyProducts, setBuyProducts] = useState([]);
   const [Amounts, setAmounts] = useState(0);
+  const [paymentId, setPaymentId] = useState('');
+  const [showAddressForm, setShowAddressForm] = useState(false);
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    phone: ""
+    name: '',
+    email: '',
+    phone: '',
+    moreaddress:[{
+      
+    }]
   });
   const [addressData, setAddressData] = useState({
-    name: "",
-    phone: "",
-    pincode: "",
-    locality: "",
-    address: "",
-    city: "",
-    state: "",
-    landmark: "",
-    alternatePhone: "",
-    addressType: "Home"
+    name: '',
+    phone: '',
+    pincode: '',
+    locality: '',
+    address: '',
+    city: '',
+    state: '',
+    landmark: '',
+    alternatePhone: '',
+    addressType: 'Home',
   });
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [showAddressForm, setShowAddressForm] = useState(true);
 
   const loggedIn = localStorage.getItem('loggedIn');
   const navigate = useNavigate();
-
-  // Fetch the total price from the Redux store
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-        const userData = {
-          name: response.data.user.name,
-          email: response.data.user.email,
-          phone: response.data.user.phone
-        };
-        setUserData(userData);
+        const response = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`,
+          { withCredentials: true }
+        );
+
+        const userdetails = response.data.user;
+        const userMoreAddress = userdetails.address.moreaddress
+        // Set the userData state with all user fields
+        setUserData({
+          name: userdetails.name || '',
+          email: userdetails.email || '',
+          phone: userdetails.phone || '', // Ensure address is an array
+          moreaddress: userMoreAddress||[], // Handle nested address arrays
+        });
+
+        // Set selectedAddress with the first address or null if empty
+        setSelectedAddress(userMoreAddress[0] || null);
+        console.log("Fetched userData:", userdetails.address.moreaddress);
+        console.log("userData",userMoreAddress)
+        
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
       }
-     
     };
 
     const fetchBuyProducts = async () => {
       try {
-        const storeBuyProduct = JSON.parse(localStorage.getItem('buyProducts')) || [];
-        setBuyProduct(storeBuyProduct);
-        if (storeBuyProduct.length === 0) {
-          setFlag(false);
+        const storedBuyProducts = JSON.parse(localStorage.getItem('buyProducts')) || [];
+        setBuyProducts(storedBuyProducts);
+        if (storedBuyProducts.length === 0) {
+          toast.error('Your cart is empty!');
+          navigate('/cart');
         }
       } catch (error) {
-        console.error("Error fetching buyProducts data:", error);
+        console.error('Error fetching buyProducts data:', error);
       }
     };
 
     fetchUserData();
     fetchBuyProducts();
-    if (totalPrice === 0) {
-      toast.error('Your cart is empty!');
-      navigate('/cart'); // Redirect if cart is empty
-    }
-  }, [totalPrice, navigate]);
+  }, [navigate]);
 
-  const handlePayment = async () => {
+
+  const handlePayment = async (addr) => {
+    setSelectedAddress(addr)
+    if(!selectedAddress){
+      alert("please select the address")
+      return;
+    }
     try {
       const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/order`, {
         amount: totalPrice * 100
@@ -150,17 +165,39 @@ function Payment() {
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
-    setAddressData(prevState => ({ ...prevState, [name]: value }));
+    setAddressData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const saveAddress = async () => {
-    const { name, phone, pincode, locality, address, city, state } = addressData;
-    if (name && phone && pincode && locality && address && city && state) {
+    try {
+      const userId = localStorage.getItem('user_id');
+      const newAddress = { ...addressData }; 
+      console.log("newaddress:",newAddress)
+      // Post the new address to the backend
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/address/${userId}`,
+        { address: newAddress },
+        { withCredentials: true }
+      );
+
+      toast.success('Address saved successfully');
+
+      // Update the state with the newly saved address
+      setUserData(
+        {address:newAddress},
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+      setSelectedAddress(newAddress); // Set the new address as the selected one
       setShowAddressForm(false);
-    } else {
-      alert("All fields are required except optional fields.");
+      console.log("useData:",userData)
+    } catch (error) {
+      console.error('Error saving address:', error);
+      toast.error('Failed to save address.');
     }
   };
+
 
   return (
     <>
@@ -179,28 +216,39 @@ function Payment() {
               <input type="text" name="city" placeholder="City/District/Town" value={addressData.city} onChange={handleAddressChange} />
               <input type="text" name="state" placeholder="State" value={addressData.state} onChange={handleAddressChange} />
               <input type="text" name="landmark" placeholder="Landmark (Optional)" value={addressData.landmark} onChange={handleAddressChange} />
-              <input type="text" name="alternatePhone" placeholder="Alternate Phone (Optional)" value={addressData.alternatePhone} onChange={handleAddressChange} />
-              <div className="address-type">
-                <label>
-                  <input type="radio" name="addressType" value="Home" checked={addressData.addressType === 'Home'} onChange={handleAddressChange} /> Home (All day delivery)
-                </label>
-                <label>
-                  <input type="radio" name="addressType" value="Work" checked={addressData.addressType === 'Work'} onChange={handleAddressChange} /> Work (Delivery between 10 AM - 5 PM)
-                </label>
-              </div>
+              <div className="button-s">
               <button onClick={saveAddress}>Save and Deliver Here</button>
+              <button onClick={() => setShowAddressForm(false)}>Cancel</button>
+              </div>
             </div>
           ) : (
             <div className="order-details">
-              <div className="login-d"><h1>Login✅</h1></div>
               <h2>Order Details</h2>
-              <p>Name: {addressData.name}</p>
-              <p>Email: {userData.email}</p>
-              <p>Phone: {addressData.phone}</p>
-              <p>Address:<br />State: {addressData.state}<br />City: {addressData.city}<br />Country: India<br />Pincode: {addressData.pincode}</p>
-              <p>Total Price: ₹{totalPrice}</p> 
-              <button onClick={handlePayment}>Proceed to Payment</button>
+              <p>Total Price: ₹{totalPrice}</p>
+
+              {/* Map through all addresses */}
+              {userData.moreaddress.map(
+                (addr, index) => (
+                  <div
+                    key={index}
+                    className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
+                    onClick={()=>handlePayment(addr)}
+                  >
+                    <p>name:{addr.name}</p>
+                    <p>
+                      locality:{addr.locality}
+                    </p>
+                    <p>village:{addr.address}</p>
+                    <p>district:{addr.city}</p>
+                    <p>State:{addr.state}</p>
+                    <p>pincode:{addr.pincode}</p>
+                  </div>
+                )
+              )}
+
+              <button onClick={() => setShowAddressForm(true)}>Add Address</button>
             </div>
+
           )}
         </div>
       )}

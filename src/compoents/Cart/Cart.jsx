@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './Cart.css';
+import styles from './Cart.module.css';
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType'
+import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType';
+
 const Cart = () => {
   const userId = localStorage.getItem("user_id");
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const itemsPerPage = 3;
+
   useEffect(() => {
     const fetchCartItems = async () => {
       setIsLoading(true); 
@@ -30,25 +32,31 @@ const Cart = () => {
     };
 
     fetchCartItems();
-  }, [userId, updateFlag]); 
+  }, [userId, updateFlag]);
 
-  
+  // Adjust currentPage if items are removed
+  useEffect(() => {
+    const maxPage = Math.ceil(cartItems.length / itemsPerPage);
+    if (currentPage > maxPage) {
+      setCurrentPage(maxPage || 1); // Reset to 1 if no items left
+    }
+  }, [cartItems, currentPage, itemsPerPage]);
+
   const totalPrice = useMemo(() => {
     const total = cartItems.reduce((total, item) => {
       if (item.productId && item.productId.price) {
         return total + item.productId.price * item.quantity;
       }
-      return total; // Skip items with missing or invalid productId
+      return total;
     }, 0);
-    dispatch({ type: SET_TOTAL_PRICE, payload: total }); 
+    dispatch({ type: SET_TOTAL_PRICE, payload: total });
     return total;
   }, [cartItems, dispatch]);
-  
-  
+
   const updateQuantity = async (productId, newQuantity) => {
     if (newQuantity < 1) return;
     try {
-      setIsLoading(true); // Set loading true during update
+      setIsLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/update/${userId}`,
         { productId, quantity: newQuantity },
@@ -61,14 +69,13 @@ const Cart = () => {
       console.error("Error updating cart:", error);
       toast.error("Failed to update cart");
     } finally {
-      setIsLoading(false); // Stop loading after update
+      setIsLoading(false);
     }
   };
 
-  // Remove item from cart
   const removeFromCart = async (productId) => {
     try {
-      setIsLoading(true); // Set loading true during removal
+      setIsLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/remove/${userId}/${productId}`,
         { withCredentials: true }
@@ -80,11 +87,10 @@ const Cart = () => {
       console.error("Error removing item from cart:", error);
       toast.error("Failed to remove item");
     } finally {
-      setIsLoading(false); // Stop loading after removal
+      setIsLoading(false);
     }
   };
 
-  // Buy Now functionality
   const buyNow = () => {
     localStorage.setItem('buyProducts', JSON.stringify(cartItems));
     localStorage.setItem('cartItems', JSON.stringify([]));
@@ -92,7 +98,6 @@ const Cart = () => {
     navigate('/buy');
   };
 
-  // Pagination logic
   const startIndex = (currentPage - 1) * itemsPerPage;
   const displayedItems = cartItems.slice(startIndex, startIndex + itemsPerPage);
 
@@ -103,79 +108,72 @@ const Cart = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       {isLoading ? (
-         <div id="loading-container">
-         <div id="loading-spinner"></div>
-         <p>Loading...</p>
-     </div>
-      ) : (
-        <div className="cart-container">
-          <div className="prev-next">
-            <div className="cart-items">
-            {displayedItems.map((item) => (
-  <div key={item.productId?._id || item.id || Math.random()} className="cart-item">
-    {item.productId ? (
-      <>
-        <img src={item.productId?.imageUrl} alt={item.productId?.name} />
-        <p className="cart-item-title">{item.productId?.name}</p>
-        <p className="cart-item-price">₹{item.productId?.price}</p>
-
-        <div className="quantity-container">
-          <button
-            className="quantity-btn"
-            onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}
-          >
-            -
-          </button>
-          <span>{item.quantity}</span>
-          <button
-            className="quantity-btn"
-            onClick={() => updateQuantity(item.productId._id, item.quantity + 1)}
-          >
-            +
-          </button>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner}></div>
+          <p>Loading...</p>
         </div>
-
-        <button
-          className="remove-btn"
-          onClick={() => removeFromCart(item.productId._id)}
-        >
-          Remove
-        </button>
-      </>
-    ) : (
-      <p className="cart-item-error">This product is unavailable or has been removed.</p>
-    )}
-  </div>
-))}
-
-            </div>
-
-            {cartItems.length > itemsPerPage && (
-              <div className="pagination">
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
-                <button onClick={handleNextPage} disabled={currentPage === Math.ceil(cartItems.length / itemsPerPage)}>Next</button>
+      ) : (
+        <div className={styles.cartContainer}>
+          <div className={styles.cartItems}>
+            {displayedItems.map((item) => (
+              <div key={item.productId?._id || item.id || Math.random()} className={styles.cartItem}>
+                {item.productId ? (
+                  <>
+                    <img src={item.productId?.imageUrl} alt={item.productId?.name} />
+                    <p className={styles.cartItemTitle}>{item.productId?.name}</p>
+                    <p className={styles.cartItemPrice}>₹{item.productId?.price}</p>
+                    <div className={styles.quantityContainer}>
+                      <button
+                        className={styles.quantityBtn}
+                        onClick={() => updateQuantity(item.productId._id, item.quantity - 1)}
+                      >
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        className={styles.quantityBtn}
+                        onClick={() => updateQuantity(item.productId._id, item.quantity + 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                    <button
+                      className={styles.removeBtn}
+                      onClick={() => removeFromCart(item.productId._id)}
+                    >
+                      Remove
+                    </button>
+                  </>
+                ) : (
+                  <p className={styles.cartItemError}>This product is unavailable or has been removed.</p>
+                )}
               </div>
-            )}
+            ))}
           </div>
-
-          <div className="price-details">
+          {cartItems.length > itemsPerPage && (
+            <div className={styles.pagination}>
+              <button onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+              <button onClick={handleNextPage} disabled={currentPage === Math.ceil(cartItems.length / itemsPerPage)}>Next</button>
+            </div>
+          )}
+          <div className={styles.priceDetails}>
             <h2>Price Details</h2>
-            <div className="price-details-row">
+            <div className={styles.priceDetailsRow}>
               <span>Total Items:</span>
               <span>{cartItems.length}</span>
             </div>
-            <div className="price-details-row">
+            <div className={styles.priceDetailsRow}>
               <span>Total Price:</span>
               <span>₹{totalPrice}</span>
             </div>
-            <div className="bottom-bar">
-              <button className="continue-shopping-btn" onClick={() => navigate("/")}>
+            <div className={styles.bottomBar}>
+              <button className={styles.continueShoppingBtn} onClick={() => navigate("/")}>
                 Continue Shopping
               </button>
               {cartItems.length > 0 && (
-                <button className="buy-now-btn" onClick={buyNow}>
+                <button className={styles.buyNowBtn} onClick={buyNow}>
                   Buy Now
                 </button>
               )}

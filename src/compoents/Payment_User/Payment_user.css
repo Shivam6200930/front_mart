@@ -1,149 +1,231 @@
-/* Payment_user.css */
 
-/* Base styles */
+
+body {
+  margin-top:5%;
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fb;
+}
+
+/* Container */
 .payment-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
   
-  .address-form,
-  .order-details {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+button {
+  background-color: #3399cc;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #2878a5;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.address-form {
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  max-width: 500px;
+  margin: 50px auto;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.address-form h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #4a90e2;
+  margin-bottom: 20px;
+}
+
+.address-form input[type="text"],
+.address-form input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.address-form input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  outline: none;
+}
+
+.address-form button {
+  display: inline-block;
+  width: 48%;
+  padding: 10px 15px;
+  margin: 10px 1%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.address-form button:hover {
+  transform: scale(1.05);
+}
+
+.address-form button:first-child {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.address-form button:first-child:hover {
+  background-color: #357abf;
+}
+
+.address-form button:last-child {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.address-form button:last-child:hover {
+  background-color: #c0392b;
+}
+
+
+/* Order Details Section */
+.order-details {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 400px; /* Adjust the max-height to fit the screen */
+  overflow-y: auto; /* Enables vertical scrolling when content overflows */
+}
+
+/* Address Option */
+.address-option {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.address-option:hover {
+  background-color: #f5f5f5;
+}
+
+.address-option.selected {
+  border-color: #3399cc;
+  background-color: #e7f3ff;
+}
+
+/* Scrollbar Styling */
+.order-details::-webkit-scrollbar {
+  width: 8px;
+}
+
+.order-details::-webkit-scrollbar-thumb {
+  background-color: #3399cc;
+  border-radius: 10px;
+}
+
+.order-details::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Media Queries for Mobile and Tablet */
+@media screen and (max-width: 768px) {
+ 
+  .payment-container {
+    margin-top:5%;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  button {
     width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .address-form h2,
-  .order-details h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .address-form input,
-  .order-details input {
-    width: calc(100% - 20px);
-    margin: 10px 10px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .address-form .address-type {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .address-form .address-type label {
-    font-size: 16px;
-  }
-  
-  .address-form button,
-  .order-details button {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 20px 10px;
-    padding: 10px;
     font-size: 18px;
-    background-color: #3399cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
   }
-  
-  .address-form button:hover,
-  .order-details button:hover {
-    background-color: #287ba9;
+
+  .order-details {
+    padding: 15px;
   }
-  
-  /* Styles for laptops and desktops */
-  @media (min-width: 1024px) {
-    .payment-container {
-      padding: 40px;
-    }
-  
-    .address-form,
-    .order-details {
-      max-width: 800px;
-    }
-  
-    .address-form input,
-    .order-details input {
-      padding: 15px;
-      font-size: 18px;
-    }
-  
-    .address-form button,
-    .order-details button {
-      padding: 15px;
-      font-size: 20px;
-    }
+
+  .address-form input {
+    font-size: 14px;
   }
-  
-  /* Styles for tablets */
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .payment-container {
-      padding: 30px;
-    }
-  
-    .address-form,
-    .order-details {
-      max-width: 700px;
-    }
-  
-    .address-form input,
-    .order-details input {
-      padding: 12px;
-      font-size: 17px;
-    }
-  
-    .address-form button,
-    .order-details button {
-      padding: 12px;
-      font-size: 19px;
-    }
+}
+
+/* Media Queries for Mobile Phones */
+@media screen and (max-width: 480px) {
+  .payment-container {
+    margin-top:19%;
+    padding: 10px;
   }
-  
-  /* Styles for phones */
-  @media (max-width: 767px) {
-    .payment-container {
-      padding: 20px;
-    }
-  
-    .address-form,
-    .order-details {
-      max-width: 90%;
-    }
-  
-    .address-form input,
-    .order-details input {
-      padding: 10px;
-      font-size: 16px;
-    }
-  
-    .address-form button,
-    .order-details button {
-      padding: 10px;
-      font-size: 18px;
-    }
-  
-    .address-form .address-type {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .address-form .address-type label {
-      margin: 5px 0;
-    }
+
+  h2 {
+    font-size: 18px;
   }
-  
+
+  .order-details p {
+    font-size: 14px;
+  }
+
+  .address-option {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .address-form input {
+    font-size: 14px;
+  }
+
+  .address-form button {
+    font-size: 16px;
+  }
+  .button-s{
+    display:flex;
+    flex-direction: column;
+  }
+  .button-s button{
+    padding:20px;
+     width:100%;
+  }
+}
+
+/* Styling for login page */
+.payment-container .login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
