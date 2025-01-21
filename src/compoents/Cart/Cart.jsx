@@ -22,6 +22,7 @@ const Cart = () => {
       setIsLoading(true); 
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/getCart/${userId}`, { withCredentials: true });
+        console.log(response.data.cart)
         setCartItems(response.data.cart);
       } catch (error) {
         console.error("Error fetching cart items:", error);

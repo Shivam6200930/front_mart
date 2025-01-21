@@ -14,13 +14,14 @@ function Payment() {
   const [Amounts, setAmounts] = useState(0);
   const [paymentId, setPaymentId] = useState('');
   const [showAddressForm, setShowAddressForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({
+    id:'',
     name: '',
     email: '',
     phone: '',
-    moreaddress:[{
-      
-    }]
+    moreaddress:[{}],
+    cartitems:[]
   });
   const [addressData, setAddressData] = useState({
     name: '',
@@ -38,60 +39,170 @@ function Payment() {
   const loggedIn = localStorage.getItem('loggedIn');
   const navigate = useNavigate();
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+ 
+  const fetchCartProductDetails = async (productIds) => {
+    console.log("ProductsId",productIds)
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/products/byIds`,
+        { productIds },
+        {withCredentials: true, // Ensure cookies or credentials are sent
+          headers: {
+            'Content-Type': 'application/json', },
+         }
+      );
+      // console.log("productDtalis:",response.data.products)
+      // setBuyProducts(response.data.products)
+      // console.log("setBuyProducts",buyProducts)
+      return response.data.products;
+
+      
+    } catch (error) {
+      console.error('Error fetching product details:', error);
+      return [];
+    }
+  };
+
+  // Function to fetch user data including cart items and product details
+  const fetchUserData = async () => {
+    try {
+      setIsLoading(true); // Start loading
+  
+      // Fetch user details
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`,
+        { withCredentials: true }
+      );
+  
+      const userDetails = response.data.user;
+  
+      console.log("Fetched User Details:", userDetails);
+  
+      // Extract product IDs from cart items
+      const cartItems = userDetails.cart.items.map(item => item.productId) || [];
+      console.log(cartItems)
+      // Fetch product details using product IDs
+      if (cartItems.length === 0) {
+        console.warn("No cart items found for this user.");
+      }
+      const productDetails = cartItems.length
+      ? await fetchCartProductDetails(cartItems)
+      : [];
+  
+      // Combine cart items with their respective product details
+      const cartWithProductDetails = userDetails.cart.items.map(item => {
+        const product = productDetails.find(product => product._id === item.productId);
+        return {
+          ...item, // Original cart item details
+          productDetails: product || {},
+          
+        };
+      });
+      
+      const extract_buyproducts = cartWithProductDetails.map((item) => ({
+        ...item.productDetails, // Product details
+        quantity: item.quantity, // Cart item quantity overrides product quantity
+        
+      }));
+      // Update state with user data
+      setUserData({
+        id: userDetails._id || '',
+        name: userDetails.name || '',
+        email: userDetails.email || '',
+        phone: userDetails.phone || '',
+        moreaddress: userDetails.address?.moreaddress || [],
+        cartItems: cartWithProductDetails, // Cart items with product details
+      });
+
+     setBuyProducts(extract_buyproducts)
+     console.log("Buy Products:", extract_buyproducts);
+     console.log("Buy Products in state:",buyProducts);
+      console.log("Updated UserData:", {
+        id: userDetails._id || '',
+        name: userDetails.name || '',
+        email: userDetails.email || '',
+        phone: userDetails.phone || '',
+        moreaddress: userDetails.address.moreaddress || [],
+        cartItems: cartWithProductDetails,
+      });
+      
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
+  };
+  
+
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`,
-          { withCredentials: true }
-        );
+    // const fetchUserData = async () => {
+    //   try {
+    //     const response = await axios.get(
+    //       `${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`,
+    //       { withCredentials: true }
+    //     );
 
-        const userdetails = response.data.user;
-        const userMoreAddress = userdetails.address.moreaddress
-        // Set the userData state with all user fields
-        setUserData({
-          name: userdetails.name || '',
-          email: userdetails.email || '',
-          phone: userdetails.phone || '', // Ensure address is an array
-          moreaddress: userMoreAddress||[], // Handle nested address arrays
-        });
+    //     const userdetails = response.data.user;
+    //     const userMoreAddress = userdetails.address.moreaddress
+    //     // Set the userData state with all user fields
+    //     setUserData({
+    //       id:userdetails._id,
+    //       name: userdetails.name || '',
+    //       email: userdetails.email || '',
+    //       phone: userdetails.phone || '', // Ensure address is an array
+    //       moreaddress: userMoreAddress||[], // Handle nested address arrays
+    //       items:userdetails.cart.items
+    //     });
 
-        // Set selectedAddress with the first address or null if empty
-        setSelectedAddress(userMoreAddress[0] || null);
-        console.log("Fetched userData:", userdetails.address.moreaddress);
-        console.log("userData",userMoreAddress)
+    //     // Set selectedAddress with the first address or null if empty
+    //     setSelectedAddress(userMoreAddress[0] || null);
+    //     console.log("Fetched userData:", userdetails.cart.items[0].productId);
+    //     console.log("userData",userMoreAddress)
         
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+    //   } catch (error) {
+    //     console.error('Error fetching user data:', error);
+    //   }
+    // };
 
-    const fetchBuyProducts = async () => {
-      try {
-        const storedBuyProducts = JSON.parse(localStorage.getItem('buyProducts')) || [];
-        setBuyProducts(storedBuyProducts);
-        if (storedBuyProducts.length === 0) {
-          toast.error('Your cart is empty!');
-          navigate('/cart');
-        }
-      } catch (error) {
-        console.error('Error fetching buyProducts data:', error);
-      }
-    };
+    // const fetchBuyProducts = async () => {
+    //   const [productIds]=userData.items.map()=>{
+    //     productId
+    //   try {
+    //     const response = await axios.get(
+    //       `${import.meta.env.VITE_BACKEND_URL}/api/users/products/byIds`,{productIds },
+    //       { withCredentials: true }
+    //     );
+    //     const cartItems = response.data.cart || [];
+    //     setBuyProducts(cartItems);
+    //     if (cartItems.length === 0) {
+    //       toast.error('Your cart is empty!');
+    //       navigate('/cart');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error fetching cart items:', error);
+    //   }
+    // };
+
 
     fetchUserData();
-    fetchBuyProducts();
+    // fetchBuyProducts();
   }, [navigate]);
 
 
   const handlePayment = async (addr) => {
     setSelectedAddress(addr)
+    console.log("addr:",selectedAddress)
     if(!selectedAddress){
       alert("please select the address")
       return;
     }
     try {
+      const updatedBuyProducts = buyProducts.map((product) => ({
+        ...product,
+        address: addr, // Include address details in the product entry
+    }));
+
+    console.log("Updated buyProducts with address:", updatedBuyProducts);
       const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/order`, {
         amount: totalPrice * 100
       }, { withCredentials: true });
@@ -126,6 +237,23 @@ function Payment() {
             console.error("Error capturing payment:", error);
           }
           toast.success('Payment Successfully!!');
+          try{
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userData.id}`, 
+              { 
+                products_details: updatedBuyProducts ,
+              }, 
+              { withCredentials: true });
+            console.log("OrderHistory saved successfully:",response.data)
+          }catch(error){
+            console.log("unable to save orderHistory error:",error)
+            alert("unable to save orderHistory:",error)
+          }
+          try{
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/deletecart/${userData.id}`)
+            console.log("successfully delete cart items from backend")
+          }catch(error){
+            console.log("unable to delete cart Items:",error)
+          }
           navigate('/');
         },
         prefill: {
@@ -134,7 +262,7 @@ function Payment() {
           contact: addressData.phone,
         },
         notes: {
-          address: 'Your Address',
+          address:selectedAddress ,
         },
         theme: {
           color: '#3399cc',
@@ -154,10 +282,10 @@ function Payment() {
         console.error("Razorpay script is not loaded.");
       }
 
-      const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
-      const userId = localStorage.getItem("user_id");
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
-      console.log("Order history saved:", response.data);
+      // const buyProducts = JSON.parse(localStorage.getItem("buyProducts")) || [];
+      // const userId = userData.id//localStorage.getItem("user_id");
+      // const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userId}`, { products_details: buyProducts }, { withCredentials: true });
+      // console.log("Order history saved:", response.data);
     } catch (error) {
       console.error("Error initiating payment:", error);
     }

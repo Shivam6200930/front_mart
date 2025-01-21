@@ -1,0 +1,294 @@
+/* Global Styles */
+
+  
+  body {
+    background-color: #f8f9fa; /* Soft gray background for a clean look */
+    color: #333;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+  }
+  
+  .orderInfo {
+    text-align: left;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orderInfo p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.8;
+  }
+  
+  .productCard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F9F9F9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  .productCard img {
+    max-width: 280px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .productDetails {
+    flex: 1;
+    padding-left: 30px;
+  }
+  
+  .productDetails h4 {
+    font-size: 1.6rem;
+    color: #34495e;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+  }
+  
+  .productDetails p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin: 8px 0;
+    transition: color 0.3s;
+  }
+  
+  .productDetails p:hover {
+    color: #2980b9; /* Hover effect to highlight details */
+  }
+  
+  .backButton {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .backButton:hover {
+    background-color: #ff4500;
+    transform: translateY(-2px);
+  }
+  
+  .error {
+    color: #e74c3c;
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+  
+  .loading {
+    font-size: 1.5rem;
+    color: #1e90ff;
+    font-weight: 500;
+    margin: 50px 0;
+  }
+  
+  /* Delivery Tracking Status */
+  .trackingStatus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 40px;
+  }
+  
+  .statusStep {
+    position: relative;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .statusStep::before {
+    content: '';
+    width: 3px;
+    height: 100%; /* Default 100% height for line in desktop mode */
+    background-color: #bdc3c7;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    transform: translateY(-50%); /* Ensures it aligns with the step */
+  }
+  
+  .stepCircle {
+    width: 24px;
+    height: 24px;
+    background-color: #bdc3c7;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .stepCircle.active {
+    background-color: #27ae60;
+    transform: scale(1.2);
+  }
+  
+  .statusLabel {
+    font-size: 1rem;
+    margin-top: 8px;
+    color: #34495e;
+  }
+  
+  .line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: -1;
+    width: 3px;
+    height: 100%;
+    background-color: #bdc3c7;
+  }
+  .downloadButton {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+    margin:10px;
+  }
+  
+  .downloadButton:hover {
+    background-color: #2980b9;
+  }
+  
+  
+  /* Responsive Design: Mobile and Tablet */
+  
+  /* For Mobile and Smaller Devices */
+  @media (max-width: 768px) {
+    .container {
+      margin: 20px;
+      padding: 20px;
+    }
+  
+    .heading {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+  
+    .orderInfo,
+    .productCard {
+      padding: 10px;
+    }
+  
+    .productCard {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .productCard img {
+      width: 90%;
+      margin-bottom: 15px;
+    }
+  
+    .productDetails {
+      text-align: center;
+      padding-left: 0;
+      padding-top: 20px;
+    }
+  
+    .backButton {
+      width: 100%;
+      padding: 14px;
+    }
+  
+    .trackingStatus {
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        padding: 20px;
+      }
+    
+      .statusStep::before {
+        width: 3px;  /* Narrow line */
+        height: 50%;  /* Default height at 50% on each step */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background-color: #bdc3c7;
+      }
+    
+      .stepCircle {
+        width: 30px;  /* Bigger circle for better visibility */
+        height: 30px;
+      }
+    
+      .stepCircle.active {
+        background-color: #2980b9;
+      }
+    
+      /* Add a staggered line movement effect for the tracking steps */
+      .statusStep:nth-child(odd)::before {
+        top: 50%; /* Odd steps (1st, 3rd, etc.) go to the top */
+      }
+    
+      .statusStep:nth-child(even)::before {
+        top: 0; /* Even steps (2nd, 4th, etc.) go to the bottom */
+        height: 50%; /* Reduce height on mobile for clarity */
+      }
+    
+      .line {
+        display: none;
+      }
+  }
+  
+  /* Tablet and Larger Mobile Devices */
+  @media (max-width: 992px) {
+    .trackingStatus {
+      flex-direction: column;
+    }
+  
+    .statusStep::before {
+      width: 70%;
+    }
+  
+    .line {
+      width: 70%;
+    }
+  
+    .productDetails h4 {
+      font-size: 1.4rem;
+    }
+  }
+  

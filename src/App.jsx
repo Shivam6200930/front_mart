@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./compoents/register/register";
 import Forget_Password from "./compoents/FrogettenPassword/Forget_Password";
 import Profile from "./compoents/Profile/Profile";
-
+import Orderdetails from "./compoents/order_details/Order_details";
 import PageNotFound from "./compoents/pageNotFound/pageNotFound";
 import ChangeUserPassword from "./compoents/changeUserPassword/ChangeUserPassword";
 import Edit from "./compoents/Edit/Edit";
@@ -22,13 +22,16 @@ import store from './redux/reduxStore/store';
 function App() {              
   const { role } = useSelector((state) => state.login);
   return (
-    <>
+    
      <Provider store={store}>
       <Router>
         <Routes>
         {
           role === 'user' ?(
-          <>    
+          <>   
+           <Route path="/order_details" element={<Layout />}>
+            <Route index element={<Orderdetails />} />
+          </Route>
           <Route path="/orderhistory" element={<Layout />}>
             <Route index element={<OrderHistory />} />
           </Route>
@@ -75,7 +78,7 @@ function App() {
         </Routes>
       </Router>
       </Provider>
-    </>
+    
   )
 }
 
