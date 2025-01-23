@@ -93,10 +93,10 @@ const Cart = () => {
   };
 
   const buyNow = () => {
-    localStorage.setItem('buyProducts', JSON.stringify(cartItems));
-    localStorage.setItem('cartItems', JSON.stringify([]));
-    setCartItems([]);
-    navigate('/buy');
+    // localStorage.setItem('buyProducts', JSON.stringify(cartItems));
+    // localStorage.setItem('cartItems', JSON.stringify([]));
+    // setCartItems([]);
+    navigate('/buy',{ state: { totalPrice } });
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;

@@ -48,7 +48,7 @@ const OrderHistory = () => {
       {orderHistory.length === 0 ? (
         <p className={styles.empty}>You have no orders yet.</p>
       ) : (
-        orderHistory.map((order, orderIndex) => (
+        orderHistory.reverse().map((order, orderIndex) => (
           <div className={styles.orderCard} key={`order-${order._id}-${orderIndex}`}>
             <div className={styles.orderHeader}>
               <span>Order ID: {order._id || "N/A"}</span>

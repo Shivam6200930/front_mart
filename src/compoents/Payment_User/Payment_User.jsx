@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate ,useLocation } from 'react-router-dom';
 import Login from '../login/login';
 import './Payment_user.css';
 
 function Payment() {
+  const location = useLocation();
+  const { totalPrice } = location.state || { totalPrice: 0 }; 
   const [orderId, setOrderId] = useState('');
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [buyProducts, setBuyProducts] = useState([]);
@@ -38,7 +39,7 @@ function Payment() {
 
   const loggedIn = localStorage.getItem('loggedIn');
   const navigate = useNavigate();
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  // const totalPrice = useSelector((state) => state.cart.totalPrice);
  
   const fetchCartProductDetails = async (productIds) => {
     console.log("ProductsId",productIds)
@@ -75,11 +76,9 @@ function Payment() {
   
       const userDetails = response.data.user;
   
-      console.log("Fetched User Details:", userDetails);
-  
       // Extract product IDs from cart items
       const cartItems = userDetails.cart.items.map(item => item.productId) || [];
-      console.log(cartItems)
+     
       // Fetch product details using product IDs
       if (cartItems.length === 0) {
         console.warn("No cart items found for this user.");
@@ -135,57 +134,7 @@ function Payment() {
 
 
   useEffect(() => {
-    // const fetchUserData = async () => {
-    //   try {
-    //     const response = await axios.get(
-    //       `${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`,
-    //       { withCredentials: true }
-    //     );
-
-    //     const userdetails = response.data.user;
-    //     const userMoreAddress = userdetails.address.moreaddress
-    //     // Set the userData state with all user fields
-    //     setUserData({
-    //       id:userdetails._id,
-    //       name: userdetails.name || '',
-    //       email: userdetails.email || '',
-    //       phone: userdetails.phone || '', // Ensure address is an array
-    //       moreaddress: userMoreAddress||[], // Handle nested address arrays
-    //       items:userdetails.cart.items
-    //     });
-
-    //     // Set selectedAddress with the first address or null if empty
-    //     setSelectedAddress(userMoreAddress[0] || null);
-    //     console.log("Fetched userData:", userdetails.cart.items[0].productId);
-    //     console.log("userData",userMoreAddress)
-        
-    //   } catch (error) {
-    //     console.error('Error fetching user data:', error);
-    //   }
-    // };
-
-    // const fetchBuyProducts = async () => {
-    //   const [productIds]=userData.items.map()=>{
-    //     productId
-    //   try {
-    //     const response = await axios.get(
-    //       `${import.meta.env.VITE_BACKEND_URL}/api/users/products/byIds`,{productIds },
-    //       { withCredentials: true }
-    //     );
-    //     const cartItems = response.data.cart || [];
-    //     setBuyProducts(cartItems);
-    //     if (cartItems.length === 0) {
-    //       toast.error('Your cart is empty!');
-    //       navigate('/cart');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error fetching cart items:', error);
-    //   }
-    // };
-
-
     fetchUserData();
-    // fetchBuyProducts();
   }, [navigate]);
 
 
@@ -201,8 +150,6 @@ function Payment() {
         ...product,
         address: addr, // Include address details in the product entry
     }));
-
-    console.log("Updated buyProducts with address:", updatedBuyProducts);
       const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/order`, {
         amount: totalPrice * 100
       }, { withCredentials: true });
@@ -238,12 +185,11 @@ function Payment() {
           }
           toast.success('Payment Successfully!!');
           try{
-            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userData.id}`, 
+             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userData.id}`, 
               { 
                 products_details: updatedBuyProducts ,
               }, 
               { withCredentials: true });
-            console.log("OrderHistory saved successfully:",response.data)
           }catch(error){
             console.log("unable to save orderHistory error:",error)
             alert("unable to save orderHistory:",error)
@@ -302,7 +248,7 @@ function Payment() {
       const newAddress = { ...addressData }; 
       console.log("newaddress:",newAddress)
       // Post the new address to the backend
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/address/${userId}`,
         { address: newAddress },
         { withCredentials: true }
@@ -317,7 +263,7 @@ function Payment() {
       setTimeout(() => {
         window.location.reload();
       }, 100);
-      setSelectedAddress(newAddress); // Set the new address as the selected one
+      setSelectedAddress(newAddress);
       setShowAddressForm(false);
       console.log("useData:",userData)
     } catch (error) {
@@ -354,7 +300,7 @@ function Payment() {
             <h2>Order Details</h2>
             <p>Total Price: ₹{totalPrice}</p>
             {userData.moreaddress.length > 0 ? (
-              userData.moreaddress.map((addr, index) => (
+              userData.moreaddress.reverse().map((addr, index) => (
                 <div
                   key={index}
                   className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
