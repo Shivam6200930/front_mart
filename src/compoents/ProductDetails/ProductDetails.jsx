@@ -91,18 +91,22 @@ function ProductDetails() {
     };
 
     try {
-      const response = await axios.post(
+      setLoading(true)
+       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/add/${userdata.id}`,
         { productId: newItem.productId, quantity: newItem.quantity },
         { withCredentials: true }
       );
-      setUserdata((prev) => ({
-        ...prev,
-        cartItem: response.data.cart,
-      }));
+      // setUserdata((prev) => ({
+      //   ...prev,
+      //   cartItem: response.data.cart,
+      // }));
       navigate("/cart");
     } catch (e) {
+      setLoading(false)
       console.error(e);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -111,11 +115,11 @@ function ProductDetails() {
       <div className="image-box">
         <img className="product-image" src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {loggedIn && (
+          {loggedIn && !loading ?(
             <button className="add-to-cart" onClick={addToCart}>
               Add to Cart
             </button>
-          )}
+          ):(<button className="add-to-cart">Wait.......</button>)}
           <button className="home" onClick={() => navigate("/")}>
             Home
           </button>
