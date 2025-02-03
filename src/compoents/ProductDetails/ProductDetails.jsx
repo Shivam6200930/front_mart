@@ -92,7 +92,7 @@ function ProductDetails() {
 
     try {
       setLoading(true)
-       await axios.post(
+       const response=await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/add/${userdata.id}`,
         { productId: newItem.productId, quantity: newItem.quantity },
         { withCredentials: true }
