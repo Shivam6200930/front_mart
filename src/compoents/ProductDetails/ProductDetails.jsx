@@ -97,10 +97,10 @@ function ProductDetails() {
         { productId: newItem.productId, quantity: newItem.quantity },
         { withCredentials: true }
       );
-      // setUserdata((prev) => ({
-      //   ...prev,
-      //   cartItem: response.data.cart,
-      // }));
+      setUserdata((prev) => ({
+        ...prev,
+        cartItem: response.data.cart,
+      }));
       navigate("/cart");
     } catch (e) {
       setLoading(false)
