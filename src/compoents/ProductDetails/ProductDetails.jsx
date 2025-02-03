@@ -15,7 +15,7 @@ function ProductDetails() {
   const [village, setVillage] = useState("");    // State for village
   const [pincodeError, setPincodeError] = useState(""); // Error message state
   const [loading, setLoading] = useState(false); // Loading state for the API call
-
+  const [loadingCart,setLoadingCart]=useState(false)
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -91,7 +91,7 @@ function ProductDetails() {
     };
 
     try {
-      setLoading(true)
+      setLoadingCart(true)
        const response=await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/add/${userdata.id}`,
         { productId: newItem.productId, quantity: newItem.quantity },
@@ -103,10 +103,10 @@ function ProductDetails() {
       }));
       navigate("/cart");
     } catch (e) {
-      setLoading(false)
+      setLoadingCart(false)
       console.error(e);
     }finally{
-      setLoading(false)
+      setLoadingCart(false)
     }
   };
 
@@ -115,7 +115,7 @@ function ProductDetails() {
       <div className="image-box">
         <img className="product-image" src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {loggedIn && !loading ?(
+          {loggedIn && !loadingCart ?(
             <button className="add-to-cart" onClick={addToCart}>
               Add to Cart
             </button>
