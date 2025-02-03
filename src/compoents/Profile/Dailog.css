@@ -1,71 +1,143 @@
+/* 🔹 Overlay Background */
 .confirm-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  
-  .confirm-dialog-content {
-    position: relative;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
-  .closeButton {
-    position: absolute;
-    bottom: 83px;
-    right: -1%;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color:black;
-  }
-  .closeButton:hover {
-    background:transparent;
-    border: none;
-  }
-  
-  .confirm-dialog-buttons {
-    margin-top: 20px;
-  }
-  .confirm-dialog-content p{
-    margin-top:11%;
-  }
-  
-  .confirm-dialog-buttons button {
-    margin: 0 10px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay for focus */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
 
+/* 🔹 Dialog Box */
+.confirm-dialog-content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px 25px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-in-out;
+}
+
+/* 🔹 Close Button - Positioned Outside */
+.closeButton {
+  position: absolute;
+  top: -20px; /* Moves it outside the dialog box */
+  right: -20px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.closeButton:hover {
+  background: #f44336;
+  transform: scale(1.1);
+}
+
+.closeButton  {
+  color: black;
+  width: 20px;
+  height: 20px;
+}
+
+.closeButton:hover svg {
+  stroke: white;
+}
+
+/* 🔹 Message Text */
+.confirm-dialog-content p {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 🔹 Buttons Section */
+.confirm-dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* 🔹 Buttons Style */
+.confirm-dialog-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 Update Button */
+.confirm-dialog-buttons button:first-child {
+  background: #4CAF50;
+  color: white;
+}
+
+.confirm-dialog-buttons button:first-child:hover {
+  background: #388E3C;
+}
+
+/* 🔹 Delete Button */
+.confirm-dialog-buttons button:last-child {
+  background: #E74C3C;
+  color: white;
+}
+
+.confirm-dialog-buttons button:last-child:hover {
+  background: #C0392B;
+}
+
+/* 🔹 Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 🔹 Responsive Design */
+@media (max-width: 768px) {
+  .confirm-dialog-content {
+    margin:5%;
+    max-width: 80%;
+    padding: 20px;
   }
-  
-  .confirm-dialog-buttons button:first-child {
-    background-color: #007bff;
-    color: white;
+
+  .confirm-dialog-buttons {
+    flex-direction: column;
   }
-  
-  .confirm-dialog-buttons button:last-child {
-    background-color: orangered;
-    color: white;
+
+  .closeButton {
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
   }
-  @media (max-width: 868px) {
-    .closeButton {
-      position: absolute;
-      bottom: 83px;
-      right: -1px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color:black;
-    }
-    
+
+  .closeButton svg {
+    width: 18px;
+    height: 18px;
   }
+}

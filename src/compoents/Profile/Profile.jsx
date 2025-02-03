@@ -9,7 +9,6 @@ import Edit from '../Edit/Edit';
 import ChangePassword from '../changeUserPassword/ChangeUserPassword';
 import DailogDelete from "./DailogDelete";
 import { Mail, PhoneCall } from 'lucide-react';
-import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -28,9 +27,6 @@ const Profile = () => {
     email: "",
     phone: ""
   });
-
-  const responses =useSelector(state=>state.login)
-    console.log(responses)
   async function fetchData() {
     try {
       setLoading(true);

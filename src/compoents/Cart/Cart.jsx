@@ -5,6 +5,7 @@ import styles from './Cart.module.css';
 import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loading from "../Loading/Loading"
 import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType';
 
 const Cart = () => {
@@ -64,6 +65,7 @@ const Cart = () => {
         { withCredentials: true }
       );
       setCartItems(response.data.cart);
+      
       setUpdateFlag((prev) => !prev);
       toast.success("Cart updated");
     } catch (error) {
@@ -111,10 +113,9 @@ const Cart = () => {
   return (
     <div className={styles.container}>
       {isLoading ? (
-        <div className={styles.loadingContainer}>
-          <div className={styles.loadingSpinner}></div>
-          <p>Loading...</p>
-        </div>
+        
+          <Loading/>
+        
       ) : (
         <div className={styles.cartContainer}>
           <div className={styles.cartItems}>

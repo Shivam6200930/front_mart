@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
-import { CircleUserRound, History, ShoppingCart } from 'lucide-react';
+import { CircleUserRound, History, ShoppingCart   } from 'lucide-react';
 import axios from 'axios';
 
 const Header = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState({
+    id: '',
     image: '',
     name: '',
   });
@@ -22,6 +23,7 @@ const Header = () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
         const temp = {
+          id: response.data.user._id,
           name: response.data.user.name,
           image: response.data.user.profileImageUrl,
         };
@@ -34,7 +36,7 @@ const Header = () => {
     if (loggedIn) {
       fetchUserPhoto();
     }
-  }, [loggedIn]);
+  }, [loggedIn, clearData]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -67,6 +69,18 @@ const Header = () => {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+  async function clearData() {
+    try {
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/logout/${data.id}`, { withCredentials: true });
+      localStorage.clear();
+
+      setShowSidebar(false);
+      navigate('/');
+      toast.success("Logout successfully!");
+    } catch (error) {
+      console.error('Failed to logout:', error);
+    }
   };
 
   return (
@@ -106,6 +120,8 @@ const Header = () => {
               <div className="dropdown-item" onClick={() => navigate('/orderhistory')}>
                 Order History
               </div>
+              <div className="dropdown-item" onClick={clearData}>Logout</div>
+
             </div>
           </div>
         ) : (
@@ -120,29 +136,36 @@ const Header = () => {
             </a>
           </div>
         )}
-         {loggedIn?(<div className="mobile-menu-icon" onClick={toggleSidebar}>
-            ☰
-          </div>):(<></>)}
-       
+        {loggedIn ? (<div className="mobile-menu-icon" onClick={toggleSidebar}>
+          ☰
+        </div>) : (<></>)}
+
       </div>
 
       {/* Sidebar for mobile view */}
       <div className={`mobile-sidebar ${showSidebar ? 'active' : ''}`} ref={sidebarRef}>
-        <button className="close-sidebar" onClick={toggleSidebar}>
+        <div className="sidebar-header">
+          <button className="close-sidebar" onClick={toggleSidebar}>✕</button>
           
-        </button>
-        <ul>
+        </div>
+        <ul className="ul-li">
           <li onClick={() => { navigate('/profile'); setShowSidebar(false); }}>
-            <CircleUserRound /> Profile
+            <CircleUserRound className="sidebar-icon" /> Profile
           </li>
           <li onClick={() => { navigate('/cart'); setShowSidebar(false); }}>
-            <ShoppingCart /> Cart
+            <ShoppingCart className="sidebar-icon" /> Cart
           </li>
+          
           <li onClick={() => { navigate('/orderhistory'); setShowSidebar(false); }}>
-            <History /> Order History
+            <History className="sidebar-icon" /> Order History
           </li>
+          <li onClick={() => { navigate('/'); setShowSidebar(false); }}>
+            HomePage
+            </li>
+          <li onClick={clearData}>Logout</li>
         </ul>
       </div>
+
     </div>
 
   );

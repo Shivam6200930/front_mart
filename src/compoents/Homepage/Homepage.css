@@ -122,6 +122,7 @@
   border-radius: 8px; /* Consistent rounded corners */
   max-width: 100%; /* Responsive images */
   height: auto; /* Maintain aspect ratio */
+  object-fit:cover;
   margin-bottom: 10px; /* Spacing below image */
   transition: transform 0.3s ease-in-out;
 }
@@ -201,6 +202,7 @@
   .product-item img {
     width: 120px;
     height: 120px;
+    object-fit:cover;
   }
   .sect {
     margin: 10px; /* Reduce margin for smaller screens */
@@ -342,6 +344,7 @@
   border-radius: 8px; /* Consistent rounded corners */
   max-width: 100%; /* Responsive images */
   height: auto; /* Maintain aspect ratio */
+  object-fit: cover;
   margin-bottom: 10px; /* Spacing below image */
   transition: transform 0.3s ease-in-out;
 }

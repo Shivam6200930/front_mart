@@ -62,7 +62,7 @@ const OrderDetails = () => {
     const doc = new jsPDF();
     const pageHeight = doc.internal.pageSize.height;
     let yPosition = 20;
-  
+
     const addNewPageIfNeeded = (doc, yPos) => {
       if (yPos > pageHeight - 30) {
         doc.addPage();
@@ -70,13 +70,13 @@ const OrderDetails = () => {
       }
       return yPos;
     };
-  
+
     // Header with branding
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(40, 40, 40);
     doc.text("Shivam Mart Invoice", 20, yPosition);
-  
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     doc.text(`Invoice No.: ${orderId}`, 90, yPosition);
@@ -85,19 +85,19 @@ const OrderDetails = () => {
     yPosition += 10;
     // doc.text(`Due Date: ${selectedProduct.dueDate || "N/A"}`, 150, yPosition);
     // yPosition += 20;
-  
+
     // Divider line
     doc.setLineWidth(0.5);
     doc.setDrawColor(200, 200, 200);
     doc.line(20, yPosition, 190, yPosition);
     yPosition += 10;
-  
+
     // Shipping Address
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.text("Billing Details:", 20, yPosition);
     yPosition += 10;
-  
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     doc.text(`Name: ${selectedProduct.user_name}`, 20, yPosition);
@@ -110,14 +110,14 @@ const OrderDetails = () => {
       yPosition
     );
     yPosition += 20;
-  
+
     // Products Section
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
     doc.setTextColor(40, 40, 40);
     doc.text("Products Ordered:", 20, yPosition);
     yPosition += 10;
-  
+
     // Table Header
     doc.setFillColor(240, 240, 240);
     doc.rect(20, yPosition, 170, 10, "F"); // Header background
@@ -128,37 +128,37 @@ const OrderDetails = () => {
     doc.text("Unit Price (Rs)", 100, yPosition + 7);
     doc.text("Amount (Rs)", 160, yPosition + 7);
     yPosition += 15;
-  
+
     // Table Body
-    
+
     doc.setFont("helvetica", "normal");
     doc.text(selectedProduct.name, 25, yPosition);
     doc.text(`${selectedProduct.quantity}`, 75, yPosition, { align: "center" });
-    doc.text(`${amount.toFixed(2)-gstAmount}`, 125, yPosition, {
+    doc.text(`${amount.toFixed(2) - gstAmount}`, 125, yPosition, {
       align: "right",
     });
-    doc.text(`${amount.toFixed(2)-gstAmount}`, 180, yPosition, { align: "right" });
+    doc.text(`${amount.toFixed(2) - gstAmount}`, 180, yPosition, { align: "right" });
     yPosition += 15;
-  
+
     // GST and Total Calculation
-    
-  
+
+
     yPosition = addNewPageIfNeeded(doc, yPosition);
     doc.setFont("helvetica", "bold");
     doc.text("Subtotal:", 120, yPosition);
-    doc.text(`Rs ${amount.toFixed(2)-gstAmount}`, 150, yPosition, { align: "left" });
-  
+    doc.text(`Rs ${amount.toFixed(2) - gstAmount}`, 150, yPosition, { align: "left" });
+
     yPosition += 10;
     doc.text(`GST (${gstRate}%):`, 120, yPosition);
     doc.text(`Rs ${gstAmount.toFixed(2)}`, 150, yPosition, { align: "left" });
-  
+
     yPosition += 10;
     doc.setTextColor(255, 69, 0); // Highlighted total
     doc.text("Total Amount:", 120, yPosition);
     doc.text(`Rs ${amount.toFixed(2)}`, 150, yPosition, { align: "left" });
-  
+
     yPosition += 20;
-  
+
     // Footer
     yPosition = addNewPageIfNeeded(doc, yPosition);
     doc.setFontSize(10);
@@ -166,11 +166,11 @@ const OrderDetails = () => {
     doc.setTextColor(105, 105, 105);
     doc.text("Thank you for shopping with us!", 20, yPosition);
     doc.text("Visit us: www.ShivamMart.com", 20, yPosition + 10);
-  
+
     // Download PDF
     doc.save(`Shivam_Mart_${orderId}_invoice.pdf`);
   };
-  
+
   // Handle error, loading, and no product selection state
   if (loading) {
     return <div className={styles.loading}>Loading...</div>;
@@ -225,24 +225,29 @@ const OrderDetails = () => {
 
       {/* Tracking Status Section */}
       <div className={styles.trackingStatus}>
+        {/* Order Created Step */}
         <div
-          className={`${styles.statusStep} ${orderStatus === "Order Created" ? styles.activeStep : ""}`}
+          className={`${styles.statusStep} ${orderStatus === "Order Created" || orderStatus === "shipped" || orderStatus === "delivered" ? styles.activeStep : ""}`}
         >
           <div
-            className={`${styles.stepCircle} ${orderStatus === "Order Created" ? styles.active : ""}`}
+            className={`${styles.stepCircle} ${orderStatus === "Order Created" || orderStatus === "shipped" || orderStatus === "delivered" ? styles.active : ""}`}
           />
           <p className={styles.statusLabel}>Order Created</p>
         </div>
         <div className={styles.line}></div>
+
+        {/* Shipped Step */}
         <div
-          className={`${styles.statusStep} ${orderStatus === "shipped" ? styles.activeStep : ""}`}
+          className={`${styles.statusStep} ${orderStatus === "shipped" || orderStatus === "delivered" ? styles.activeStep : ""}`}
         >
           <div
-            className={`${styles.stepCircle} ${orderStatus === "shipped" ? styles.active : ""}`}
+            className={`${styles.stepCircle} ${orderStatus === "shipped" || orderStatus === "delivered" ? styles.active : ""}`}
           />
           <p className={styles.statusLabel}>Shipped</p>
         </div>
         <div className={styles.line}></div>
+
+        {/* Delivered Step */}
         <div
           className={`${styles.statusStep} ${orderStatus === "delivered" ? styles.activeStep : ""}`}
         >
@@ -252,6 +257,7 @@ const OrderDetails = () => {
           <p className={styles.statusLabel}>Delivered</p>
         </div>
       </div>
+
 
       {/* Product Card Section */}
       <div className={styles.productCard}>

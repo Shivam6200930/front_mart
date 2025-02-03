@@ -1,81 +1,162 @@
+/* Edit.css */
 #container-edit {
-  position:fixed;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .edit-container {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.edit-container h1 {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 25px;
+  width: 450px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
   text-align: center;
-  margin-bottom: 20px;
+  overflow: hidden;
 }
 
-.edit-container input {
+h1 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
-.closeEditButton{
-  position: fixed;
-  bottom:52%;
-  left: 50%;
-  background: transparent;
+
+input:focus {
+  outline: none;
+  border-color: #007BFF;
+}
+
+#edhm-page {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 20px;
   border: none;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  color:black;
+  transition: background-color 0.3s;
 }
-.closeEditButton:hover{
-  background:transparent;
-}
+
 #btn-edit {
-  background-color: #ff0000;
+  background-color: #007BFF;
   color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
 }
 
 #btn-edit:hover {
-  background-color: #9b0000;
-}
-#edhm-page{
-  display: flex;
-  justify-content: space-between;
-}
-#btn-hom{
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  background-color:orangered;
+  background-color: #0056b3;
 }
 
-@media (max-width: 868px) {
-  .closeEditButton{
-    position: absolute;
-    top:36%;
-    right: 12.5%;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color:black;
+#btn-hom {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+#btn-hom:hover {
+  background-color: #ddd;
+}
+
+/* Close button */
+.closeEditButton {
+  position: absolute;
+  top: 2px; /* Moves it outside the dialog box */
+  right: 8px;
+  background: #15035f;
+  border-radius: 50%;
+  border: none;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  color: #ff0000;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(74, 5, 210, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.closeEditButton:hover {
+  color: #ff0000;
+}
+
+.Toastify__toast-container {
+  z-index: 1100;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .edit-container {
+    width: 90%; /* Use more screen space for mobile */
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.7rem; /* Adjust font size for smaller screens */
+    margin-bottom: 15px;
+  }
+
+  input {
+    font-size: 1rem; /* Slightly smaller input font */
+    padding: 10px;
+  }
+
+  button {
+    font-size: 0.9rem; /* Smaller font size for buttons */
+    padding: 10px 18px;
+  }
+
+  #edhm-page {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 15px;
+  }
+
+  .closeEditButton {
+    font-size: 1.4rem; /* Smaller close button for mobile */
+  }
+}
+
+/* Media Query for extra small screens */
+@media (max-width: 480px) {
+  .edit-container {
+    width: 95%; /* Use even more screen space on very small devices */
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem; /* Smaller font size on very small devices */
+  }
+
+  input {
+    padding: 8px; /* Slightly smaller padding */
+  }
+
+  button {
+    padding: 8px 16px;
+  }
+
+  .closeEditButton {
+    font-size: 1.2rem; /* Even smaller close button */
   }
 }

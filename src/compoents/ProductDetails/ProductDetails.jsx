@@ -4,10 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./productDetails.css";
 
 function ProductDetails() {
+  const loggedIn = localStorage.getItem("loggedIn")
   const [userdata, setUserdata] = useState({
     id: "",
     cartItem: [],
-    loggedIn: false
   });
   const [pincode, setPincode] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
@@ -25,7 +25,6 @@ function ProductDetails() {
       const temp = {
         id: response.data.user._id,
         cartItem: response.data.user.cartItem,
-        loggedIn: response.data.user.loggedIn
       };
       setUserdata(temp);
     } catch (error) {
@@ -112,7 +111,7 @@ function ProductDetails() {
       <div className="image-box">
         <img className="product-image" src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {userdata.loggedIn && (
+          {loggedIn && (
             <button className="add-to-cart" onClick={addToCart}>
               Add to Cart
             </button>
