@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./OrderHistory.module.css";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 const OrderHistory = () => {
   const navigate = useNavigate()
   const [orderHistory, setOrderHistory] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isloading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -34,8 +35,8 @@ const OrderHistory = () => {
     fetchOrderHistory();
   }, []);
 
-  if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
+  if (isloading) {
+    return <div className={styles.loading}><Loading/></div>;
   }
 
   if (error) {
@@ -43,6 +44,7 @@ const OrderHistory = () => {
   }
 
   return (
+    
     <div className={styles.container}>
       <h2 className={styles.heading}>Order History</h2>
       {orderHistory.length === 0 ? (
