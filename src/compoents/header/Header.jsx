@@ -32,13 +32,10 @@ const Header = () => {
         console.error('Error fetching user photo:', error);
       }
     };
-
-    if (loggedIn) {
+    
       fetchUserPhoto();
-    }
-  }, [loggedIn, clearData]);
+    
 
-  useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
@@ -50,8 +47,13 @@ const Header = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    }
+    
+  }, [loggedIn, clearData]);
+
+  // useEffect(() => {
+    
+  // }, []);
 
   const handleSearch = () => {
     navigate(`/search_products/?q=${searchQuery}`);
