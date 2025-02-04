@@ -51,7 +51,7 @@ input:focus {
   margin-top: 20px;
 }
 
-button {
+#btn-edit {
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
@@ -122,7 +122,7 @@ button {
     padding: 10px;
   }
 
-  button {
+  #btn-edit {
     font-size: 0.9rem; /* Smaller font size for buttons */
     padding: 10px 18px;
   }
@@ -152,7 +152,7 @@ button {
     padding: 8px; /* Slightly smaller padding */
   }
 
-  button {
+  #btn-edit {
     padding: 8px 16px;
   }
 

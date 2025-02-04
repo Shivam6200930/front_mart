@@ -76,7 +76,7 @@ function ChangeUserPassword({onClose}) {
             onChange={HandaleChange}
           ></input>
           <div className="but">
-            <button className="button" onClick={change_Password}>
+            <button className="button-c" onClick={change_Password}>
               Change Password
             </button>
            

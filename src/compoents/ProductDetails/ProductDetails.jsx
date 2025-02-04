@@ -4,109 +4,92 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./productDetails.css";
 
 function ProductDetails() {
-  const loggedIn = localStorage.getItem("loggedIn")
+  const loggedIn = localStorage.getItem("loggedIn");
   const [userdata, setUserdata] = useState({
     id: "",
     cartItem: [],
   });
   const [pincode, setPincode] = useState("");
   const [deliveryDate, setDeliveryDate] = useState("");
-  const [district, setDistrict] = useState("");  // State for district
-  const [village, setVillage] = useState("");    // State for village
-  const [pincodeError, setPincodeError] = useState(""); // Error message state
-  const [loading, setLoading] = useState(false); // Loading state for the API call
-  const [loadingCart,setLoadingCart]=useState(false)
+  const [district, setDistrict] = useState("");
+  const [village, setVillage] = useState("");
+  const [pincodeError, setPincodeError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loadingCart, setLoadingCart] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-      const temp = {
-        id: response.data.user._id,
-        cartItem: response.data.user.cartItem,
-      };
-      setUserdata(temp);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
+        setUserdata({
+          id: response.data.user._id,
+          cartItem: response.data.user.cartItem,
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
     fetchData();
   }, []);
 
-  // Function to validate the pincode and display the district/village
   const validatePincode = async (pin) => {
+    if (!pin) {
+      setPincodeError("Please enter a pincode.");
+      return;
+    }
     setLoading(true);
-    setPincodeError(""); // Reset error message before validation
+    setPincodeError("");
 
     try {
       const response = await axios.get(`https://api.postalpincode.in/pincode/${pin}`);
-      if (response.data[0].Status === "Success") {
-        // Reset error message and set district, village, delivery date
+      if (response.data[0]?.Status === "Success") {
         const postOfficeDetails = response.data[0].PostOffice[0];
         setDistrict(postOfficeDetails.District);
-        setVillage(postOfficeDetails.Name); // Name is assumed to refer to the village or locality
+        setVillage(postOfficeDetails.Name);
 
-        // Set a random delivery date between 1-5 days from current date
-        const maxDays = 5;
-        const deliveryDays = Math.floor(Math.random() * maxDays) + 1;
-        const deliveryDate = new Date();
-        deliveryDate.setDate(deliveryDate.getDate() + deliveryDays);
-        const formattedDate = deliveryDate.toLocaleDateString('en-IN', {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        });
-        setDeliveryDate(formattedDate);
-
+        const deliveryDays = Math.floor(Math.random() * 5) + 1;
+        const estimatedDate = new Date();
+        estimatedDate.setDate(estimatedDate.getDate() + deliveryDays);
+        setDeliveryDate(estimatedDate.toLocaleDateString("en-IN", {
+          weekday: "short",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }));
       } else {
-        // Invalid pincode
-        setDistrict(""); // Clear previous district data
-        setVillage("");  // Clear previous village data
-        setDeliveryDate(""); // Clear previous delivery date
-        setPincodeError("Invalid Pincode. Please check and enter a valid pincode.");
+        setDistrict("");
+        setVillage("");
+        setDeliveryDate("");
+        setPincodeError("Invalid Pincode. Please enter a valid one.");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error validating pincode:", error);
       setPincodeError("Error validating pincode. Please try again.");
-      setDistrict(""); // Clear previous district data
-      setVillage("");  // Clear previous village data
-      setDeliveryDate(""); // Clear previous delivery date
     } finally {
       setLoading(false);
     }
   };
 
-  // Add product to the cart
   const addToCart = async () => {
-    const newItem = {
-      productId: state._id,
-      name: state.name,
-      imageUrl: state.imageUrl,
-      price: state.price,
-      quantity: 1
-    };
-
+    if (!loggedIn) {
+      alert("Please log in to add items to the cart.");
+      return;
+    }
+    setLoadingCart(true);
     try {
-      setLoadingCart(true)
-       const response=await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/add/${userdata.id}`,
-        { productId: newItem.productId, quantity: newItem.quantity },
+        { productId: state._id, quantity: 1 },
         { withCredentials: true }
       );
-      setUserdata((prev) => ({
-        ...prev,
-        cartItem: response.data.cart,
-      }));
+      setUserdata((prev) => ({ ...prev, cartItem: response.data.cart }));
       navigate("/cart");
-    } catch (e) {
-      setLoadingCart(false)
-      console.error(e);
-    }finally{
-      setLoadingCart(false)
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    } finally {
+      setLoadingCart(false);
     }
   };
 
@@ -115,14 +98,16 @@ function ProductDetails() {
       <div className="image-box">
         <img className="product-image" src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {loggedIn && !loadingCart ?(
+          {loggedIn && !loadingCart ? (
             <button className="add-to-cart" onClick={addToCart}>
               Add to Cart
             </button>
-          ):(<button className="add-to-cart">Wait.......</button>)}
-          <button className="home" onClick={() => navigate("/")}>
-            Home
-          </button>
+          ) : (
+            <button className="add-to-cart" disabled>
+              {loadingCart ? "Adding..." : "Log in to add"}
+            </button>
+          )}
+          <button className="home" onClick={() => navigate("/")}>Home</button>
         </div>
       </div>
 
@@ -142,41 +127,14 @@ function ProductDetails() {
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
           />
-          <button className="search-button" onClick={() => validatePincode(pincode)}>
+          <button className="search-button" onClick={() => validatePincode(pincode)} disabled={loading}>
             {loading ? "Validating..." : "Search"}
           </button>
         </div>
         {pincodeError && <p className="error-message">{pincodeError}</p>}
-
-        {deliveryDate && !pincodeError && (
-          <p className="delivery-date">Estimated Delivery: {deliveryDate}</p>
-        )}
-
-        {/* Display district and village information only if pincode is valid */}
-        {district && !pincodeError && (
-          <p className="delivery-info"><strong>District:</strong> {district}</p>
-        )}
-
-        {village && !pincodeError && (
-          <p className="delivery-info"><strong>Village/Locality:</strong> {village}</p>
-        )}
-
-        <div className="highlights">
-          <p className="highlight-title">Highlights:</p>
-          <ul className="highlight-list">
-            <li>Easy payment options</li>
-            <li>Free shipping on orders above ₹1000</li>
-          </ul>
-        </div>
-
-        <div className="product-specifications">
-          <h3>Product Specifications:</h3>
-          <ul>
-            <li>Feature1: {state.specifications?.Feature1}</li>
-            <li>Feature2: {state.specifications?.Feature2}</li>
-            <li>Feature3: {state.specifications?.Feature3}</li>
-          </ul>
-        </div>
+        {deliveryDate && <p className="delivery-date">Estimated Delivery: {deliveryDate}</p>}
+        {district && <p className="delivery-info"><strong>District:</strong> {district}</p>}
+        {village && <p className="delivery-info"><strong>Village/Locality:</strong> {village}</p>}
       </div>
     </div>
   );

@@ -50,7 +50,6 @@ function Edit({onClose}) {
         />
         <div id="edhm-page">
         <button onClick={handleEdit} id='btn-edit'>Edit</button>
-        <button id='btn-hom' onClick={() => navigate('/')}>Homepage</button>
         </div>
       </div>
       <ToastContainer position="top-center" reverseOrder={false} />
