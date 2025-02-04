@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Login from '../login/login';
 import './Payment_user.css';
-
+import Loading from "../Loading/Loading";
 function Payment() {
   const location = useLocation();
   const { totalPrice } = location.state || { totalPrice: 0 };
@@ -143,11 +143,9 @@ function Payment() {
 
   const handlePayment = async (addr) => {
     setSelectedAddress(addr)
-    console.log("addr:", selectedAddress)
     if (!isAddressSelected) {
-      // First click: Show alert
       alert("Please select the address again to proceed with payment.");
-      setIsAddressSelected(true);  // Set the flag to true after the first click
+      setIsAddressSelected(true);
       return;
     }
     if (!selectedAddress) {
@@ -277,6 +275,7 @@ function Payment() {
 
   const saveAddress = async () => {
     try {
+      setIsLoading(true); 
       const userId = localStorage.getItem('user_id');
       const newAddress = { ...addressData };
       // console.log("newaddress:",newAddress)
@@ -302,12 +301,14 @@ function Payment() {
     } catch (error) {
       console.error('Error saving address:', error);
       toast.error('Failed to save address. please check you fill all details.');
+    }finally{
+      setIsLoading(false); 
     }
   };
 
 
   return (
-  <div>
+    <div>
     {!loggedIn ? (
       <Login />
     ) : (
@@ -324,30 +325,35 @@ function Payment() {
             <input type="text" name="state" placeholder="State" value={addressData.state} onChange={handleAddressChange} readOnly required />
             <input type="text" name="landmark" placeholder="Landmark (Optional)" value={addressData.landmark} onChange={handleAddressChange} />
             <div className="button-s">
-              <button onClick={saveAddress}>Save and Deliver Here</button>
+              {!isLoading?(<button onClick={saveAddress}>Save and Deliver Here</button>):(<button onClick={saveAddress}>Saving....</button>)}
               <button onClick={() => setShowAddressForm(false)}>Cancel</button>
             </div>
           </div>
+        ) : isLoading ? (
+          <Loading />
         ) : (
           <div>
             <h2>Order Details</h2>
             <p>Total Price: ₹{totalPrice}</p>
             <div className="order-details">
               {userData.moreaddress.length > 0 ? (
-                userData.moreaddress.reverse().map((addr, index) => (
-                  <div
-                    key={index}
-                    className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
-                    onClick={() => handlePayment(addr)}
-                  >
-                    <p>Name: {addr.name}</p>
-                    <p>Locality: {addr.locality}</p>
-                    <p>Village: {addr.address}</p>
-                    <p>District: {addr.city}</p>
-                    <p>State: {addr.state}</p>
-                    <p>Pincode: {addr.pincode}</p>
-                  </div>
-                ))
+                userData.moreaddress
+                  .slice() // Create a copy before reversing to avoid mutating the original array
+                  .reverse()
+                  .map((addr, index) => (
+                    <div
+                      key={index}
+                      className={`address-option ${selectedAddress === addr ? 'selected' : ''}`}
+                      onClick={() => handlePayment(addr)}
+                    >
+                      <p>Name: {addr.name}</p>
+                      <p>Locality: {addr.locality}</p>
+                      <p>Village: {addr.address}</p>
+                      <p>District: {addr.city}</p>
+                      <p>State: {addr.state}</p>
+                      <p>Pincode: {addr.pincode}</p>
+                    </div>
+                  ))
               ) : (
                 <p>Please add the address</p>
               )}
@@ -358,6 +364,7 @@ function Payment() {
       </div>
     )}
   </div>
+  
 );
 
 }

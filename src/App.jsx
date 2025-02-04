@@ -30,7 +30,7 @@ function App() {
       <Router>
       <Routes>
   {
-    role === "user" ? (
+    role == "user" ? (
       <>
         <Route path="/order_details" element={<Layout />}>
           <Route index element={<Orderdetails />} />

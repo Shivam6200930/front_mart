@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 function ForgetPassword() {
   const navigate = useNavigate();
   const [user, setUser] = useState({ email: '' });
-
+  const [isloading,setLoading] =useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -19,6 +19,7 @@ function ForgetPassword() {
       if (!user.email) {
         toast.warn('Please enter your email!');
       } else {
+        setLoading(true)
         await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/users/sendresetPassword`,
           { email: user.email },
@@ -30,6 +31,8 @@ function ForgetPassword() {
     } catch (err) {
       console.error(err);
       toast.error('Something went wrong. Try again later.');
+    }finally{
+      setLoading(false)
     }
     setUser({ email: '' });
   };
@@ -47,9 +50,11 @@ function ForgetPassword() {
           onChange={handleChange}
           className={styles["input-field"]}
         />
-        <button onClick={forget} className={styles["btn-reset"]}>
+        {!isloading ?(<button onClick={forget} className={styles["btn-reset"]}>
           Submit
-        </button>
+        </button>):(<button onClick={forget} className={styles["btn-reset"]}>
+          Submiting.......
+        </button>)}
       </div>
     </div>
   );

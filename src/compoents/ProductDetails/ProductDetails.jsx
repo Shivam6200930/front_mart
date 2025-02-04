@@ -62,7 +62,9 @@ function ProductDetails() {
         setDistrict("");
         setVillage("");
         setDeliveryDate("");
-        setPincodeError("Invalid Pincode. Please enter a valid one.");
+        if (pincode) {
+          setPincodeError("Invalid Pincode. Please enter a valid one.");
+        }
       }
     } catch (error) {
       console.error("Error validating pincode:", error);
@@ -74,7 +76,8 @@ function ProductDetails() {
 
   const addToCart = async () => {
     if (!loggedIn) {
-      alert("Please log in to add items to the cart.");
+     alert("Please log in to add items to the cart.");
+      navigate("/login");
       return;
     }
     setLoadingCart(true);
@@ -98,13 +101,13 @@ function ProductDetails() {
       <div className="image-box">
         <img className="product-image" src={state.imageUrl} alt={state.name} />
         <div className="button-container">
-          {loggedIn && !loadingCart ? (
+          { !loadingCart ? (
             <button className="add-to-cart" onClick={addToCart}>
               Add to Cart
             </button>
           ) : (
-            <button className="add-to-cart" disabled>
-              {loadingCart ? "Adding..." : "Log in to add"}
+            <button className="add-to-cart" disabled onClick={addToCart}>
+              {loadingCart ? "Adding..." : "Add to Cart"}
             </button>
           )}
           <button className="home" onClick={() => navigate("/")}>Home</button>
@@ -135,7 +138,27 @@ function ProductDetails() {
         {deliveryDate && <p className="delivery-date">Estimated Delivery: {deliveryDate}</p>}
         {district && <p className="delivery-info"><strong>District:</strong> {district}</p>}
         {village && <p className="delivery-info"><strong>Village/Locality:</strong> {village}</p>}
+
+        <div className="highlights">
+          <p className="highlight-title">Highlights:</p>
+          <ul className="highlight-list">
+            <li>Easy payment options</li>
+            <li>Free shipping on orders above ₹1000</li>
+          </ul>
+        </div>
+
+        <div className="product-specifications">
+          <h3>Product Specifications:</h3>
+          <ul>
+            <li>Feature1: {state.specifications?.Feature1}</li>
+            <li>Feature2: {state.specifications?.Feature2}</li>
+            <li>Feature3: {state.specifications?.Feature3}</li>
+          </ul>
+        </div>
       </div>
+      
+
+     
     </div>
   );
 }

@@ -98,6 +98,11 @@ const Cart = () => {
     // localStorage.setItem('buyProducts', JSON.stringify(cartItems));
     // localStorage.setItem('cartItems', JSON.stringify([]));
     // setCartItems([]);
+    if (!loggedIn) {
+      alert("Please log in to add items to the cart.");
+      navigate("/login");
+      return;
+    }
     navigate('/buy',{ state: { totalPrice } });
   };
 
