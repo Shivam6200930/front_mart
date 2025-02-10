@@ -1,71 +1,227 @@
-/* Header Styles */
-.header {
+
+  body {
+    background: #1f1f1f;
+    color: #f5f5f5;
+  }
+  
+  /* Header Styling */
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #222;
-    color: white;
-    padding: 15px 30px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Logo Section */
-.logoSection {
-    flex: 1;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
+    padding: 20px 40px;
+    background: linear-gradient(45deg, #4c5c68, #333);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  
+  
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
     letter-spacing: 2px;
+    color: #fff;
+    text-decoration: none;
     text-transform: uppercase;
-}
-
-/* User Profile Section */
-.userSection {
+    position: relative;
+    padding-left: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .logo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #f44336, #ffeb3b);
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .logo:hover::after {
+    transform: scaleX(1);
+  }
+  
+  /* Menu Container */
+  .menu-container {
+    position: relative;
     display: flex;
     align-items: center;
-}
-
-.userProfile {
-    display: flex;
-    align-items: center;
-}
-
-.userAvatar {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
-.username {
-    font-size: 18px;
-    font-weight: 600;
-}
-
-/* Hover effects */
-.userProfile:hover {
+    gap: 10px;
+  }
+  
+  /* Menu Button */
+  .menu-button {
+    background-color: #f44336;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 30px;
     cursor: pointer;
-    background: #333;
-    padding: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  .menu-button:hover {
+    background-color: #ffeb3b;
+    color:black;
+    font-weight: bold;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .menu-button:active {
+    transform: translateY(1px);
+  }
+  
+  /* Menu List */
+  .menu-list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #333;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    z-index: 10;
+  }
+  
+  .menu-container:hover .menu-list {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  
+  /* Menu Items */
+  .menu-item {
+    padding: 12px;
+    color: #f5f5f5;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 10px;
+  }
+  
+  .menu-item:hover {
+    background-color: #555;
+    padding-left: 20px;
+  }
+  
+  .menu-item:active {
+    background-color: #f44336;
+  }
+  
+  /* Menu Item Links */
+  .menu-item-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: block;
+    width: 100%;
+  }
+  
+  /* Logout Animation */
+  .menu-item.logout {
+    background: linear-gradient(45deg, #ff0000, #f44336);
+    color: #fff;
+    font-weight: 700;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+  }
+  
+  .menu-item.logout:hover {
+    transform: scale(1.1);
+    background-color: #ff0000;
+  }
+  
+  /* Mobile Menu (Hamburger) */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 20;
+  }
+  
+  .hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
     border-radius: 5px;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
+  }
+  
+  /* Mobile View Adjustments */
+  @media screen and (max-width: 798px) {
     .header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 20px;
+      padding: 20px;
+      justify-content: space-between;
     }
-
+  
     .logo {
-        font-size: 20px;
+      font-size: 24px;
     }
-
-    .userProfile {
-        margin-top: 10px;
+  
+    .menu-container {
+      display: none;
     }
-}
+  
+    .hamburger {
+      display: flex;
+    }
+  
+    /* Dropdown for Mobile */
+    .mobile-menu-list {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #333;
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      z-index: 10;
+    }
+  
+    .mobile-menu-list {
+      display: flex;
+    }
+  
+    .mobile-menu-item {
+      padding: 15px;
+      color: #f5f5f5;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .mobile-menu-item:hover {
+      background-color: #555;
+    }
+  
+    .mobile-menu-item:active {
+      background-color: #f44336;
+    }
+  }
+  

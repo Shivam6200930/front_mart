@@ -7,7 +7,8 @@
 }
 
 .cartContainer {
-  margin-top:8%;
+  margin-top:2%;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -17,7 +18,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
-
+.cartContainer h1 {
+  text-align:center;
+}
 /* Loading Spinner */
 .loadingContainer {
   display: flex;
@@ -146,7 +149,7 @@
 .bottomBar {
   margin-top: 20px;
   display: flex;
-  justify-content: space-between;
+  gap: 900px;
 }
 
 .continueShoppingBtn,
@@ -163,6 +166,7 @@
 }
 
 .continueShoppingBtn {
+ 
   background: linear-gradient(45deg, #6a11cb, #2575fc);
 }
 
@@ -172,7 +176,7 @@
 
 .continueShoppingBtn:hover,
 .buyNowBtn:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
 }
 
 /* Pagination Buttons */

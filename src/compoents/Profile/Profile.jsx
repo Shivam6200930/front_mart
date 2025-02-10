@@ -92,7 +92,7 @@ const Profile = () => {
           image: response.data.image
         }));
 
-        toast.success('Image upload successfully!');
+        alert('Image upload successfully!');
         navigate('/profile');
       } else {
         toast.error('Failed to upload image');

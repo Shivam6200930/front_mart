@@ -10,6 +10,7 @@ import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType';
 
 const Cart = () => {
   const userId = localStorage.getItem("user_id");
+  const loggedIn = localStorage.getItem("loggedIn")
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -122,7 +123,9 @@ const Cart = () => {
           <Loading/>
         
       ) : (
+        
         <div className={styles.cartContainer}>
+          <h1>Cart Items</h1>
           <div className={styles.cartItems}>
             {displayedItems.map((item) => (
               <div key={item.productId?._id || item.id || Math.random()} className={styles.cartItem}>

@@ -1,0 +1,745 @@
+/* Import Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+/* Root Variables */
+:root {
+  --bg-color: #e0e5ec;
+  --card-bg: rgba(255, 255, 255, 0.7); /* Glassmorphism background */
+  --box-shadow-light: 8px 8px 16px rgba(186, 191, 211, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.6);
+  --box-shadow-inset: inset 8px 8px 16px rgba(186, 191, 211, 0.3), inset -8px -8px 16px rgba(255, 255, 255, 0.6);
+  --primary-color: #4a90e2;
+  --text-color: #333;
+  --hover-bg: #f5f6f8;
+}
+
+/* Main Container */
+.container {
+  max-width: 1500px;
+  margin: auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-color);
+  min-height: 100vh;
+  border-radius: 15px;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 75px;
+  width: 100%;
+  max-width: 1000px;
+  background: var(--bg-color);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow-light);
+}
+
+/* Dropdown Styling */
+.filters select {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: var(--bg-color);
+  box-shadow: var(--box-shadow-light);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.filters select:focus {
+  box-shadow: var(--box-shadow-inset);
+}
+.addBtnProduct {   
+  width: 150px; /* Set desired width */
+  height: 30px; /* Set desired height */
+  padding: 14px 16px; /* Adjust padding as needed */
+  border: none;   
+  border-radius: 8px;   
+  cursor: pointer;   
+  font-size: 1.5rem;   
+  transition: all 0.3s ease;   
+  background: var(--primary-color);   
+  color: white;   
+  box-shadow: var(--box-shadow-light);   
+  margin-bottom: 25px;   
+  margin-left: 850px; 
+}
+
+/* Product List */
+.productList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Exactly 3 products per row */
+  gap: 100px;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+/* Product Card */
+.productCard {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--box-shadow-light);
+  transition: all 0.3s ease;
+  text-align: center;
+  color: var(--text-color);
+  backdrop-filter: blur(10px); /* Glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.productCard h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.productCard p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.productCard button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  background: var(--primary-color);
+  color: white;
+  box-shadow: var(--box-shadow-light);
+}
+
+.productCard:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--box-shadow-inset), 10px 10px 20px rgba(186, 191, 211, 0.5);
+}
+
+.productCard button:hover {
+  background: #3578c4;
+  transform: scale(1.05);
+}
+
+/* Hover Effect for Product Card */
+.productCard:hover {
+  background: var(--hover-bg);
+  box-shadow: var(--box-shadow-light), 10px 10px 20px rgba(186, 191, 211, 0.5);
+}
+
+/* Buttons for Edit & Delete */
+.editBtn {
+  background: var(--primary-color);
+  color: white;
+  margin-right: 10px;
+}
+
+.deleteBtn {
+  background: #e44d4d;
+  color: white;
+}
+
+.deleteBtn:hover {
+  background: #c43b3b;
+}
+
+
+/* Modern Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modalContent {
+  background: #1e1e2e;
+  padding: 30px;
+  width: 95%;
+  max-width: 550px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Title */
+.modalContent h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Form Styling */
+.formGroup {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #d1d1e0;
+}
+
+.modalContent input, .formSelect {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #2e2e3e;
+  color: #ffffff;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+  outline: none;
+  transition: 0.3s;
+}
+
+.modalContent input:focus, .formSelect:focus {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Specifications Styling */
+.subField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.subField input {
+  flex: 1;
+  padding: 10px;
+}
+
+/* Buttons */
+.buttonGroup, .modalButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+ .addBtn, .removeBtn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  
+}
+.saveBtn,.cancelBtn{
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  width:100%;
+  
+}
+
+
+.saveBtn {
+  background: #4a90e2;
+  color: white;
+}
+
+.cancelBtn {
+  background: #ff4d4d;
+  color: white;
+}
+
+.addBtn {
+  background: #28a745;
+  color: white;
+}
+
+.removeBtn {
+  background: #ff4747;
+  color: white;
+}
+ .removeBtn:hover, .cancelBtn:hover{
+  background:#ff4747;
+  transform: scale(1.05);
+}
+.addBtn:hover{
+  background:#28a747;
+  transform: scale(1.05);
+}
+
+.saveBtn:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dialogOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogBox {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dialogActions {
+  margin-top: 10px;
+}
+
+.confirmDelete {
+  background: red;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.cancelDelete {
+  background: gray;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+
+.addProductModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContainer {
+  background: #ffffff;
+  width: 400px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+}
+
+.inputField,
+.selectDropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.selectDropdown {
+  background-color: #f9f9f9;
+}
+
+.specificationsSection {
+  margin-top: 15px;
+}
+
+.specificationsTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.specificationRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.specInput {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.removeFeatureBtn {
+  background: #ff4d4d;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.removeFeatureBtn:hover {
+  background: #cc0000;
+}
+
+.addFeatureBtn {
+  background: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+
+.addFeatureBtn:hover {
+  background: #0056b3;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.saveBtn {
+  background: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+
+.saveBtn:hover {
+  background: #218838;
+}
+
+.cancelBtn {
+  background: #6c757d;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+}
+
+.cancelBtn:hover {
+  background: #545b62;
+}
+
+
+
+/*add product css*/
+.addProductModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.modalContainer {
+  background: linear-gradient(135deg, #1e1e2f, #252547);
+  padding: 25px;
+  width: 90%;
+  max-width: 520px;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.4s ease-in-out;
+  color: #ffffff;
+  max-height: 80vh; /* Prevents the modal from exceeding screen height */
+  overflow-y: auto; /* Enables scrolling when content is too long */
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  padding-bottom: 10px; /* Ensures buttons are always visible */
+}
+
+
+.modalTitle {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #00d4ff;
+}
+
+.inputField, .selectDropdown {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 2px solid #00d4ff;
+  border-radius: 10px;
+  font-size: 16px;
+  background: #2d2d4a;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.inputField:focus, .selectDropdown:focus {
+  border-color: #ff00a6;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 0, 166, 0.6);
+}
+
+.specificationsSection {
+  margin-top: 20px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.specificationsTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #00d4ff;
+  margin-bottom: 12px;
+}
+
+.specificationRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.specInput {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ff00a6;
+  border-radius: 8px;
+  background: #2d2d4a;
+  color: white;
+}
+
+.removeFeatureBtn {
+  background: #ff003c;
+  margin-bottom:23px;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.removeFeatureBtn:hover {
+  background: #cc002a;
+}
+
+.addFeatureBtn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #00d4ff, #ff00a6);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+  font-size: 17px;
+  transition: 0.3s;
+}
+
+.addFeatureBtn:hover {
+  background: linear-gradient(90deg, #00d4ff, #ff00a6);
+  opacity: 0.9;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.saveBtn {
+  background: linear-gradient(90deg, #00d4ff, #ff00a6);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.saveBtn:hover {
+  background: linear-gradient(90deg, #00d4ff, #ff00a6);
+  opacity: 0.9;
+}
+
+.cancelBtn {
+  background: #6c757d;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cancelBtn:hover {
+  background: #5a6268;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Mobile & Tablet Responsiveness */
+@media (max-width: 1024px) {
+  .filters {
+    flex-direction: column;
+    align-items: center;
+    gap:15px;
+  }
+
+  .productList {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .productList {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .modalContent {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modalContent h2 {
+    font-size: 1.5rem;
+  }
+
+  .modalButtons {
+    flex-direction: column;
+  }
+
+  .saveBtn,
+  .cancelBtn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .modalContainer {
+    width: 95%;
+    padding: 18px;
+    max-width: 400px;
+  }
+  .addBtnProduct{
+  width: 150px; /* Set desired width */
+  height: 30px; /* Set desired height */
+  padding: 14px 16px; /* Adjust padding as needed */
+  border: none;   
+  border-radius: 8px;   
+  cursor: pointer;   
+  font-size: 1.5rem;   
+  transition: all 0.3s ease;   
+  background: var(--primary-color);   
+  color: white;   
+  box-shadow: var(--box-shadow-light);   
+  margin-bottom: 25px;   
+  margin-left: 40px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .productList {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .filters{
+    gap:15px;
+  }
+
+  .filters select {
+    width: 100%;
+  }
+}

@@ -18,21 +18,20 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const loggedIn = localStorage.getItem('loggedIn');
 
+  const fetchUserPhoto = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
+      const temp = {
+        id: response.data.user._id,
+        name: response.data.user.name,
+        image: response.data.user.profileImageUrl,
+      };
+      setData(temp);
+    } catch (error) {
+      console.error('Error fetching user photo:', error);
+    }
+  };
   useEffect(() => {
-    const fetchUserPhoto = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/loggedUser`, { withCredentials: true });
-        const temp = {
-          id: response.data.user._id,
-          name: response.data.user.name,
-          image: response.data.user.profileImageUrl,
-        };
-        setData(temp);
-      } catch (error) {
-        console.error('Error fetching user photo:', error);
-      }
-    };
-    
       fetchUserPhoto();
     
 
@@ -49,7 +48,7 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     }
     
-  }, [loggedIn, clearData]);
+  }, [ clearData]);
 
   // useEffect(() => {
     

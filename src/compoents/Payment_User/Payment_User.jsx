@@ -43,28 +43,29 @@ function Payment() {
   // const totalPrice = useSelector((state) => state.cart.totalPrice);
 
   const fetchCartProductDetails = async (productIds) => {
-    console.log("ProductsId", productIds)
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/products/byIds`,
-        { productIds },
+      if (!productIds || productIds.length === 0) {
+        console.warn("No product IDs provided for fetching details.");
+        return [];
+      }
+     
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/products`,
+        {productIds},
         {
-          withCredentials: true, // Ensure cookies or credentials are sent
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          withCredentials: true,
         }
       );
-      // console.log("productDtalis:",response.data.products)
-      // setBuyProducts(response.data.products)
-      // console.log("setBuyProducts",buyProducts)
-      return response.data.products;
-
-
+  
+      console.log("Fetched product details response:", response.data.products);
+  
+      return Array.isArray(response.data.products) ? response.data.products : [];
     } catch (error) {
-      console.error('Error fetching product details:', error);
+      console.error("Error fetching product details:", error);
       return [];
     }
   };
+  
 
   // Function to fetch user data including cart items and product details
   const fetchUserData = async () => {
@@ -80,12 +81,14 @@ function Payment() {
       const userDetails = response.data.user;
 
       // Extract product IDs from cart items
-      const cartItems = userDetails.cart.items.map(item => item.productId) || [];
+      const cartItems = userDetails.cart.items.map(item => item?.productId?._id || item.productId) || [];
+
 
       // Fetch product details using product IDs
       if (cartItems.length === 0) {
         console.warn("No cart items found for this user.");
       }
+      console.log("Product IDs to fetch:", cartItems);
       const productDetails = cartItems.length
         ? await fetchCartProductDetails(cartItems)
         : [];
@@ -99,9 +102,11 @@ function Payment() {
 
         };
       });
+      console.log(`cartItems:${cartWithProductDetails}`)
 
       const extract_buyproducts = cartWithProductDetails.map((item) => ({
-        ...item.productDetails, // Product details
+        ...item.productDetails,
+        productId:item.productId,
         quantity: item.quantity, // Cart item quantity overrides product quantity
 
       }));
@@ -112,25 +117,15 @@ function Payment() {
         email: userDetails.email || '',
         phone: userDetails.phone || '',
         moreaddress: userDetails.address?.moreaddress || [],
-        cartItems: cartWithProductDetails, // Cart items with product details
+        cartItems: cartWithProductDetails, 
       });
+      console.log(`name:${JSON.stringify(userData.cartItems)}`)
 
       setBuyProducts(extract_buyproducts)
-      //  console.log("Buy Products:", extract_buyproducts);
-      //  console.log("Buy Products in state:",buyProducts);
-      // console.log("Updated UserData:", {
-      //   id: userDetails._id || '',
-      //   name: userDetails.name || '',
-      //   email: userDetails.email || '',
-      //   phone: userDetails.phone || '',
-      //   moreaddress: userDetails.address.moreaddress || [],
-      //   cartItems: cartWithProductDetails,
-      // });
-
     } catch (error) {
       console.error('Error fetching user data:', error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -147,23 +142,27 @@ function Payment() {
       alert("Please select the address again to proceed with payment.");
       setIsAddressSelected(true);
       return;
-    }
+    } 
+    console.log(`selected address:${JSON.stringify(selectedAddress)}`)
     if (!selectedAddress) {
       alert("please select the address")
       return;
     }
     try {
-      const updatedBuyProducts = buyProducts.map((product) => ({
-        ...product,
-        address: addr, // Include address details in the product entry
-      }));
+     
       const orderResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/razorpay/order`, {
         amount: totalPrice * 100
       }, { withCredentials: true });
       const orderData = orderResponse.data;
       setAmounts(orderData.amount);
       setOrderId(orderData.id);
+      console.log(`order_id:${orderData.id}`)
 
+      const updatedBuyProducts = buyProducts.map((product) => ({
+        ...product,
+        address: addr,
+        
+      }));
       const options = {
         key: 'rzp_test_gwXTpGbNWP2B41',
         amount: orderData.amount,
@@ -197,10 +196,12 @@ function Payment() {
           } catch (error) {
             console.log("email doesnot send ", error)
           }
+          navigate('/');
           try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/order_history/${userData.id}`,
               {
                 products_details: updatedBuyProducts,
+                orderId: orderData.id
               },
               { withCredentials: true });
           } catch (error) {
@@ -210,10 +211,43 @@ function Payment() {
           try {
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/deletecart/${userData.id}`)
             console.log("successfully delete cart items from backend")
-          } catch (error) {
+          } catch (error) {              
             console.log("unable to delete cart Items:", error)
           }
-          navigate('/');
+          try {
+            const orderPayload = {
+              _id:orderData.id,
+              user: userData.id,
+              products: userData.cartItems.map(product => ({
+                productId: product.productId,
+                name: product.productDetails.name,
+                quantity: product.quantity,
+                total: totalPrice,
+              })),
+              paymentStatus: "Success",
+              paymentMethod: "Razorpay",
+              deliveryStatus: "Order Created",
+              shippingAddress: {
+                name: selectedAddress.name,
+                phone: selectedAddress.phone,
+                pincode: selectedAddress.pincode,
+                locality: selectedAddress.locality,
+                address: selectedAddress.address,
+                city: selectedAddress.city,
+                state: selectedAddress.state,
+                landmark: selectedAddress.landmark,
+                alternatePhone: selectedAddress.alternatePhone,
+              }
+            };
+            console.log(`orderPayload:${JSON.stringify(orderPayload)}`)
+
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/addOrder`, orderPayload, { withCredentials: true });
+            console.log("Successfully added order.");
+          } catch (error) {
+            console.log("Unable to add order:", error);
+          }
+
+
         },
         prefill: {
           name: addressData.name,
@@ -330,6 +364,7 @@ function Payment() {
             </div>
           </div>
         ) : isLoading ? (
+          
           <Loading />
         ) : (
           <div>
