@@ -11,7 +11,7 @@ const AdminPanel = () => {
                 <h1>Welcome to Admin Panel</h1>
                 <p>Select an option from the sidebar to manage products or orders.</p>
             </div>
-            <div className={styles.sidebar}>
+            {/* <div className={styles.sidebar}>
                 <h2>Admin Panel</h2>
                 <ul>
                     <li>
@@ -25,7 +25,7 @@ const AdminPanel = () => {
                         </button>
                     </li>
                 </ul>
-            </div>
+            </div> */}
             
         </div>
     );
