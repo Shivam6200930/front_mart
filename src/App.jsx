@@ -20,8 +20,6 @@ import PaymentUser from "./compoents/Payment_User/Payment_User";
 import AdminPannel from "./admin/AdminPannel";
 import ProductManager from "./admin/components_admin/Product_Manger"
 import OrderManagement from "./admin/components_admin/Order_Mangement";
-import { Provider } from 'react-redux';
-import store from './redux/reduxStore/store';
 import { useEffect , useState } from "react";
 
 function App() {
@@ -33,7 +31,7 @@ function App() {
 
 
   return (
-    <Provider store={store}>
+    
       <Router>
         <Routes>
           {
@@ -105,7 +103,7 @@ function App() {
         </Routes>
 
       </Router>
-    </Provider>
+   
   );
 }
 
