@@ -137,9 +137,11 @@ const Header = () => {
             </a>
           </div>
         )}
-        {loggedIn ? (<div className="mobile-menu-icon" onClick={toggleSidebar}>
-          ☰
-        </div>) : (<></>)}
+        {window.innerWidth < 769 && loggedIn && (
+  <div className="mobile-menu-icon" onClick={toggleSidebar}>
+    ☰
+  </div>
+)}
 
       </div>
 

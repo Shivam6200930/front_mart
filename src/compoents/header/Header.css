@@ -339,7 +339,9 @@ body {
     display: none; /* Hide cart on mobile */
   }
   .mobile-menu-icon {
-    display: block;
+    .mobile-ion-view {
+        display: block;
+    }
     color:white;
   }
   .login-button {

@@ -106,7 +106,7 @@ function ProductDetails() {
               Add to Cart
             </button>
           ) : (
-            <button className="add-to-cart" disabled onClick={addToCart}>
+            <button className="add-to-cart">
               {loadingCart ? "Adding..." : "Add to Cart"}
             </button>
           )}
