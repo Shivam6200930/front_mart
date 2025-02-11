@@ -309,36 +309,43 @@ function Payment() {
 
   const saveAddress = async () => {
     try {
-      setIsLoading(true); 
-      const userId = localStorage.getItem('user_id');
-      const newAddress = { ...addressData };
-      // console.log("newaddress:",newAddress)
-      // Post the new address to the backend
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/address/${userId}`,
-        { address: newAddress },
-        { withCredentials: true }
-      );
+        setIsLoading(true); 
+      
+        if (!userData?.id) {
+            toast.error("User ID is missing!");
+            return;
+        }
 
-      toast.success('Address saved successfully');
+        console.log(`userId: ${userData.id}`);
+        const newAddress = { ...addressData };
 
-      // Update the state with the newly saved address
-      setUserData(
-        { address: newAddress },
-      );
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-      setSelectedAddress(newAddress);
-      setShowAddressForm(false);
-      console.log("useData:", userData)
+        // Post the new address to the backend
+        await axios.post(
+            `${import.meta.env.VITE_BACKEND_URL}/api/users/address/${userData.id}`,
+            { address: newAddress },
+            { withCredentials: true }
+        );
+
+        toast.success('Address saved successfully');
+
+        // Update the state while keeping existing user data
+        setUserData(prev => ({
+            ...prev,
+            address: newAddress
+        }));
+
+        setSelectedAddress(newAddress);
+        setShowAddressForm(false);
+
+        console.log("Updated userData:", userData);
     } catch (error) {
-      console.error('Error saving address:', error);
-      toast.error('Failed to save address. please check you fill all details.');
-    }finally{
-      setIsLoading(false); 
+        console.error('Error saving address:', error);
+        toast.error('Failed to save address. Please check if you filled all details correctly.');
+    } finally {
+        setIsLoading(false); 
     }
-  };
+};
+
 
 
   return (
