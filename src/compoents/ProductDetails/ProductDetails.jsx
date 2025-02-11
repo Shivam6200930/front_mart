@@ -5,6 +5,8 @@ import "./productDetails.css";
 
 function ProductDetails() {
   const loggedIn = localStorage.getItem("loggedIn");
+  console.log(typeof loggedIn);
+
   const [userdata, setUserdata] = useState({
     id: "",
     cartItem: [],
@@ -75,7 +77,7 @@ function ProductDetails() {
   };
 
   const addToCart = async () => {
-    if (!loggedIn) {
+    if (loggedIn != 'true') {
      alert("Please log in to add items to the cart.");
       navigate("/login");
       return;

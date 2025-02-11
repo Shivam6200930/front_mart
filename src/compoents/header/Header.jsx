@@ -16,7 +16,7 @@ const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const sidebarRef = useRef(null);
   const dropdownRef = useRef(null);
-  const loggedIn = localStorage.getItem('loggedIn');
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
 
   const fetchUserPhoto = async () => {
     try {

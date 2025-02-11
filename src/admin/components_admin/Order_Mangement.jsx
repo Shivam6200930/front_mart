@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../compoents/Loading/Loading"
 
 const OrderManagement = () => {
-  const navigate=useNavigate();
+  
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [userId,setUserId]=useState()
   useEffect(() => {
     fetchOrders();
@@ -22,6 +21,7 @@ const OrderManagement = () => {
         setUserId(order.user._id)
         
       });
+      // console.log(`response:${JSON.stringify(response.data.orders)}`)
       
       setOrders(response.data.orders);
       setLoading(false);
@@ -34,15 +34,13 @@ const OrderManagement = () => {
   const updateOrder = async (orderId, deliveryStatus, paymentStatus) => {
     try {
       console.log(userId)
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/updated/${orderId}/${userId}`, 
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/updated/${orderId}/${userId}`, 
         {
         deliveryStatus:deliveryStatus
       },{withCredentials:true});
-      console.log(`response:${response.data}`)
       fetchOrders()
     } catch (err) {
       alert("internal server error")
-      setError("Error updating order:",err);
       console.log(err)
     }
   };
@@ -67,7 +65,7 @@ const OrderManagement = () => {
           {orders.map((order) => (
             <tr key={order._id}>
               <td>{order._id}</td>
-              <td>{order.user?.name} ({order.user?.email})</td>
+              <td>{order.shippingAddress.name} ({order.user?.email})</td>
               <td>
                 <select
                   className="status-dropdown"

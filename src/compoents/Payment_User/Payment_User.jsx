@@ -38,7 +38,7 @@ function Payment() {
     addressType: 'Home',
   });
 
-  const loggedIn = localStorage.getItem('loggedIn');
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
   const navigate = useNavigate();
   // const totalPrice = useSelector((state) => state.cart.totalPrice);
 

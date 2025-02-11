@@ -10,7 +10,7 @@ import { SET_TOTAL_PRICE } from '../../redux/ActionType/actionType';
 
 const Cart = () => {
   const userId = localStorage.getItem("user_id");
-  const loggedIn = localStorage.getItem("loggedIn")
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);

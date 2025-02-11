@@ -23,88 +23,91 @@ import OrderManagement from "./admin/components_admin/Order_Mangement";
 import { useEffect , useState } from "react";
 
 function App() {
-  const [r,setR]=useState()
-  useEffect (()=>{
-  const role = localStorage.getItem('role')
-  setR(role)
-  },[])
+  const [r, setR] = useState(null);
 
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    
+    setR(role || "guest"); // Default to "guest" if no role is found
+  }, []);
+
+  if (r === null) {
+    return <div>Loading...</div>; // Prevent rendering until role is determined
+  }
 
   return (
-    
-      <Router>
-        <Routes>
-          {
-            r == "user" ? (
-              <>
-                <Route path="/order_details" element={<Layout />}>
-                  <Route index element={<Orderdetails />} />
-                </Route>
-                <Route path="/orderhistory" element={<Layout />}>
-                  <Route index element={<OrderHistory />} />
-                </Route>
-                <Route path="/buy" element={<Layout />}>
-                  <Route index element={<PaymentUser />} />
-                </Route>
-                <Route path="/profile" element={<Layout />}>
-                  <Route index element={<Profile />} />
-                </Route>
-                <Route path="/changepassword" element={<Layout />}>
-                  <Route index element={<ChangeUserPassword />} />
-                </Route>
-                <Route path="/editprofile" element={<Layout />}>
-                  <Route index element={<Edit />} />
-                </Route>
-                <Route path="/cart" element={<Layout />}>
-                  <Route index element={<Cart />} />
-                </Route>
-              </>
-            ) : r === "admin" ? (
-              <>
-              <Route path="/admin" element={<Layout_admin />}>
-                <Route index element={<AdminPannel />} />
-              </Route>
-              <Route path="/product-manager" element={<Layout_admin />}>
-                  <Route index element={<ProductManager />} />
-              </Route>
-              <Route path="/order-manager" element={<Layout_admin />}>
-                  <Route index element={<OrderManagement />} />
-              </Route>
-                </>
-            ) : null
-          }
+    <Router>
+      <Routes>
+        {/* User Routes */}
+        {r === "user" && (
+          <>
+            <Route path="/order_details" element={<Layout />}>
+              <Route index element={<Orderdetails />} />
+            </Route>
+            <Route path="/orderhistory" element={<Layout />}>
+              <Route index element={<OrderHistory />} />
+            </Route>
+            <Route path="/buy" element={<Layout />}>
+              <Route index element={<PaymentUser />} />
+            </Route>
+            <Route path="/profile" element={<Layout />}>
+              <Route index element={<Profile />} />
+            </Route>
+            <Route path="/changepassword" element={<Layout />}>
+              <Route index element={<ChangeUserPassword />} />
+            </Route>
+            <Route path="/editprofile" element={<Layout />}>
+              <Route index element={<Edit />} />
+            </Route>
+            <Route path="/cart" element={<Layout />}>
+              <Route index element={<Cart />} />
+            </Route>
+          </>
+        )}
 
-          {/* Common routes for both users and guests */}
-          <Route path="/view" element={<Layout />}>
-            <Route index element={<ProductDetails />} />
-          </Route>
-          <Route path="/api/users/resetPassword/:id/:token" element={<ResetPasswordPage />} />
-          <Route path="/contact" element={<Layout />}>
-            <Route index element={<Contact />} />
-          </Route>
-          <Route path="/login" element={<Layout />}>
-            <Route index element={<Login />} />
-          </Route>
-          <Route path="/register" element={<Layout />}>
-            <Route index element={<Register />} />
-          </Route>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Homepage />} />
-          </Route>
-          <Route path="/forgetpassword" element={<Layout />}>
-            <Route index element={<Forget_Password />} />
-          </Route>
-          <Route path="/search_products" element={<Layout />}>
-            <Route index element={<Search_products />} />
-          </Route>
+        {/* Admin Routes */}
+        {r === "admin" && (
+          <>
+            <Route path="/admin" element={<Layout_admin />}>
+              <Route index element={<AdminPannel />} />
+            </Route>
+            <Route path="/product-manager" element={<Layout_admin />}>
+              <Route index element={<ProductManager />} />
+            </Route>
+            <Route path="/order-manager" element={<Layout_admin />}>
+              <Route index element={<OrderManagement />} />
+            </Route>
+          </>
+        )}
 
-          {/* 404 Page (Always at the Bottom) */}
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
+        {/* Common Routes */}
+        <Route path="/view" element={<Layout />}>
+          <Route index element={<ProductDetails />} />
+        </Route>
+        <Route path="/api/users/resetPassword/:id/:token" element={<ResetPasswordPage />} />
+        <Route path="/contact" element={<Layout />}>
+          <Route index element={<Contact />} />
+        </Route>
+        <Route path="/login" element={<Layout />}>
+          <Route index element={<Login />} />
+        </Route>
+        <Route path="/register" element={<Layout />}>
+          <Route index element={<Register />} />
+        </Route>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
+        </Route>
+        <Route path="/forgetpassword" element={<Layout />}>
+          <Route index element={<Forget_Password />} />
+        </Route>
+        <Route path="/search_products" element={<Layout />}>
+          <Route index element={<Search_products />} />
+        </Route>
 
-      </Router>
-   
+        {/* 404 Page */}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Router>
   );
 }
-
 export default App;
